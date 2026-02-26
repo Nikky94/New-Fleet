@@ -323,23 +323,23 @@
         </div>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('overview')">📊 車隊總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
-            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租用中</button>
+            <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 承租</button>
             <button class="tab-btn" onclick="switchTab('sold')">🧮 出售</button>
-            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
             <button class="tab-btn" onclick="switchTab('profitability')">💰 損益</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本</button>
         </div>
         
         <div class="content">
-            <!-- 車隊總覽 -->
+            <!-- 總覽 -->
             <div id="overview" class="tab-content active">
-                <h2 style="margin-bottom: 20px;">使用概況</h2>
+                <h2 style="margin-bottom: 20px;">狀態別</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>車輛保有數</h3>
+                        <h3>保有台數</h3>
                         <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
@@ -349,7 +349,7 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>自購</h3>
+                        <h3>自購車</h3>
                         <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
                     </div>
@@ -364,7 +364,7 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>異常</h3>
+                        <h3>已解約</h3>
                         <div class="value" id="terminatedVehicles">5</div>
                         <div class="unit">台</div>
                     </div>
@@ -389,9 +389,9 @@
                 </div>
             </div>
             
-            <!-- 長期評估 -->
+            <!-- 風險 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">10年間曲線分析</h2>
+                <h2 style="margin-bottom: 20px;">用車習慣</h2>
                 
                 <div class="legend">
                     <div class="legend-item">
@@ -422,9 +422,9 @@
                 </div>
             </div>
             
-            <!-- 租用中 -->
+            <!-- 承租 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">租約實行中</h2>
+                <h2 style="margin-bottom: 20px;">實行中</h2>
                 
                 <div class="search-filter">
                     <input type="text" id="searchVehicle" placeholder="🔍 搜尋車牌 / 車型..." onkeyup="filterVehicles()">
@@ -470,33 +470,33 @@
 
             <!-- 出售 -->
             <div id="sold" class="tab-content">
-                <h2 style="margin-bottom: 20px;">已結案</h2>
+                <h2 style="margin-bottom: 20px;">已處分</h2>
 
                 <div class="summary-box">
                     <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
-                            <div class="label">出售總台數</div>
+                            <div class="label">出售台數</div>
                             <div class="value" id="soldCount">28</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">購車總成本</div>
+                            <div class="label">購車成本</div>
                             <div class="value" id="soldTotalPurchase">$5.7M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">出售總收入</div>
+                            <div class="label">出售收入</div>
                             <div class="value" id="soldTotalSale">$2.65M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">租金總收入</div>
+                            <div class="label">租金收入</div>
                             <div class="value" id="soldTotalRental">$22.0M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">成本總支出</div>
+                            <div class="label">結案成本</div>
                             <div class="value" id="soldTotalCost">$15.15M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總損益</div>
+                            <div class="label">損益累計</div>
                             <div class="value profit-positive" id="soldTotalProfit">$4.95M</div>
                         </div>
                     </div>
@@ -526,9 +526,9 @@
                 </div>
             </div>
 
-            <!-- 異常 -->
+            <!-- 解約 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">中途解約</h2>
+                <h2 style="margin-bottom: 20px;">異常終止</h2>
 
                 <div class="summary-box">
                     <h3>摘要</h3>
@@ -538,23 +538,23 @@
                             <div class="value" id="termCount">5</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">購車總成本</div>
+                            <div class="label">購車成本</div>
                             <div class="value" id="termTotalPurchase">$5.9M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">租金總收入</div>
+                            <div class="label">租金收入</div>
                             <div class="value" id="termTotalRental">$9.75M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">解約等收入</div>
+                            <div class="label">其他收入</div>
                             <div class="value" id="termTotalFee">$0.87M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">成本總支出</div>
+                            <div class="label">暫結成本</div>
                             <div class="value" id="termTotalCost">$7.65M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總損益</div>
+                            <div class="label">損益累計</div>
                             <div class="value profit-positive" id="termTotalProfit">$3.27M</div>
                         </div>
                     </div>
@@ -571,7 +571,7 @@
                                 <th>解約日</th>
                                 <th>購車價</th>
                                 <th>租金收入</th>
-                                <th>解約金</th>
+                                <th>解約收入</th>
                                 <th>支出成本</th>
                                 <th>總損益</th>
                                 <th>持有年限</th>
@@ -587,7 +587,7 @@
             
             <!-- 損益 -->
             <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">個別分析</h2>
+                <h2 style="margin-bottom: 20px;">車輛別</h2>
                 
                 <div class="chart-row">
                     <div class="chart-container">
@@ -603,7 +603,7 @@
                 </div>
             </div>
             
-            <!-- 成本結構 -->
+            <!-- 成本 -->
             <div id="costs" class="tab-content">
                 <h2 style="margin-bottom: 20px;">圖表檢視</h2>
                 
@@ -799,7 +799,7 @@
                     "totalProfit": -9109,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "17.8萬km微幅虧損"
+                    "notes": "17.8萬km"
                 },
                 {
                     
@@ -816,7 +816,7 @@
                     "totalProfit": -9154,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "20.9萬km微幅虧損"
+                    "notes": "20.9萬km"
                 },
                 {
                     
@@ -833,7 +833,7 @@
                     "totalProfit": -86211,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "30.4萬km虧損"
+                    "notes": "30.4萬km"
                 },
                 {
                     "id": "HSR-20004",
@@ -849,7 +849,7 @@
                     "totalProfit": -22584,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "26.8萬km虧損"
+                    "notes": "26.8萬km"
                 },
                 {
                     "id": "HSR-20005",
@@ -865,7 +865,7 @@
                     "totalProfit": -171304,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "31.3萬km嚴重虧損"
+                    "notes": "31.3萬km"
                 },
                 {
                     "id": "HSR-20006",
@@ -881,7 +881,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "30.7萬km虧損"
+                    "notes": "30.7萬km"
                 },
                 {
                     "id": "HSR-20007",
@@ -897,7 +897,7 @@
                     "totalProfit": -123112,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "30萬km虧損"
+                    "notes": "30萬km"
                 },
                 {
                     "id": "HSR-20008",
@@ -913,7 +913,7 @@
                     "totalProfit": -138984,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "24.8萬km虧損"
+                    "notes": "24.8萬km"
                 },
                 {
                     "id": "HSR-20009",
@@ -929,7 +929,7 @@
                     "totalProfit": -233430,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "30萬km嚴重虧損"
+                    "notes": "30萬km"
                 },
                 {
                     "id": "HSR-20010",
@@ -945,7 +945,7 @@
                     "totalProfit": -89775,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "36.5萬km虧損"
+                    "notes": "36.5萬km"
                 },
                 {
                     "id": "HSR-20011",
@@ -961,7 +961,7 @@
                     "totalProfit": -10676,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "23.7萬km微幅虧損"
+                    "notes": "23.7萬km"
                 },
                 {
                     "id": "HSR-20012",
@@ -1311,7 +1311,7 @@
             new Chart(document.getElementById('statusChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['租用中', '自購', '維修中', '中途解約', '已出售'],
+                    labels: ['租用中', '自購車', '維修中', '解約', '已出售'],
                     datasets: [{
                         data: [29, 1, 0, 5, 28],
                         backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
