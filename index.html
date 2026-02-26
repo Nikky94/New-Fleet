@@ -339,32 +339,32 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>保有台數</h3>
+                        <h3>保有</h3>
                         <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>租用中</h3>
-                        <div class="value" id="activeVehicles">29</div>
-                        <div class="unit">台</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>自購車</h3>
+                        <h3>潛在</h3>
                         <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>維修中</h3>
+                        <h3>承租</h3>
+                        <div class="value" id="activeVehicles">29</div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>重大維修</h3>
                         <div class="value" id="maintenanceVehicles">0</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>已出售</h3>
+                        <h3>出售</h3>
                         <div class="value" id="soldVehicles">28</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>已解約</h3>
+                        <h3>解約</h3>
                         <div class="value" id="terminatedVehicles">5</div>
                         <div class="unit">台</div>
                     </div>
@@ -636,8 +636,8 @@
             "summary": {
                 "totalVehicles": 30,
                 "status": {
-                    "active": 29,
                     "idle": 1,
+                    "active": 29,
                     "maintenance": 0,
                     "terminated": 5,
                     "sold": 28
@@ -645,13 +645,12 @@
                 "vehicleTypes": {
                     "Sedan": 26,
                     "SUV": 1,
-                    "MPV": 2,
-                    "VAN": 0,                    
+                    "MPV": 2,                   
                 },
                 "fleetAge": {
                     "under1Year": 0,
                     "1to3Years": 27,
-                    "3to5Years": 2,
+                    "3to5Years":  2,
                     "over5Years": 0
                 }
             },
@@ -678,7 +677,6 @@
                 {"type": "Sedan", "count": 26, "utilization": 82.5, "profitMargin": 12.5, "avgCost": 850000},
                 {"type": "SUV", "count": 1, "utilization": 88.2, "profitMargin": 15.8, "avgCost": 1250000},
                 {"type": "MPV", "count": 2, "utilization": 91.5, "profitMargin": 18.2, "avgCost": 1550000},
-                {"type": "VAN", "count": 0, "utilization": 85.0, "profitMargin": 10.5, "avgCost": 950000},
             ],
             "expiringVehicles": [
                 {
@@ -693,7 +691,7 @@
                     "margin": 20.8,
                     "utilization": 88.5,
                     "status": "critical",
-                    "recommendation": "高收益車輛，建議續約或轉售高價"
+                    "recommendation": "高收益，建議續約或轉售高價"
                 },
                 {
                     "id": "CEO-001",
@@ -707,7 +705,7 @@
                     "margin": 6.7,
                     "utilization": 65.0,
                     "status": "warning",
-                    "recommendation": "高階座車，維護成本偏高，評估換購新車"
+                    "recommendation": "維護成本偏高，評估換購新車"
                 },
                 {
                     "id": "HSR-005",
@@ -1264,8 +1262,8 @@
         // 初始化
         document.getElementById('reportDate').textContent = fleetData.reportDate;
         document.getElementById('totalVehicles').textContent = fleetData.summary.totalVehicles;
-        document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
         document.getElementById('idleVehicles').textContent = fleetData.summary.status.idle;
+        document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
         document.getElementById('maintenanceVehicles').textContent = fleetData.summary.status.maintenance;
         document.getElementById('soldVehicles').textContent = fleetData.summary.status.sold;
         document.getElementById('terminatedVehicles').textContent = fleetData.summary.status.terminated;
@@ -1311,7 +1309,7 @@
             new Chart(document.getElementById('statusChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['租用中', '自購車', '維修中', '解約', '已出售'],
+                    labels: ['租用中', '潛在', '重大維修', '已解約', '已出售'],
                     datasets: [{
                         data: [29, 1, 0, 5, 28],
                         backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
@@ -1323,10 +1321,10 @@
             new Chart(document.getElementById('typeChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Sedan', 'SUV', 'MPV', 'VAN'],
+                    labels: ['Sedan', 'SUV', 'MPV'],
                     datasets: [{
-                        data: [26, 1, 2, 0],
-                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe']
+                        data: [26, 1, 2],
+                        backgroundColor: ['#667eea', '#4facfe', '#f093fb', '#00f2fe']
                     }]
                 },
                 options: chartConfig
@@ -1348,11 +1346,11 @@
             new Chart(document.getElementById('typePerformanceChart'), {
                 type: 'bar',
                 data: {
-                    labels: ['Sedan', 'SUV', 'MPV', 'VAN'],
+                    labels: ['Sedan', 'SUV', 'MPV'],
                     datasets: [
                         {
                             label: '利潤率 (%)',
-                            data: [12.5, 15.8, 18.2, 10.5, 22.4],
+                            data: [12.5, 10.5, 22.4],
                             backgroundColor: '#667eea'
                         }
                     ]
@@ -1672,7 +1670,7 @@
             new Chart(document.getElementById('costStructureChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['購車', '稅金', '維修', '保費', '其他'],
+                    labels: ['購車', '稅金', '維修', '保險', '其他'],
                     datasets: [{
                         data: [45.0, 12.5, 18.5, 15.0, 9.0],
                         backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#868e96']
