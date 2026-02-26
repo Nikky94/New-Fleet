@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👮天鷹保全車隊報表</title>
+    <title>👮天鷹保全🚙</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     <style>
         * {
@@ -318,24 +318,24 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>👮天鷹保全車隊報表</h1>
+            <h1>👮天鷹保全🚙</h1>
             <p></p>
         </div>
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 車隊總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 年度趨勢</button>
-            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 實行中</button>
-            <button class="tab-btn" onclick="switchTab('sold')">🧮 已出售</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租用中</button>
+            <button class="tab-btn" onclick="switchTab('sold')">🧮 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
-            <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
+            <button class="tab-btn" onclick="switchTab('profitability')">💰 損益</button>
             <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
         </div>
         
         <div class="content">
             <!-- 車隊總覽 -->
             <div id="overview" class="tab-content active">
-                <h2 style="margin-bottom: 20px;">整體現況</h2>
+                <h2 style="margin-bottom: 20px;">使用概況</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -344,12 +344,12 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>使用中</h3>
+                        <h3>租用中</h3>
                         <div class="value" id="activeVehicles">29</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>閒置</h3>
+                        <h3>自購</h3>
                         <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
                     </div>
@@ -389,9 +389,9 @@
                 </div>
             </div>
             
-            <!-- 年度趨勢 -->
+            <!-- 長期評估 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">10年期曲線分析</h2>
+                <h2 style="margin-bottom: 20px;">10年間曲線分析</h2>
                 
                 <div class="legend">
                     <div class="legend-item">
@@ -422,14 +422,14 @@
                 </div>
             </div>
             
-            <!-- 實行中 -->
+            <!-- 租用中 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">未到期分析</h2>
+                <h2 style="margin-bottom: 20px;">未到期車輛</h2>
                 
                 <div class="search-filter">
                     <input type="text" id="searchVehicle" placeholder="🔍 搜尋車牌 / 車型..." onkeyup="filterVehicles()">
                     <select id="statusFilter" onchange="filterVehicles()">
-                        <option value="">全部狀態</option>
+                        <option value="">狀態</option>
                         <option value="critical">🔴 緊急</option>
                         <option value="warning">🟡 警示</option>
                         <option value="normal">🟢 一般</option>
@@ -449,8 +449,8 @@
                     <table id="vehicleTable">
                         <thead>
                             <tr>
-                                <th>車輛ID</th>
-                                <th>車牌</th>
+                                <th>編碼</th>
+                                <th>車號</th>
                                 <th>車型</th>
                                 <th>到期日</th>
                                 <th>收益</th>
@@ -468,35 +468,35 @@
                 </div>
             </div>
 
-            <!-- 已出售 -->
+            <!-- 結案出售 -->
             <div id="sold" class="tab-content">
-                <h2 style="margin-bottom: 20px;">已出售車輛明細</h2>
+                <h2 style="margin-bottom: 20px;">明細</h2>
 
                 <div class="summary-box">
-                    <h3>已出售車輛統計摘要</h3>
+                    <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">已出售台數</div>
-                            <div class="value" id="soldCount">5</div>
+                            <div class="value" id="soldCount">28</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總購車成本</div>
+                            <div class="label">購車總成本</div>
                             <div class="value" id="soldTotalPurchase">$5.7M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總出售收入</div>
+                            <div class="label">出售總收入</div>
                             <div class="value" id="soldTotalSale">$2.65M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">租金收入</div>
+                            <div class="label">租金總收入</div>
                             <div class="value" id="soldTotalRental">$22.0M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">營運成本</div>
+                            <div class="label">營運總成本</div>
                             <div class="value" id="soldTotalCost">$15.15M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總損益</div>
+                            <div class="label">損益統計</div>
                             <div class="value profit-positive" id="soldTotalProfit">$4.95M</div>
                         </div>
                     </div>
@@ -506,8 +506,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>車輛ID</th>
-                                <th>車牌</th>
+                                <th>編碼</th>
+                                <th>車號</th>
                                 <th>車型</th>
                                 <th>購入日期</th>
                                 <th>出售日期</th>
@@ -526,12 +526,12 @@
                 </div>
             </div>
 
-            <!-- 解約 -->
+            <!-- 中途解約 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">解約明細</h2>
+                <h2 style="margin-bottom: 20px;">明細</h2>
 
                 <div class="summary-box">
-                    <h3>解約車輛統計摘要</h3>
+                    <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">解約台數</div>
@@ -546,7 +546,7 @@
                             <div class="value" id="termTotalRental">$9.75M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">違約金收入</div>
+                            <div class="label">解約金收入</div>
                             <div class="value" id="termTotalFee">$0.87M</div>
                         </div>
                         <div class="summary-item">
@@ -564,14 +564,14 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>車輛ID</th>
-                                <th>車牌</th>
+                                <th>編碼</th>
+                                <th>車號</th>
                                 <th>車型</th>
-                                <th>租賃開始</th>
-                                <th>解約日期</th>
+                                <th>起租日</th>
+                                <th>解約日</th>
                                 <th>購車價</th>
                                 <th>租金收入</th>
-                                <th>違約金</th>
+                                <th>解約金</th>
                                 <th>營運成本</th>
                                 <th>總損益</th>
                                 <th>持有年限</th>
@@ -585,9 +585,9 @@
                 </div>
             </div>
             
-            <!-- 個別損益 -->
+            <!-- 損益 -->
             <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">個別車輛損益分析</h2>
+                <h2 style="margin-bottom: 20px;">明細</h2>
                 
                 <div class="chart-row">
                     <div class="chart-container">
@@ -605,7 +605,7 @@
             
             <!-- 成本結構 -->
             <div id="costs" class="tab-content">
-                <h2 style="margin-bottom: 20px;">成本結構分析</h2>
+                <h2 style="margin-bottom: 20px;">圖表分析</h2>
                 
                 <div class="chart-row">
                     <div class="chart-container">
@@ -623,7 +623,7 @@
         </div>
         
         <div class="footer">
-            <p>車隊營運績效報表 | 報告日期：<span id="reportDate">2026-02-26</span> | SE Dept. - Fleet Management Division</p>
+            <p>天鷹車隊報表 | 報告日期：<span id="reportDate">2026-02-26</span> | SE Corp. - Fleet Management Division</p>
         </div>
     </div>
     
@@ -631,7 +631,7 @@
         // 數據載入
         const fleetData = {
             "reportDate": "2026-02-26",
-            "reportTitle": "👮天鷹保全車隊報表 (10年期曲線分析)",
+            "reportTitle": "天鷹車隊報表 (10年曲線分析)",
             "company": "SE Corp. - Fleet Management Division",
             "summary": {
                 "totalVehicles": 30,
@@ -639,7 +639,7 @@
                     "active": 29,
                     "idle": 1,
                     "maintenance": 0,
-                    "terminated": 0,
+                    "terminated": 5,
                     "sold": 28
                 },
                 "vehicleTypes": {
@@ -675,10 +675,10 @@
                 "other": 9.0
             },
             "typePerformance": [
-                {"type": "Sedan", "count": 40, "utilization": 82.5, "profitMargin": 12.5, "avgCost": 850000},
-                {"type": "SUV", "count": 30, "utilization": 88.2, "profitMargin": 15.8, "avgCost": 1250000},
-                {"type": "MPV", "count": 25, "utilization": 91.5, "profitMargin": 18.2, "avgCost": 1550000},
-                {"type": "VAN", "count": 15, "utilization": 85.0, "profitMargin": 10.5, "avgCost": 950000},
+                {"type": "Sedan", "count": 26, "utilization": 82.5, "profitMargin": 12.5, "avgCost": 850000},
+                {"type": "SUV", "count": 1, "utilization": 88.2, "profitMargin": 15.8, "avgCost": 1250000},
+                {"type": "MPV", "count": 2, "utilization": 91.5, "profitMargin": 18.2, "avgCost": 1550000},
+                {"type": "VAN", "count": 0, "utilization": 85.0, "profitMargin": 10.5, "avgCost": 950000},
             ],
             "expiringVehicles": [
                 {
@@ -767,7 +767,7 @@
                     "totalProfit": 117398,
                     "holdingPeriod": 3.25,
                     "status": "completed",
-                    "notes": "期滿高於市價出售"
+                    "notes": "高於市價出售"
                 },
                 {
                     "id": "CEO-20001",
@@ -783,7 +783,7 @@
                     "totalProfit": 660711,
                     "holdingPeriod": 3,
                     "status": "completed",
-                    "notes": "期滿高於市價出售"
+                    "notes": "極高收益"
                 },
                 {
                     "id": "HSR-20001",
@@ -799,7 +799,7 @@
                     "totalProfit": -9109,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車17.8萬km微幅虧損"
+                    "notes": "17.8萬km微幅虧損"
                 },
                 {
                     
@@ -816,7 +816,7 @@
                     "totalProfit": -9154,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車20.9萬km微幅虧損"
+                    "notes": "20.9萬km微幅虧損"
                 },
                 {
                     
@@ -833,7 +833,7 @@
                     "totalProfit": -86211,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.4萬km流標虧損"
+                    "notes": "30.4萬km虧損"
                 },
                 {
                     "id": "HSR-20004",
@@ -849,7 +849,7 @@
                     "totalProfit": -22584,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車26.8萬km微幅虧損"
+                    "notes": "26.8萬km虧損"
                 },
                 {
                     "id": "HSR-20005",
@@ -865,7 +865,7 @@
                     "totalProfit": -171304,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車31.3萬km嚴重虧損"
+                    "notes": "31.3萬km嚴重虧損"
                 },
                 {
                     "id": "HSR-20006",
@@ -881,7 +881,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20007",
@@ -897,7 +897,7 @@
                     "totalProfit": -123112,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30萬km嚴重虧損"
+                    "notes": "30萬km虧損"
                 },
                 {
                     "id": "HSR-20008",
@@ -913,7 +913,7 @@
                     "totalProfit": -138984,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車24.8萬km嚴重虧損"
+                    "notes": "24.8萬km虧損"
                 },
                 {
                     "id": "HSR-20009",
@@ -929,7 +929,7 @@
                     "totalProfit": -233430,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30萬km嚴重虧損"
+                    "notes": "30萬km嚴重虧損"
                 },
                 {
                     "id": "HSR-20010",
@@ -945,7 +945,7 @@
                     "totalProfit": -89775,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車36.5萬km嚴重虧損"
+                    "notes": "36.5萬km虧損"
                 },
                 {
                     "id": "HSR-20011",
@@ -961,7 +961,7 @@
                     "totalProfit": -10676,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車23.7萬km微幅虧損"
+                    "notes": "23.7萬km微幅虧損"
                 },
                 {
                     "id": "HSR-20012",
@@ -977,7 +977,7 @@
                     "totalProfit": -1903,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車24.4萬km微幅虧損"
+                    "notes": "24.4萬km微幅虧損"
                 },
                 {
                     "id": "HSR-20013",
@@ -993,7 +993,7 @@
                     "totalProfit": -85046,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車34.1萬km嚴重虧損"
+                    "notes": "34.1萬km虧損"
                 },
                 {
                     "id": "HSR-20014",
@@ -1009,7 +1009,7 @@
                     "totalProfit": -126929,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車31.6萬km嚴重虧損"
+                    "notes": "31.6萬km虧損"
                 },
                 {
                     "id": "HSR-20015",
@@ -1025,7 +1025,7 @@
                     "totalProfit": -126399,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20016",
@@ -1041,7 +1041,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20017",
@@ -1057,7 +1057,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20018",
@@ -1073,7 +1073,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20019",
@@ -1089,7 +1089,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20020",
@@ -1105,7 +1105,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20021",
@@ -1121,7 +1121,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20022",
@@ -1137,7 +1137,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20023",
@@ -1153,7 +1153,7 @@
                     "totalProfit": -110057,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車30.7萬km嚴重虧損"
+                    "notes": "30.7萬km虧損"
                 },
                 {
                     "id": "HSR-20024",
@@ -1169,12 +1169,12 @@
                     "totalProfit": -171304,
                     "holdingPeriod": 3.4,
                     "status": "completed",
-                    "notes": "巡邏車31.3萬km嚴重虧損"
+                    "notes": "31.3萬km虧損"
                 }
             ],
             "terminatedVehicles": [
                 {
-                    "id": "GA-2022-003",
+                    "id": "GA-22003",
                     "plate": "TERM-001",
                     "model": "Hyundai Elantra",
                     "type": "Sedan",
@@ -1191,7 +1191,7 @@
                     "notes": "提前解約，收取違約金"
                 },
                 {
-                    "id": "HSR-003",
+                    "id": "HSR-23003",
                     "plate": "TERM-002",
                     "model": "Nissan Serena",
                     "type": "MPV",
@@ -1208,7 +1208,7 @@
                     "notes": "2.5年提前解約"
                 },
                 {
-                    "id": "TRK-003",
+                    "id": "TRK-22003",
                     "plate": "TERM-003",
                     "model": "Mitsubishi Fuso",
                     "type": "Track",
@@ -1225,7 +1225,7 @@
                     "notes": "因企業併購而解約"
                 },
                 {
-                    "id": "VAN-005",
+                    "id": "VAN-23005",
                     "plate": "TERM-004",
                     "model": "Mercedes Sprinter",
                     "type": "VAN",
@@ -1242,7 +1242,7 @@
                     "notes": "1.8年提前解約，虧損風險"
                 },
                 {
-                    "id": "GA-2023-008",
+                    "id": "GA-23008",
                     "plate": "TERM-005",
                     "model": "Mazda CX-5",
                     "type": "SUV",
@@ -1311,9 +1311,9 @@
             new Chart(document.getElementById('statusChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['使用中', '閒置', '維修中', '中途解約', '已出售'],
+                    labels: ['租用中', '自購', '維修中', '中途解約', '已出售'],
                     datasets: [{
-                        data: [85, 12, 8, 10, 5],
+                        data: [29, 1, 0, 5, 28],
                         backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
                     }]
                 },
@@ -1323,9 +1323,9 @@
             new Chart(document.getElementById('typeChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Sedan', 'SUV', 'MPV', 'VAN', 'Track'],
+                    labels: ['Sedan', 'SUV', 'MPV', 'VAN'],
                     datasets: [{
-                        data: [40, 30, 25, 15, 10],
+                        data: [26, 1, 2, 0],
                         backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe']
                     }]
                 },
@@ -1338,7 +1338,7 @@
                     labels: ['<1年', '1-3年', '3-5年', '>5年'],
                     datasets: [{
                         label: '車輛台數',
-                        data: [15, 45, 40, 20],
+                        data: [0, 27, 2, 0],
                         backgroundColor: '#667eea'
                     }]
                 },
@@ -1348,7 +1348,7 @@
             new Chart(document.getElementById('typePerformanceChart'), {
                 type: 'bar',
                 data: {
-                    labels: ['Sedan', 'SUV', 'MPV', 'VAN', 'Track'],
+                    labels: ['Sedan', 'SUV', 'MPV', 'VAN'],
                     datasets: [
                         {
                             label: '利潤率 (%)',
