@@ -424,7 +424,7 @@
             
             <!-- 租用中 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">未到期車輛</h2>
+                <h2 style="margin-bottom: 20px;">租約實行中</h2>
                 
                 <div class="search-filter">
                     <input type="text" id="searchVehicle" placeholder="🔍 搜尋車牌 / 車型..." onkeyup="filterVehicles()">
@@ -468,9 +468,9 @@
                 </div>
             </div>
 
-            <!-- 結案出售 -->
+            <!-- 出售 -->
             <div id="sold" class="tab-content">
-                <h2 style="margin-bottom: 20px;">明細</h2>
+                <h2 style="margin-bottom: 20px;">結案明細</h2>
 
                 <div class="summary-box">
                     <h3>摘要</h3>
@@ -492,7 +492,7 @@
                             <div class="value" id="soldTotalRental">$22.0M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">營運總成本</div>
+                            <div class="label">成本總支出</div>
                             <div class="value" id="soldTotalCost">$15.15M</div>
                         </div>
                         <div class="summary-item">
@@ -514,7 +514,7 @@
                                 <th>購車價</th>
                                 <th>出售價</th>
                                 <th>租金收入</th>
-                                <th>營運成本</th>
+                                <th>支出成本</th>
                                 <th>總損益</th>
                                 <th>持有年限</th>
                                 <th>備註</th>
@@ -528,7 +528,7 @@
 
             <!-- 中途解約 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">明細</h2>
+                <h2 style="margin-bottom: 20px;">終止明細</h2>
 
                 <div class="summary-box">
                     <h3>摘要</h3>
@@ -538,23 +538,23 @@
                             <div class="value" id="termCount">5</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">購車成本</div>
+                            <div class="label">購車總成本</div>
                             <div class="value" id="termTotalPurchase">$5.9M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">租金收入</div>
+                            <div class="label">租金總收入</div>
                             <div class="value" id="termTotalRental">$9.75M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">解約金收入</div>
+                            <div class="label">解約等收入</div>
                             <div class="value" id="termTotalFee">$0.87M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">營運成本</div>
+                            <div class="label">成本總支出</div>
                             <div class="value" id="termTotalCost">$7.65M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總損益</div>
+                            <div class="label">損益</div>
                             <div class="value profit-positive" id="termTotalProfit">$3.27M</div>
                         </div>
                     </div>
@@ -572,7 +572,7 @@
                                 <th>購車價</th>
                                 <th>租金收入</th>
                                 <th>解約金</th>
-                                <th>營運成本</th>
+                                <th>支出成本</th>
                                 <th>總損益</th>
                                 <th>持有年限</th>
                                 <th>解約原因</th>
@@ -587,7 +587,7 @@
             
             <!-- 損益 -->
             <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">明細</h2>
+                <h2 style="margin-bottom: 20px;">個別分析</h2>
                 
                 <div class="chart-row">
                     <div class="chart-container">
