@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>車隊營運績效報表</title>
+    <title>👮天鷹保全車隊報表</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     <style>
         * {
@@ -325,9 +325,9 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 車隊總覽</button>
             <button class="tab-btn" onclick="switchTab('trends')">📈 年度趨勢</button>
-            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 實行中車輛</button>
-            <button class="tab-btn" onclick="switchTab('sold')">✅ 已出售車輛</button>
-            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約車輛</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 實行中</button>
+            <button class="tab-btn" onclick="switchTab('sold')">🧮 已出售</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
             <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
             <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
         </div>
@@ -340,32 +340,32 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>總車輛數</h3>
-                        <div class="value" id="totalVehicles">120</div>
+                        <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>使用中</h3>
-                        <div class="value" id="activeVehicles">85</div>
+                        <div class="value" id="activeVehicles">29</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>閒置</h3>
-                        <div class="value" id="idleVehicles">12</div>
+                        <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>維修中</h3>
-                        <div class="value" id="maintenanceVehicles">8</div>
+                        <div class="value" id="maintenanceVehicles">0</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>已出售</h3>
-                        <div class="value" id="soldVehicles">5</div>
+                        <div class="value" id="soldVehicles">28</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>中途解約</h3>
-                        <div class="value" id="terminatedVehicles">10</div>
+                        <div class="value" id="terminatedVehicles">5</div>
                         <div class="unit">台</div>
                     </div>
                 </div>
@@ -528,7 +528,7 @@
 
             <!-- 解約車輛 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">中途解約車輛明細</h2>
+                <h2 style="margin-bottom: 20px;">解約明細</h2>
 
                 <div class="summary-box">
                     <h3>解約車輛統計摘要</h3>
