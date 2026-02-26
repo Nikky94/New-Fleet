@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>進階車隊營運績效報表</title>
+    <title>車隊營運績效報表</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     <style>
         * {
@@ -318,14 +318,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚗 進階車隊營運績效報表</h1>
-            <p>10年期趨勢分析 | 多維度成本拆解 | 實時決策支持</p>
+            <h1>🚗車隊營運績效報表</h1>
+            <p></p>
         </div>
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 車隊總覽</button>
             <button class="tab-btn" onclick="switchTab('trends')">📈 年度趨勢</button>
-            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 車輛分析</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 實行中車輛</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 已出售車輛</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約車輛</button>
             <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
@@ -335,7 +335,7 @@
         <div class="content">
             <!-- 車隊總覽 -->
             <div id="overview" class="tab-content active">
-                <h2 style="margin-bottom: 20px;">車隊整體現況</h2>
+                <h2 style="margin-bottom: 20px;">整體現況</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -391,7 +391,7 @@
             
             <!-- 年度趨勢 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">10年期營運趨勢分析</h2>
+                <h2 style="margin-bottom: 20px;">10年期曲線分析</h2>
                 
                 <div class="legend">
                     <div class="legend-item">
@@ -422,9 +422,9 @@
                 </div>
             </div>
             
-            <!-- 車輛分析 -->
+            <!-- 實行中車輛 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">到期車輛分析</h2>
+                <h2 style="margin-bottom: 20px;">未到期分析</h2>
                 
                 <div class="search-filter">
                     <input type="text" id="searchVehicle" placeholder="🔍 搜尋車牌 / 車型..." onkeyup="filterVehicles()">
@@ -623,37 +623,36 @@
         </div>
         
         <div class="footer">
-            <p>進階車隊營運績效報表 | 報告日期：<span id="reportDate">2026-02-25</span> | GA Dept. - Fleet Management Division</p>
+            <p>車隊營運績效報表 | 報告日期：<span id="reportDate">2026-02-26</span> | SE Dept. - Fleet Management Division</p>
         </div>
     </div>
     
     <script>
         // 數據載入
         const fleetData = {
-            "reportDate": "2026-02-25",
-            "reportTitle": "進階車隊營運績效報表 (10年期趨勢分析)",
-            "company": "GA Dept. - Fleet Management Division",
+            "reportDate": "2026-02-26",
+            "reportTitle": "車隊營運績效報表 (10年期曲線分析)",
+            "company": "SE Corp. - Fleet Management Division",
             "summary": {
-                "totalVehicles": 120,
+                "totalVehicles": 30,
                 "status": {
-                    "active": 85,
-                    "idle": 12,
-                    "maintenance": 8,
-                    "terminated": 10,
-                    "sold": 5
+                    "active": 29,
+                    "idle": 1,
+                    "maintenance": 0,
+                    "terminated": 0,
+                    "sold": 28
                 },
                 "vehicleTypes": {
-                    "Sedan": 40,
-                    "SUV": 30,
-                    "MPV": 25,
-                    "VAN": 15,
-                    "Track": 10
+                    "Sedan": 26,
+                    "SUV": 1,
+                    "MPV": 2,
+                    "VAN": 0,                    
                 },
                 "fleetAge": {
-                    "under1Year": 15,
-                    "1to3Years": 45,
-                    "3to5Years": 40,
-                    "over5Years": 20
+                    "under1Year": 0,
+                    "1to3Years": 27,
+                    "3to5Years": 2,
+                    "over5Years": 0
                 }
             },
             "yearlyTrend": [
@@ -756,20 +755,36 @@
             ],
             "soldVehicles": [
                 {
-                    "id": "GA-2020-001",
-                    "plate": "OLD-0001",
-                    "model": "Honda Civic",
-                    "type": "Sedan",
-                    "purchaseDate": "2020-01-15",
-                    "saleDate": "2025-12-20",
-                    "purchasePrice": 800000,
-                    "salePrice": 450000,
-                    "totalRentalRevenue": 2400000,
-                    "totalOperatingCost": 1800000,
-                    "totalProfit": 1050000,
-                    "holdingPeriod": 5.95,
+                    "id": "GA-2019-001",
+                    "plate": "RDQ-1350",
+                    "model": "Toyota Sienta",
+                    "type": "MPV",
+                    "purchaseDate": "2019-03-31",
+                    "saleDate": "2022-06-24",
+                    "purchasePrice": 679537,
+                    "salePrice": 438095,
+                    "totalRentalRevenue": 479988,
+                    "totalOperatingCost": 121148,
+                    "totalProfit": 117398,
+                    "holdingPeriod": 3.25,
                     "status": "completed",
-                    "notes": "5年期滿，以市價出售"
+                    "notes": "3年正常期滿出售"
+                },
+                {
+                    "id": "GEO-2020-002",
+                    "plate": "RDB-8065",
+                    "model": "Mercedes-Benz GLC",
+                    "type": "Sedan",
+                    "purchaseDate": "2020-12-01",
+                    "saleDate": "2023-12-05",
+                    "purchasePrice": 2780095,
+                    "salePrice": 1790476,
+                    "totalRentalRevenue": 1956558,
+                    "totalOperatingCost": 306228,
+                    "totalProfit": 660711,
+                    "holdingPeriod": 3,
+                    "status": "completed",
+                    "notes": "3年正常期滿，高於市價出售"
                 },
                 {
                     "id": "GA-2019-005",
