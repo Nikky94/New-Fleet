@@ -318,24 +318,24 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚗 進階車隊營運績效報表</h1>
-            <p>10年期趨勢分析 | 多維度成本拆解 | 實時決策支持</p>
+            <h1>👮 天鷹保全車隊</h1>
+            <p>風險損益 | 管理對策</p>
         </div>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('overview')">📊 車隊總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 年度趨勢</button>
-            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 車輛分析</button>
-            <button class="tab-btn" onclick="switchTab('sold')">✅ 已出售車輛</button>
-            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約車輛</button>
-            <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+            <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
+            <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
+            <button class="tab-btn" onclick="switchTab('profitability')">💰 損益</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本</button>
         </div>
         
         <div class="content">
-            <!-- 車隊總覽 -->
+            <!-- 總覽 -->
             <div id="overview" class="tab-content active">
-                <h2 style="margin-bottom: 20px;">車隊整體現況</h2>
+                <h2 style="margin-bottom: 20px;">現況</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -389,9 +389,9 @@
                 </div>
             </div>
             
-            <!-- 年度趨勢 -->
+            <!-- 風險 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">10年期營運趨勢分析</h2>
+                <h2 style="margin-bottom: 20px;">用車習慣</h2>
                 
                 <div class="legend">
                     <div class="legend-item">
@@ -422,9 +422,9 @@
                 </div>
             </div>
             
-            <!-- 車輛分析 -->
+            <!-- 租用車輛 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">到期車輛分析</h2>
+                <h2 style="margin-bottom: 20px;">實行中車輛</h2>
                 
                 <div class="search-filter">
                     <input type="text" id="searchVehicle" placeholder="🔍 搜尋車牌 / 車型..." onkeyup="filterVehicles()">
@@ -468,12 +468,12 @@
                 </div>
             </div>
 
-            <!-- 已出售車輛 -->
+            <!-- 已出售 -->
             <div id="sold" class="tab-content">
                 <h2 style="margin-bottom: 20px;">已出售車輛明細</h2>
 
                 <div class="summary-box">
-                    <h3>已出售車輛統計摘要</h3>
+                    <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">已出售台數</div>
@@ -526,12 +526,12 @@
                 </div>
             </div>
 
-            <!-- 解約車輛 -->
+            <!-- 解約 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">中途解約車輛明細</h2>
+                <h2 style="margin-bottom: 20px;">中途解約</h2>
 
                 <div class="summary-box">
-                    <h3>解約車輛統計摘要</h3>
+                    <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">解約台數</div>
@@ -585,9 +585,9 @@
                 </div>
             </div>
             
-            <!-- 個別損益 -->
+            <!-- 損益 -->
             <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">個別車輛損益分析</h2>
+                <h2 style="margin-bottom: 20px;">車輛別</h2>
                 
                 <div class="chart-row">
                     <div class="chart-container">
@@ -603,9 +603,9 @@
                 </div>
             </div>
             
-            <!-- 成本結構 -->
+            <!-- 成本 -->
             <div id="costs" class="tab-content">
-                <h2 style="margin-bottom: 20px;">成本結構分析</h2>
+                <h2 style="margin-bottom: 20px;">圖表別</h2>
                 
                 <div class="chart-row">
                     <div class="chart-container">
@@ -632,8 +632,8 @@
         const fleetData = {
   "reportInfo": {
     "reportDate": "2026-02-27",
-    "reportTitle": "進階車隊營運績效報表",
-    "company": "GA Dept. - Fleet Management Division"
+    "reportTitle": "👮天鷹保全車隊",
+    "company": "JAM Dept. OALT"
   },
   "summary": {
     "totalVehicles": 30,
@@ -808,7 +808,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "高稼動率"
     },
     {
       "id": "HSR-23003",
@@ -823,7 +823,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "高稼動率"
     },
     {
       "id": "HSR-23004",
@@ -838,7 +838,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "高稼動率"
     },
     {
       "id": "HSR-23005",
@@ -853,7 +853,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "高稼動率"
     },
     {
       "id": "HSR-23006",
@@ -1527,10 +1527,10 @@
   ],
   "terminatedVehicles": [
     {
-      "id": "TERM-001",
+      "id": "HSR-001",
       "plate": "TR-9999",
-      "model": "Sienna",
-      "type": "MPV",
+      "model": "Toyota Yaris",
+      "type": "Sedan",
       "leaseStartDate": "2023-01-01",
       "terminationDate": "2025-02-01",
       "purchasePrice": 1500000,
@@ -1544,7 +1544,7 @@
       "notes": "已收取違約金結案"
     },
     {
-      "id": "TERM-002",
+      "id": "HSR-002",
       "plate": "TR-8888",
       "model": "Altis",
       "type": "Sedan",
@@ -1556,12 +1556,12 @@
       "totalOperatingCost": 200000,
       "totalProfit": -550000,
       "holdingPeriod": 1.0,
-      "terminationReason": "客戶破產",
+      "terminationReason": "事故全損",
       "status": "terminated",
       "notes": "車輛收回待售"
     },
     {
-      "id": "TERM-003",
+      "id": "HSR-003",
       "plate": "TR-7777",
       "model": "CR-V",
       "type": "SUV",
@@ -1573,12 +1573,12 @@
       "totalOperatingCost": 300000,
       "totalProfit": 400000,
       "holdingPeriod": 1.5,
-      "terminationReason": "合約轉讓",
+      "terminationReason": "事故全損",
       "status": "terminated",
       "notes": "手續費已結清"
     },
     {
-      "id": "TERM-004",
+      "id": "HSR-004",
       "plate": "TR-6666",
       "model": "Vios",
       "type": "Sedan",
@@ -1590,9 +1590,9 @@
       "totalOperatingCost": 200000,
       "totalProfit": 330000,
       "holdingPeriod": 2.5,
-      "terminationReason": "個人因素",
+      "terminationReason": "事故全損",
       "status": "terminated",
-      "notes": "正常結案"
+      "notes": "本金損益"
     }
   ],
   "costBreakdown": {
@@ -1654,9 +1654,9 @@
             new Chart(document.getElementById('statusChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['使用中', '閒置', '維修中', '中途解約', '已出售'],
+                    labels: ['使用中', '自購', '維修中', '中途解約', '已出售'],
                     datasets: [{
-                        data: [85, 12, 8, 10, 5],
+                        data: [29, 1, 0, 4, 28],
                         backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
                     }]
                 },
@@ -1666,10 +1666,10 @@
             new Chart(document.getElementById('typeChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Sedan', 'SUV', 'MPV', 'VAN', 'Track'],
+                    labels: ['Sedan', 'SUV', 'MPV'],
                     datasets: [{
-                        data: [40, 30, 25, 15, 10],
-                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe']
+                        data: [27, 1, 2],
+                        backgroundColor: ['#667eea', '#f093fb', '#00f2fe']
                     }]
                 },
                 options: chartConfig
@@ -1681,7 +1681,7 @@
                     labels: ['<1年', '1-3年', '3-5年', '>5年'],
                     datasets: [{
                         label: '車輛台數',
-                        data: [15, 45, 40, 20],
+                        data: [0, 28, 2, 0],
                         backgroundColor: '#667eea'
                     }]
                 },
@@ -1691,11 +1691,11 @@
             new Chart(document.getElementById('typePerformanceChart'), {
                 type: 'bar',
                 data: {
-                    labels: ['Sedan', 'SUV', 'MPV', 'VAN', 'Track'],
+                    labels: ['Sedan', 'SUV', 'MPV'],
                     datasets: [
                         {
                             label: '利潤率 (%)',
-                            data: [12.5, 15.8, 18.2, 10.5, 22.4],
+                            data: [12.5, 18.2, 10.5],
                             backgroundColor: '#667eea'
                         }
                     ]
@@ -2015,7 +2015,7 @@
             new Chart(document.getElementById('costStructureChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['購車', '稅金', '維修', '保費', '其他'],
+                    labels: ['購車', '稅金', '保修', '保險', '其他'],
                     datasets: [{
                         data: [45.0, 12.5, 18.5, 15.0, 9.0],
                         backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#868e96']
