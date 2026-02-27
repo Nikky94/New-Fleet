@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>👮天鷹保全🚙</title>
+    <title>👮天鷹保全車隊</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     <style>
         * {
@@ -318,14 +318,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>👮天鷹保全🚙</h1>
+            <h1>👮天鷹保全車隊</h1>
             <p></p>
         </div>
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
             <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
-            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 承租</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">🧮 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
             <button class="tab-btn" onclick="switchTab('profitability')">💰 損益</button>
@@ -349,7 +349,7 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>承租</h3>
+                        <h3>未到期</h3>
                         <div class="value" id="activeVehicles">29</div>
                         <div class="unit">台</div>
                     </div>
@@ -359,13 +359,13 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>出售</h3>
+                        <h3>已出售</h3>
                         <div class="value" id="soldVehicles">28</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>解約</h3>
-                        <div class="value" id="terminatedVehicles">5</div>
+                        <h3>異常</h3>
+                        <div class="value" id="terminatedVehicles">4</div>
                         <div class="unit">台</div>
                     </div>
                 </div>
