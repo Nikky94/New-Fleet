@@ -319,7 +319,7 @@
     <div class="container">
         <div class="header">
             <h1>👮 天鷹保全車隊</h1>
-            <p>風險損益 | 管理對策</p>
+            <p> 績效管理報表 </p>
         </div>
         
         <div class="tabs">
@@ -327,9 +327,9 @@
             <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
-            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
-            <button class="tab-btn" onclick="switchTab('profitability')">💰 損益</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
+            <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
         </div>
         
         <div class="content">
@@ -339,17 +339,17 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>總車輛數</h3>
+                        <h3>保有車</h3>
                         <div class="value" id="totalVehicles">120</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>使用中</h3>
+                        <h3>租用中</h3>
                         <div class="value" id="activeVehicles">85</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>閒置</h3>
+                        <h3>自購車</h3>
                         <div class="value" id="idleVehicles">12</div>
                         <div class="unit">台</div>
                     </div>
@@ -364,7 +364,7 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>中途解約</h3>
+                        <h3>已解約</h3>
                         <div class="value" id="terminatedVehicles">10</div>
                         <div class="unit">台</div>
                     </div>
@@ -424,7 +424,7 @@
             
             <!-- 租用車輛 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">實行中車輛</h2>
+                <h2 style="margin-bottom: 20px;">實行中</h2>
                 
                 <div class="search-filter">
                     <input type="text" id="searchVehicle" placeholder="🔍 搜尋車牌 / 車型..." onkeyup="filterVehicles()">
@@ -449,8 +449,8 @@
                     <table id="vehicleTable">
                         <thead>
                             <tr>
-                                <th>車輛ID</th>
-                                <th>車牌</th>
+                                <th>編碼</th>
+                                <th>車號</th>
                                 <th>車型</th>
                                 <th>到期日</th>
                                 <th>收益</th>
@@ -470,25 +470,25 @@
 
             <!-- 已出售 -->
             <div id="sold" class="tab-content">
-                <h2 style="margin-bottom: 20px;">已出售車輛明細</h2>
+                <h2 style="margin-bottom: 20px;">結案明細</h2>
 
                 <div class="summary-box">
                     <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
-                            <div class="label">已出售台數</div>
+                            <div class="label">台數</div>
                             <div class="value" id="soldCount">5</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總購車成本</div>
+                            <div class="label">購車成本</div>
                             <div class="value" id="soldTotalPurchase">$5.7M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總出售收入</div>
+                            <div class="label">拍賣收入</div>
                             <div class="value" id="soldTotalSale">$2.65M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">租金收入</div>
+                            <div class="label">租金收入(含其他)</div>
                             <div class="value" id="soldTotalRental">$22.0M</div>
                         </div>
                         <div class="summary-item">
@@ -496,7 +496,7 @@
                             <div class="value" id="soldTotalCost">$15.15M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總損益</div>
+                            <div class="label">損益累計</div>
                             <div class="value profit-positive" id="soldTotalProfit">$4.95M</div>
                         </div>
                     </div>
@@ -506,11 +506,11 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>車輛ID</th>
-                                <th>車牌</th>
+                                <th>編碼</th>
+                                <th>車號</th>
                                 <th>車型</th>
-                                <th>購入日期</th>
-                                <th>出售日期</th>
+                                <th>購入日</th>
+                                <th>出售日</th>
                                 <th>購車價</th>
                                 <th>出售價</th>
                                 <th>租金收入</th>
@@ -534,7 +534,7 @@
                     <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
-                            <div class="label">解約台數</div>
+                            <div class="label">台數</div>
                             <div class="value" id="termCount">5</div>
                         </div>
                         <div class="summary-item">
@@ -546,7 +546,7 @@
                             <div class="value" id="termTotalRental">$9.75M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">違約金收入</div>
+                            <div class="label">解約金收入</div>
                             <div class="value" id="termTotalFee">$0.87M</div>
                         </div>
                         <div class="summary-item">
@@ -554,7 +554,7 @@
                             <div class="value" id="termTotalCost">$7.65M</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總損益</div>
+                            <div class="label">損益累計</div>
                             <div class="value profit-positive" id="termTotalProfit">$3.27M</div>
                         </div>
                     </div>
@@ -564,16 +564,16 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>車輛ID</th>
-                                <th>車牌</th>
+                                <th>編碼</th>
+                                <th>車號</th>
                                 <th>車型</th>
-                                <th>租賃開始</th>
-                                <th>解約日期</th>
+                                <th>起租日</th>
+                                <th>解約日</th>
                                 <th>購車價</th>
                                 <th>租金收入</th>
-                                <th>違約金</th>
+                                <th>解約金</th>
                                 <th>營運成本</th>
-                                <th>總損益</th>
+                                <th>損益累計</th>
                                 <th>持有年限</th>
                                 <th>解約原因</th>
                                 <th>備註</th>
@@ -623,7 +623,7 @@
         </div>
         
         <div class="footer">
-            <p>進階車隊營運績效報表 | 報告日期：<span id="reportDate">2026-02-25</span> | GA Dept. - Fleet Management Division</p>
+            <p>車隊營運績效報表 | <span id="reportDate">2026-02-25</span> | JAM Dept. OALT</p>
         </div>
     </div>
     
@@ -748,7 +748,7 @@
       "margin": 7.8,
       "utilization": 78.5,
       "status": "critical",
-      "recommendation": "高收益車輛，建議續約或轉售高價"
+      "recommendation": "已使用五年，建議汰換新車"
     },
     {
       "id": "GA-21002",
@@ -793,7 +793,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "86000km高收益車輛，建議續約或轉售高價"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23002",
@@ -808,7 +808,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高稼動率"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23003",
@@ -823,7 +823,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高稼動率"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23004",
@@ -838,7 +838,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高稼動率"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23005",
@@ -853,7 +853,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高稼動率"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23006",
@@ -868,7 +868,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23007",
@@ -883,7 +883,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23008",
@@ -898,7 +898,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23009",
@@ -913,7 +913,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23010",
@@ -928,7 +928,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23011",
@@ -943,7 +943,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23012",
@@ -958,7 +958,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23013",
@@ -973,7 +973,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23014",
@@ -988,7 +988,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23015",
@@ -1003,7 +1003,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23016",
@@ -1018,7 +1018,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23017",
@@ -1033,11 +1033,11 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23018",
-      "plate": "RFA-8226",
+      "plate": "RFA-8230",
       "make": "Toyota",
       "model": "Vios",
       "type": "Sedan",
@@ -1048,11 +1048,11 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23019",
-      "plate": "RFA-8227",
+      "plate": "RFA-8232",
       "make": "Toyota",
       "model": "Vios",
       "type": "Sedan",
@@ -1063,11 +1063,11 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23020",
-      "plate": "RFA-8229",
+      "plate": "RFA-8237",
       "make": "Toyota",
       "model": "Vios",
       "type": "Sedan",
@@ -1078,7 +1078,7 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23021",
@@ -1093,25 +1093,10 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
       "id": "HSR-23022",
-      "plate": "RFA-8231",
-      "make": "Toyota",
-      "model": "Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
-    },
-    {
-      "id": "HSR-23023",
       "plate": "RFA-8232",
       "make": "Toyota",
       "model": "Vios",
@@ -1123,25 +1108,10 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
-      "id": "HSR-23024",
-      "plate": "RFA-8233",
-      "make": "Toyota",
-      "model": "Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
-    },
-    {
-      "id": "HSR-23025",
+      "id": "HSR-23023",
       "plate": "RFA-8235",
       "make": "Toyota",
       "model": "Vios",
@@ -1153,22 +1123,67 @@
       "margin": 20.8,
       "utilization": 55.3,
       "status": "critical",
-      "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+      "recommendation": "巡邏車高稼動,如期更新"
     },
     {
-      "id": "GA-26029",
-      "plate": "SELF-001",
+      "id": "HSR-23024",
+      "plate": "RFA-8237",
       "make": "Toyota",
-      "model": "Altis",
+      "model": "Vios",
       "type": "Sedan",
-      "leaseEnd": "2030-12-31",
-      "revenue": 0,
-      "cost": 750000,
-      "profit": -750000,
-      "margin": 0,
-      "utilization": 0,
-      "status": "normal",
-      "recommendation": "自購公務車，不計收益"
+      "leaseEnd": "2026-04-30",
+      "revenue": 768000,
+      "cost": 919000,
+      "profit": 38000,
+      "margin": 20.8,
+      "utilization": 55.3,
+      "status": "critical",
+      "recommendation": "巡邏車高稼動,如期更新"
+    },
+    {
+      "id": "HSR-23025",
+      "plate": "RFA-8239",
+      "make": "Toyota",
+      "model": "Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 768000,
+      "cost": 919000,
+      "profit": 38000,
+      "margin": 20.8,
+      "utilization": 55.3,
+      "status": "critical",
+      "recommendation": "巡邏車高稼動,如期更新"
+    },
+    {
+      "id": "HSR-23026",
+      "plate": "RFA-8250",
+      "make": "Toyota",
+      "model": "Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 768000,
+      "cost": 919000,
+      "profit": 38000,
+      "margin": 20.8,
+      "utilization": 55.3,
+      "status": "critical",
+      "recommendation": "巡邏車高稼動,如期更新"
+    },
+    {
+      "id": "HSR-23027",
+      "plate": "RFA-8251",
+      "make": "Toyota",
+      "model": "Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 768000,
+      "cost": 919000,
+      "profit": 38000,
+      "margin": 20.8,
+      "utilization": 55.3,
+      "status": "critical",
+      "recommendation": "巡邏車高稼動,如期更新"    
     }
   ],
   "soldVehicles": [
