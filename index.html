@@ -323,24 +323,24 @@
         </div>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('overview')">📊 車隊總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 年度趨勢</button>
+            <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 車輛分析</button>
-            <button class="tab-btn" onclick="switchTab('sold')">✅ 已出售車輛</button>
-            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約車輛</button>
+            <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
             <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本</button>
         </div>
         
         <div class="content">
-            <!-- 車隊總覽 -->
+            <!-- 總覽 -->
             <div id="overview" class="tab-content active">
-                <h2 style="margin-bottom: 20px;">車隊整體現況</h2>
+                <h2 style="margin-bottom: 20px;">現況</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>總車輛數</h3>
-                        <div class="value" id="totalVehicles">120</div>
+                        <h3>保有數</h3>
+                        <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
@@ -349,7 +349,7 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>閒置</h3>
+                        <h3>自購</h3>
                         <div class="value" id="idleVehicles">12</div>
                         <div class="unit">台</div>
                     </div>
@@ -473,7 +473,7 @@
                 <h2 style="margin-bottom: 20px;">已出售車輛明細</h2>
 
                 <div class="summary-box">
-                    <h3>已出售車輛統計摘要</h3>
+                    <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">已出售台數</div>
@@ -631,29 +631,27 @@
         // 數據載入
         const fleetData = {
             "reportDate": "2026-02-25",
-            "reportTitle": "進階車隊營運績效報表 (10年期趨勢分析)",
+            "reportTitle": "車隊營運績效報表 ",
             "company": "GA Dept. - Fleet Management Division",
             "summary": {
-                "totalVehicles": 120,
+                "totalVehicles": 30,
                 "status": {
-                    "active": 85,
-                    "idle": 12,
-                    "maintenance": 8,
-                    "terminated": 10,
-                    "sold": 5
+                    "active": 29,
+                    "idle": 1,
+                    "maintenance": 0,
+                    "terminated": 4,
+                    "sold": 28
                 },
                 "vehicleTypes": {
-                    "Sedan": 40,
-                    "SUV": 30,
-                    "MPV": 25,
-                    "VAN": 15,
-                    "Track": 10
+                    "Sedan": 26,
+                    "SUV": 1,
+                    "MPV": 2,
                 },
                 "fleetAge": {
-                    "under1Year": 15,
-                    "1to3Years": 45,
-                    "3to5Years": 40,
-                    "over5Years": 20
+                    "under1Year": 0,
+                    "1to3Years": 27,
+                    "3to5Years": 2,
+                    "over5Years": 0
                 }
             },
             "yearlyTrend": [
@@ -683,11 +681,415 @@
                 {"type": "Track", "count": 10, "utilization": 94.5, "profitMargin": 22.4, "avgCost": 2550000}
             ],
             "expiringVehicles": [
+                    "id": "GA-21001",
+                    "plate": "RDH-8065",
+                    "model": "Luxgen M7",
+                    "type": "MPV",
+                    "leaseEnd": "2026-09-18",
+                    "revenue": 1033000,
+                    "cost": 796000,
+                    "profit": 285000,
+                    "margin": 7.8,
+                    "utilization": 78.5,
+                    "status": "critical",
+                    "recommendation": "高收益車輛，建議續約或轉售高價"
+                },
                 {
-                    "id": "GA-2021-001",
-                    "plate": "ABC-8888",
-                    "model": "Toyota Camry",
+                    "id": "GA-21002",
+                    "plate": "RDQ-0865",
+                    "model": "Honda CR-V",
+                    "type": "SUV",
+                    "leaseEnd": "2027-03-30",
+                    "revenue": 1001000,
+                    "cost": 1254000,
+                    "profit": 373000,
+                    "margin": 20.8,
+                    "utilization": 82.1,
+                    "status": "critical",
+                    "recommendation": "86000km高收益車輛，建議續約或轉售高價"
+                },
+                {
+                    "id": "CEO-22001",
+                    "plate": "RFD-9786",
+                    "model": "Toyota Sienna",
+                    "type": "MPV",
+                    "leaseEnd": "2026-11-30",
+                    "revenue": 2100000,
+                    "cost": 3089000,
+                    "profit": 373000,
+                    "margin": 20.8,
+                    "utilization": 88.3,
+                    "status": "critical",
+                    "recommendation": "86000km高收益車輛，建議續約或轉售高價"
+                },
+                {
+                    "id": "HSR-23001",
+                    "plate": "RFA-8173",
+                    "model": "Toyota Vios",
                     "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "86000km高收益車輛，建議續約或轉售高價"
+                },
+                {
+                    "id": "HSR-23002",
+                    "plate": "RFA-8175",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23003",
+                    "plate": "RFA-8187",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23004",
+                    "plate": "RFA-8190",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23005",
+                    "plate": "RFA-8192",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23006",
+                    "plate": "RFA-8193",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23007",
+                    "plate": "RFA-8197",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23008",
+                    "plate": "RFA-8201",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23009",
+                    "plate": "RFA-8202",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23010",
+                    "plate": "RFA-8203",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23011",
+                    "plate": "RFA-8205",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23012",
+                    "plate": "RFA-8210",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23013",
+                    "plate": "RFA-8211",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23014",
+                    "plate": "RFA-8215",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23015",
+                    "plate": "RFA-8219",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23016",
+                    "plate": "RFA-8223",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23017",
+                    "plate": "RFA-8225",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                     "id": "HSR-23018",
+                    "plate": "RFA-8230",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 { 
+                    "id": "HSR-23019",
+                    "plate": "RFA-8232",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 { 
+                    "id": "HSR-23020",
+                    "plate": "RFA-8235",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                },
+                {
+                    "id": "HSR-23021",
+                    "plate": "RFA-8235",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                },
+                {
+                    "id": "HSR-23022",
+                    "plate": "RFA-8239",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 },
+                 {
+                    "id": "HSR-23023",
+                    "plate": "RFA-8250",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                  },
+                  {  
+                    "id": "HSR-23024",
+                    "plate": "RFA-8251",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                  },
+                  {  
+                    "id": "HSR-23025",
+                    "plate": "RFA-8252",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                  },
+                  {  
+                    "id": "HSR-23026",
+                    "plate": "RFQ-9715",
+                    "model": "Toyota Vios",
+                    "type": "Sedan",
+                    "leaseEnd": "2026-04-30",
+                    "revenue": 768000,
+                    "cost": 919000,
+                    "profit": 38000,
+                    "margin": 20.8,
+                    "utilization": 55.3,
+                    "status": "critical",
+                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
+                 
+                    "id": "GA-001",
+                    "plate": "RDH-8065",
+                    "model": "Luxgen M7",
+                    "type": "MPV",
                     "leaseEnd": "2026-03-15",
                     "revenue": 1200000,
                     "cost": 950000,
@@ -695,63 +1097,7 @@
                     "margin": 20.8,
                     "utilization": 88.5,
                     "status": "critical",
-                    "recommendation": "高收益車輛，建議續約或轉售高價"
-                },
-                {
-                    "id": "CEO-001",
-                    "plate": "BOSS-1",
-                    "model": "Mercedes-Benz S-Class",
-                    "type": "Sedan",
-                    "leaseEnd": "2026-06-01",
-                    "revenue": 4500000,
-                    "cost": 4200000,
-                    "profit": 300000,
-                    "margin": 6.7,
-                    "utilization": 65.0,
-                    "status": "warning",
-                    "recommendation": "高階座車，維護成本偏高，評估換購新車"
-                },
-                {
-                    "id": "HSR-005",
-                    "plate": "HSR-5566",
-                    "model": "VW Multivan",
-                    "type": "MPV",
-                    "leaseEnd": "2026-08-20",
-                    "revenue": 2800000,
-                    "cost": 2100000,
-                    "profit": 700000,
-                    "margin": 25.0,
-                    "utilization": 95.2,
-                    "status": "normal",
-                    "recommendation": "高鐵接駁主力，高稼動率，建議續約"
-                },
-                {
-                    "id": "TRK-002",
-                    "plate": "TRK-1234",
-                    "model": "Isuzu F-Series",
-                    "type": "Track",
-                    "leaseEnd": "2027-02-15",
-                    "revenue": 5500000,
-                    "cost": 4100000,
-                    "profit": 1400000,
-                    "margin": 25.5,
-                    "utilization": 92.0,
-                    "status": "normal",
-                    "recommendation": "穩定收益貨車，按計畫保養"
-                },
-                {
-                    "id": "VAN-012",
-                    "plate": "VAN-9900",
-                    "model": "Ford Transit",
-                    "type": "VAN",
-                    "leaseEnd": "2026-04-10",
-                    "revenue": 1500000,
-                    "cost": 1550000,
-                    "profit": -50000,
-                    "margin": -3.3,
-                    "utilization": 72.0,
-                    "status": "critical",
-                    "recommendation": "虧損車輛，租約期滿即刻處分"
+                    "recommendation": "高收益車輛，建議續約或轉售高價"               
                 }
             ],
             "soldVehicles": [
