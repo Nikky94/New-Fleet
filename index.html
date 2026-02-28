@@ -319,7 +319,7 @@
     <div class="container">
         <div class="header">
             <h1>👮 天鷹保全</h1>
-            <p>    車隊績效管理報表 </p>
+            <p>       車隊績效管理報表 </p>
         </div>
         
         <div class="tabs">
@@ -477,7 +477,7 @@
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">台數</div>
-                            <div class="value" id="soldCount">5</div>
+                            <div class="value" id="soldCount">27</div>
                         </div>
                         <div class="summary-item">
                             <div class="label">購車成本</div>
@@ -535,7 +535,7 @@
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">台數</div>
-                            <div class="value" id="termCount">5</div>
+                            <div class="value" id="termCount">4</div>
                         </div>
                         <div class="summary-item">
                             <div class="label">購車成本</div>
@@ -623,7 +623,7 @@
         </div>
         
         <div class="footer">
-            <p>SEMAIL FMR | <span id="reportDate">2026-02-25</span> | OALT JBD Dept.</p>
+            <p>SEMAIL FMR | <span id="reportDate">"2026-02-28"</span> | OALT JBD Dept.</p>
         </div>
     </div>
     
@@ -631,7 +631,7 @@
         // 數據載入
         const fleetData = {
   "reportInfo": {
-    "reportDate": "2026-02-27",
+    "reportDate": "2026-02-28",
     "reportTitle": "👮天鷹保全車隊報表",
     "company": "OALT JBD Dept. "
   },
@@ -639,7 +639,7 @@
     "totalVehicles": 30,
     "status": {
       "active": 29,
-      "selfOwned": 1,
+      "idle": 1,
       "sold": 27,
       "terminated": 4
     },
@@ -1708,7 +1708,7 @@
                 data: {
                     labels: ['使用中', '自購', '維修中', '中途解約', '已出售'],
                     datasets: [{
-                        data: [29, 1, 0, 4, 28],
+                        data: [29, 1, 0, 4, 27],
                         backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
                     }]
                 },
