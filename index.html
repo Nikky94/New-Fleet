@@ -1580,7 +1580,7 @@
         document.getElementById('reportDate').textContent = fleetData.reportDate;
         document.getElementById('totalVehicles').textContent = fleetData.summary.totalVehicles;
         document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
-        document.getElementById('idleVehicles').textContent = fleetData.summary.status.idle;
+        document.getElementById('selfOwnedVehicles').textContent = fleetData.summary.status.selfOwned;
         document.getElementById('maintenanceVehicles').textContent = fleetData.summary.status.maintenance;
         document.getElementById('soldVehicles').textContent = fleetData.summary.status.sold;
         document.getElementById('terminatedVehicles').textContent = fleetData.summary.status.terminated;
@@ -1626,7 +1626,7 @@
             new Chart(document.getElementById('statusChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['使用中', '自購', '維修中', '中途解約', '已出售'],
+                    labels: ['租用中', '自購車', '維修中', '解約', '出售'],
                     datasets: [{
                         data: [29, 1, 0, 4, 28],
                         backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
