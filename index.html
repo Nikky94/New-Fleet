@@ -352,12 +352,7 @@
                         <h3>自購車</h3>
                         <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
-                    </div>
-                    <div class="stat-card">
-                        <h3>維修中</h3>
-                        <div class="value" id="maintenanceVehicles">0</div>
-                        <div class="unit">台</div>
-                    </div>
+                    </div>                    
                     <div class="stat-card">
                         <h3>出售車</h3>
                         <div class="value" id="soldVehicles">28</div>
@@ -623,7 +618,7 @@
         </div>
         
         <div class="footer">
-            <p>SEMAIL Fleet Management Report | 日期:<span id="reportDate">2026-02-28</span> | OALT JAM Dept.Nikky Wu</p>
+            <p>SEMAIL FMR | Date:<span id="reportDate">2026-02-28</span> | OALT JAM Dept.Nikky Wu</p>
         </div>
     </div>
     
@@ -631,7 +626,7 @@
         // 數據載入
         const fleetData = {
   "reportInfo": {
-    "reportDate": "2026-02-27",
+    "reportDate": "2026-02-2",
     "reportTitle": "👮天鷹保全車隊報表",
     "company": "OALT JAM Dept. "
   },
@@ -1580,8 +1575,7 @@
         document.getElementById('reportDate').textContent = fleetData.reportDate;
         document.getElementById('totalVehicles').textContent = fleetData.summary.totalVehicles;
         document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
-        document.getElementById('idleVehicles').textContent = fleetData.summary.status.idle;
-        document.getElementById('maintenanceVehicles').textContent = fleetData.summary.status.maintenance;
+        document.getElementById('selfOwnedVehicles').textContent = fleetData.summary.status.selfOwned;
         document.getElementById('soldVehicles').textContent = fleetData.summary.status.sold;
         document.getElementById('terminatedVehicles').textContent = fleetData.summary.status.terminated;
         
@@ -1626,10 +1620,10 @@
             new Chart(document.getElementById('statusChart'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['使用中', '自購', '維修中', '中途解約', '已出售'],
+                    labels: ['租用中', '自購車', '解約異常', '已出售'],
                     datasets: [{
-                        data: [29, 1, 0, 4, 28],
-                        backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
+                        data: [29, 1, 4, 28],
+                        backgroundColor: ['#51cf66', '#ffd93d', '#ff6b6b', '#868e96']
                     }]
                 },
                 options: chartConfig
@@ -1640,7 +1634,7 @@
                 data: {
                     labels: ['Sedan', 'SUV', 'MPV'],
                     datasets: [{
-                        data: [27, 1, 2],
+                        data: [27, 2, 2],
                         backgroundColor: ['#667eea', '#f093fb', '#00f2fe']
                     }]
                 },
