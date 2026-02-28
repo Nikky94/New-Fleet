@@ -319,7 +319,7 @@
     <div class="container">
         <div class="header">
             <h1>👮 天鷹保全</h1>
-            <p>       車隊績效管理報表 </p>
+            <p> 車隊績效評估報表OALT JBD Dept. 2026.2.28</p>
         </div>
         
         <div class="tabs">
@@ -354,108 +354,58 @@
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>維修</h3>
-                        <div class="value" id="maintenanceVehicles">0</div>
-                        <div class="unit">台</div>
+                        <h3>月均收益</h3>
+                        <div class="value" id="avgMonthlyRevenue">24,695</div>
+                        <div class="unit">元/台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>出售</h3>
-                        <div class="value" id="soldVehicles">27</div>
-                        <div class="unit">台</div>
+                        <h3>月均支出</h3>
+                        <div class="value" id="avgMonthlyExpense">7,722</div>
+                        <div class="unit">元/台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>解約</h3>
-                        <div class="value" id="terminatedVehicles">4</div>
-                        <div class="unit">台</div>
+                        <h3>使用率</h3>
+                        <div class="value" id="utilizationRate">96.7</div>
+                        <div class="unit">%</div>
                     </div>
                 </div>
-                
+
                 <div class="chart-row">
+                    <div class="chart-container">
+                        <canvas id="vehicleTypeChart"></canvas>
+                    </div>
                     <div class="chart-container">
                         <canvas id="statusChart"></canvas>
                     </div>
-                    <div class="chart-container">
-                        <canvas id="typeChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="chart-row">
-                    <div class="chart-container">
-                        <canvas id="ageChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="typePerformanceChart"></canvas>
-                    </div>
                 </div>
             </div>
-            
+
             <!-- 風險 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">用車習慣</h2>
-                
-                <div class="legend">
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: #667eea;"></div>
-                        <span>過去5年 (實績)</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background: #ffd93d;"></div>
-                        <span>未來5年 (預測)</span>
-                    </div>
-                </div>
-                
-                <div class="chart-container">
-                    <canvas id="revenueChart"></canvas>
-                </div>
-                
-                <div class="chart-row">
-                    <div class="chart-container">
-                        <canvas id="claimRateChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="utilizationChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="chart-container">
-                    <canvas id="profitTrendChart"></canvas>
+                <h2 style="margin-bottom: 20px;">往來案件（過去5年實績 + 未來5年預測）</h2>
+                <div class="chart-container" style="height: 500px;">
+                    <canvas id="trendChart"></canvas>
                 </div>
             </div>
-            
-            <!-- 租用車輛 -->
+
+            <!-- 使用中車輛 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">實行中</h2>
-                
+                <h2 style="margin-bottom: 20px;">使用中車輛明細</h2>
                 <div class="search-filter">
-                    <input type="text" id="searchVehicle" placeholder="🔍 搜尋車牌 / 車型..." onkeyup="filterVehicles()">
-                    <select id="statusFilter" onchange="filterVehicles()">
-                        <option value="">全部狀態</option>
-                        <option value="critical">🔴 緊急</option>
-                        <option value="warning">🟡 警示</option>
-                        <option value="normal">🟢 一般</option>
-                    </select>
+                    <input type="text" id="vehicleSearch" placeholder="搜尋車牌或編號..." onkeyup="filterVehicleTable()">
                 </div>
-                
-                <div class="chart-row">
-                    <div class="chart-container">
-                        <canvas id="expiryTimelineChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="expiryProfitChart"></canvas>
-                    </div>
-                </div>
-                
                 <div class="table-container">
                     <table id="vehicleTable">
                         <thead>
                             <tr>
-                                <th>編碼</th>
-                                <th>車號</th>
+                                <th>車輛編號</th>
+                                <th>車牌</th>
                                 <th>車型</th>
-                                <th>到期日</th>
-                                <th>收益</th>
-                                <th>成本</th>
-                                <th>淨利</th>
+                                <th>類型</th>
+                                <th>租約到期</th>
+                                <th>年收益</th>
+                                <th>年成本</th>
+                                <th>年利潤</th>
                                 <th>利潤率</th>
                                 <th>使用率</th>
                                 <th>狀態</th>
@@ -468,55 +418,53 @@
                 </div>
             </div>
 
-            <!-- 已出售 -->
+            <!-- 已出售車輛 -->
             <div id="sold" class="tab-content">
-                <h2 style="margin-bottom: 20px;">結案明細</h2>
-
+                <h2 style="margin-bottom: 20px;">已出售車輛統計</h2>
                 <div class="summary-box">
                     <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
-                            <div class="label">台數</div>
+                            <div class="label">已出售台數</div>
                             <div class="value" id="soldCount">27</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">購車成本</div>
-                            <div class="value" id="soldTotalPurchase">$5.7M</div>
+                            <div class="label">總購入成本</div>
+                            <div class="value" id="soldTotalPurchase">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">拍賣收入</div>
-                            <div class="value" id="soldTotalSale">$2.65M</div>
+                            <div class="label">總出售收入</div>
+                            <div class="value" id="soldTotalSale">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">租金收入(含其他)</div>
-                            <div class="value" id="soldTotalRental">$22.0M</div>
+                            <div class="label">總租金收入</div>
+                            <div class="value" id="soldTotalRental">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">營運成本</div>
-                            <div class="value" id="soldTotalCost">$15.15M</div>
+                            <div class="label">總營運成本</div>
+                            <div class="value" id="soldTotalCost">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">損益累計</div>
-                            <div class="value profit-positive" id="soldTotalProfit">$4.95M</div>
+                            <div class="label">總損益</div>
+                            <div class="value" id="soldTotalProfit">0</div>
                         </div>
                     </div>
                 </div>
-
+                <div class="search-filter">
+                    <input type="text" id="soldSearch" placeholder="搜尋車牌或編號..." onkeyup="filterSoldTable()">
+                </div>
                 <div class="table-container">
-                    <table>
+                    <table id="soldTable">
                         <thead>
                             <tr>
-                                <th>編碼</th>
-                                <th>車號</th>
+                                <th>車輛編號</th>
+                                <th>車牌</th>
                                 <th>車型</th>
-                                <th>購入日</th>
-                                <th>出售日</th>
-                                <th>購車價</th>
+                                <th>購入價</th>
                                 <th>出售價</th>
                                 <th>租金收入</th>
                                 <th>營運成本</th>
                                 <th>總損益</th>
-                                <th>持有年限</th>
                                 <th>備註</th>
                             </tr>
                         </thead>
@@ -526,57 +474,49 @@
                 </div>
             </div>
 
-            <!-- 解約 -->
+            <!-- 解約車輛 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">中途解約</h2>
-
+                <h2 style="margin-bottom: 20px;">解約車輛統計</h2>
                 <div class="summary-box">
-                    <h3>摘要</h3>
+                    <h3>解約統計摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
-                            <div class="label">台數</div>
-                            <div class="value" id="termCount">4</div>
-                        </div>
-                        <div class="summary-item">
-                            <div class="label">購車成本</div>
-                            <div class="value" id="termTotalPurchase">$5.9M</div>
+                            <div class="label">解約台數</div>
+                            <div class="value" id="terminatedCount">4</div>
                         </div>
                         <div class="summary-item">
                             <div class="label">租金收入</div>
-                            <div class="value" id="termTotalRental">$9.75M</div>
+                            <div class="value" id="terminatedTotalRental">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">解約金收入</div>
-                            <div class="value" id="termTotalFee">$0.87M</div>
+                            <div class="label">違約金收入</div>
+                            <div class="value" id="terminatedTotalPenalty">0</div>
                         </div>
                         <div class="summary-item">
                             <div class="label">營運成本</div>
-                            <div class="value" id="termTotalCost">$7.65M</div>
+                            <div class="value" id="terminatedTotalCost">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">損益累計</div>
-                            <div class="value profit-positive" id="termTotalProfit">$3.27M</div>
+                            <div class="label">總損益</div>
+                            <div class="value" id="terminatedTotalProfit">0</div>
                         </div>
                     </div>
                 </div>
-
+                <div class="search-filter">
+                    <input type="text" id="terminatedSearch" placeholder="搜尋車牌或編號..." onkeyup="filterTerminatedTable()">
+                </div>
                 <div class="table-container">
-                    <table>
+                    <table id="terminatedTable">
                         <thead>
                             <tr>
-                                <th>編碼</th>
-                                <th>車號</th>
+                                <th>車輛編號</th>
+                                <th>車牌</th>
                                 <th>車型</th>
-                                <th>起租日</th>
-                                <th>解約日</th>
-                                <th>購車價</th>
                                 <th>租金收入</th>
-                                <th>解約金</th>
+                                <th>違約金</th>
                                 <th>營運成本</th>
-                                <th>損益累計</th>
-                                <th>持有年限</th>
+                                <th>總損益</th>
                                 <th>解約原因</th>
-                                <th>備註</th>
                             </tr>
                         </thead>
                         <tbody id="terminatedTableBody">
@@ -584,56 +524,41 @@
                     </table>
                 </div>
             </div>
-            
-            <!-- 損益 -->
+
+            <!-- 個別損益 -->
             <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">車輛別</h2>
-                
+                <h2 style="margin-bottom: 20px;">個別損益分析</h2>
                 <div class="chart-row">
                     <div class="chart-container">
-                        <canvas id="vehicleComparisonChart"></canvas>
+                        <canvas id="profitChart"></canvas>
                     </div>
                     <div class="chart-container">
-                        <canvas id="marginRankChart"></canvas>
+                        <canvas id="marginChart"></canvas>
                     </div>
-                </div>
-                
-                <div class="chart-container">
-                    <canvas id="scatterChart"></canvas>
                 </div>
             </div>
-            
-            <!-- 成本 -->
+
+            <!-- 成本結構 -->
             <div id="costs" class="tab-content">
-                <h2 style="margin-bottom: 20px;">圖表別</h2>
-                
-                <div class="chart-row">
-                    <div class="chart-container">
-                        <canvas id="costStructureChart"></canvas>
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="typeMarginChart"></canvas>
-                    </div>
-                </div>
-                
+                <h2 style="margin-bottom: 20px;">成本結構分析</h2>
                 <div class="chart-container">
-                    <canvas id="costStackChart"></canvas>
+                    <canvas id="costChart"></canvas>
                 </div>
             </div>
         </div>
         
         <div class="footer">
-            <p>SEMAIL FMR | <span id="reportDate">"2026-02-28"</span> | OALT JBD Dept.</p>
+            <p>進階車隊營運績效報表 | 最後更新：2026-02-28 | JBD Dept. Fleet Management Division</p>
         </div>
     </div>
-    
+
     <script>
-        // 數據載入
+        // ===== 數據核心區 (完整的真實車隊數據) =====
         const fleetData = {
   "reportInfo": {
     "reportDate": "2026-02-28",
-    "reportTitle": "👮天鷹保全車隊報表",
-    "company": "OALT JBD Dept. "
+    "reportTitle": "👮車隊報表",
+    "company": " JBD Dept. "
   },
   "summary": {
     "totalVehicles": 30,
@@ -653,999 +578,82 @@
     "MPV": 3
   },
   "yearlyTrend": [
-    {
-      "year": 2021,
-      "revenue": 5774563,
-      "expense": 3934790,
-      "profit": 1839773,
-      "claimRate": 0.42,
-      "utilization": 92.5
-    },
-    {
-      "year": 2022,
-      "revenue": 7085577,
-      "expense": 4077142,
-      "profit": 3008435,
-      "claimRate": 0.44,
-      "utilization": 94.1
-    },
-    {
-      "year": 2023,
-      "revenue": 8744272,
-      "expense": 3694609,
-      "profit": 5049663,
-      "claimRate": 1.44,
-      "utilization": 95.8
-    },
-    {
-      "year": 2024,
-      "revenue": 9306029,
-      "expense": 3202077,
-      "profit": 6103952,
-      "claimRate": 0.74,
-      "utilization": 96.2
-    },
-    {
-      "year": 2025,
-      "revenue": 8595524,
-      "expense": 3158363,
-      "profit": 5437161,
-      "claimRate": 0.67,
-      "utilization": 96.7
-    },
-    {
-      "year": 2026,
-      "revenue": 8854422,
-      "expense": 2858841,
-      "profit": 5234191,
-      "claimRate": 0.69,
-      "utilization": 96.7
-    },
-    {
-      "year": 2027,
-      "revenue": 8499354,
-      "expense": 3026021,
-      "profit": 5473333,
-      "claimRate": 0.64,
-      "utilization": 100
-    },
-    {
-      "year": 2028,
-      "revenue": 9533640,
-      "expense": 4000000,
-      "profit": 5533640,
-      "claimRate": 0.6,
-      "utilization": 100
-    },
-    {
-      "year": 2029,
-      "revenue": 9533640,
-      "expense": 4000000,
-      "profit": 5533600,
-      "claimRate": 0.55,
-      "utilization": 100
-    },
-    {
-      "year": 2030,
-      "revenue": 9533640,
-      "expense": 4000000,
-      "profit": 5533600,
-      "claimRate": 0.48,
-      "utilization": 100
-    }
+    {"year": 2021, "revenue": 5774563, "expense": 3934790, "profit": 1839773, "claimRate": 0.42, "utilization": 92.5},
+    {"year": 2022, "revenue": 7085577, "expense": 4077142, "profit": 3008435, "claimRate": 0.44, "utilization": 94.1},
+    {"year": 2023, "revenue": 8744272, "expense": 3694609, "profit": 5049663, "claimRate": 1.44, "utilization": 95.8},
+    {"year": 2024, "revenue": 9306029, "expense": 3202077, "profit": 6103952, "claimRate": 0.74, "utilization": 96.2},
+    {"year": 2025, "revenue": 8595524, "expense": 3158363, "profit": 5437161, "claimRate": 0.67, "utilization": 96.7},
+    {"year": 2026, "revenue": 8854422, "expense": 2858841, "profit": 5234191, "claimRate": 0.69, "utilization": 96.7},
+    {"year": 2027, "revenue": 8499354, "expense": 3026021, "profit": 5473333, "claimRate": 0.64, "utilization": 100},
+    {"year": 2028, "revenue": 9533640, "expense": 4000000, "profit": 5533640, "claimRate": 0.6, "utilization": 100},
+    {"year": 2029, "revenue": 9533640, "expense": 4000000, "profit": 5533600, "claimRate": 0.55, "utilization": 100},
+    {"year": 2030, "revenue": 9533640, "expense": 4000000, "profit": 5533600, "claimRate": 0.48, "utilization": 100}
   ],
   "expiringVehicles": [
-    {
-      "id": "GA-21001",
-      "plate": "RDH-8065",
-      "model": "Luxgen M7",
-      "type": "MPV",
-      "leaseEnd": "2026-09-18",
-      "revenue": 1033000,
-      "cost": 796000,
-      "profit": 285000,
-      "margin": 7.8,
-      "utilization": 78.5,
-      "status": "critical",
-      "recommendation": "已使用五年，建議汰新"
-    },
-    {
-      "id": "GA-21002",
-      "plate": "RDQ-0865",
-      "model": "Honda CR-V",
-      "type": "SUV",
-      "leaseEnd": "2027-03-30",
-      "revenue": 1001000,
-      "cost": 1254000,
-      "profit": 373000,
-      "margin": 20.8,
-      "utilization": 82.1,
-      "status": "critical",
-      "recommendation": "已使用六年，建議汰新"
-    },
-    {
-      "id": "CEO-22001",
-      "plate": "RFD-9786",
-      "model": "Toyota Sienna",
-      "type": "MPV",
-      "leaseEnd": "2026-11-30",
-      "revenue": 2100000,
-      "cost": 3089000,
-      "profit": 373000,
-      "margin": 20.8,
-      "utilization": 88.3,
-      "status": "critical",
-      "recommendation": "8.6萬,高收益車輛"
-    },
-    {
-      "id": "HSR-23001",
-      "plate": "RFA-8173",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23002",
-      "plate": "RFA-8175",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23003",
-      "plate": "RFA-8187",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23004",
-      "plate": "RFA-8190",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23005",
-      "plate": "RFA-8192",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23006",
-      "plate": "RFA-8193",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23007",
-      "plate": "RFA-8197",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23008",
-      "plate": "RFA-8201",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23009",
-      "plate": "RFA-8202",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23010",
-      "plate": "RFA-8203",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23011",
-      "plate": "RFA-8205",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23012",
-      "plate": "RFA-8210",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23013",
-      "plate": "RFA-8211",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23014",
-      "plate": "RFA-8215",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23015",
-      "plate": "RFA-8219",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23016",
-      "plate": "RFA-8223",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23017",
-      "plate": "RFA-8225",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23018",
-      "plate": "RFA-8230",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23019",
-      "plate": "RFA-8232",
-      "make": "Toyota",
-      "model": "Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23020",
-      "plate": "RFA-8235",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23021",
-      "plate": "RFA-8237",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23022",
-      "plate": "RFA-8239",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23023",
-      "plate": "RFA-8250",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23024",
-      "plate": "RFA-8251",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23025",
-      "plate": "RFA-8252",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"
-    },
-    {
-      "id": "HSR-23026",
-      "plate": "RFA-9715",
-      "model": "Toyota Vios",
-      "type": "Sedan",
-      "leaseEnd": "2026-04-30",
-      "revenue": 768000,
-      "cost": 919000,
-      "profit": 38000,
-      "margin": 20.8,
-      "utilization": 55.3,
-      "status": "critical",
-      "recommendation": "巡邏車高稼動,如期更新"   
-    }
+    {"id": "GA-21001", "plate": "RDH-8065", "model": "Luxgen M7", "type": "MPV", "leaseEnd": "2026-09-18", "revenue": 1033000, "cost": 796000, "profit": 285000, "margin": 7.8, "utilization": 78.5, "status": "critical", "recommendation": "已使用五年，建議汰新"},
+    {"id": "GA-21002", "plate": "RDQ-0865", "model": "Honda CR-V", "type": "SUV", "leaseEnd": "2027-03-30", "revenue": 1001000, "cost": 1254000, "profit": 373000, "margin": 20.8, "utilization": 82.1, "status": "critical", "recommendation": "已使用六年，建議汰新"},
+    {"id": "CEO-22001", "plate": "RFD-9786", "model": "Toyota Sienna", "type": "MPV", "leaseEnd": "2026-11-30", "revenue": 2100000, "cost": 3089000, "profit": 373000, "margin": 20.8, "utilization": 88.3, "status": "critical", "recommendation": "8.6萬,高收益車輛"},
+    {"id": "HSR-23001", "plate": "RFA-8173", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23002", "plate": "RFA-8175", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23003", "plate": "RFA-8187", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23004", "plate": "RFA-8190", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23005", "plate": "RFA-8192", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23006", "plate": "RFA-8193", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23007", "plate": "RFA-8197", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23008", "plate": "RFA-8201", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23009", "plate": "RFA-8202", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23010", "plate": "RFA-8203", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23011", "plate": "RFA-8205", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23012", "plate": "RFA-8210", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23013", "plate": "RFA-8211", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23014", "plate": "RFA-8215", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23015", "plate": "RFA-8219", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23016", "plate": "RFA-8223", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23017", "plate": "RFA-8225", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23018", "plate": "RFA-8230", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23019", "plate": "RFA-8232", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23020", "plate": "RFA-8235", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23021", "plate": "RFA-8237", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23022", "plate": "RFA-8239", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23023", "plate": "RFA-8250", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23024", "plate": "RFA-8251", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23025", "plate": "RFA-8252", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
+    {"id": "HSR-23026", "plate": "RFA-9715", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"}
   ],
   "soldVehicles": [
-    {
-      "id": "GA-19001",
-      "plate": "RDQ-1350",
-      "model": "Toyota Sienta",
-      "type": "MPV",
-      "purchaseDate": "2019-03-31",
-      "saleDate": "2022-03-30",
-      "purchasePrice": 679531,
-      "salePrice": 438095,
-      "totalRentalRevenue": 480000,
-      "totalOperatingCost": 124148,
-      "totalProfit": 114416,
-      "holdingPeriod": 3,
-      "status": "completed",
-      "notes": "5.5萬km"
-    },
-    {
-      "id": "CEO-20001",
-      "plate": "RDB-8065",
-      "model": "M-BENZ GLC coupe",
-      "type": "SUV",
-      "purchaseDate": "2020-12-01",
-      "saleDate": "2023-11-30",
-      "purchasePrice": 2780095,
-      "salePrice": 1790476,
-      "totalRentalRevenue": 1952360,
-      "totalOperatingCost": 306228,
-      "totalProfit": 656513,
-      "holdingPeriod": 3,
-      "status": "completed",
-      "notes": "7.9萬km"
-    },
-    {
-      "id": "HSR-20001",
-      "plate": "RCU-6706",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 147619,
-      "totalRentalRevenue": 743424,
-      "totalOperatingCost": 353683,
-      "totalProfit": 24866,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "33.5萬km"
-    },
-    {
-        "id": "HSR-20002",
-      "plate": "RCU-6710",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 147619,
-      "totalRentalRevenue": 743424,
-      "totalOperatingCost": 353683,
-      "totalProfit": 24866,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "33.5萬km"
-    },
-    {
-      "id": "HSR-20003",
-      "plate": "RCU-6712",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 154286,
-      "totalRentalRevenue": 741484,
-      "totalOperatingCost": 326754,
-      "totalProfit": 56222,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "30.1萬km"
-    },
-    {
-      "id": "HSR-20004",
-      "plate": "RCU-6713",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 171429,
-      "totalRentalRevenue": 746190,
-      "totalOperatingCost": 351446,
-      "totalProfit": 53379,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "36萬km"
-    },
-    {     
-      "id": "HSR-20005",
-      "plate": "RCU-6715",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-11-16",
-      "purchasePrice": 512794,
-      "salePrice": 136190,
-      "totalRentalRevenue": 792421,
-      "totalOperatingCost": 397736,
-      "totalProfit": 18081,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "31.3萬km"
-    },
-    {
-      "id": "HSR-20006",
-      "plate": "RCU-6716",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 202857,
-      "totalRentalRevenue": 770322,
-      "totalOperatingCost": 403156,
-      "totalProfit": 57229,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "30.8萬km"
-    },
-    {
-      "id": "HSR-20007",
-      "plate": "RCU-6720",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-26",
-      "purchasePrice": 512794,
-      "salePrice": 170476,
-      "totalRentalRevenue": 768768,
-      "totalOperatingCost": 383830,
-      "totalProfit": 42620,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "30萬km"
-    },
-    {
-      "id": "HSR-20008",
-      "plate": "RCU-6721",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 109524,
-      "totalRentalRevenue": 762533,
-      "totalOperatingCost": 338750,
-      "totalProfit": 20513,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "24.8萬km"
-    },
-    {
-      "id": "HSR-20009",
-      "plate": "RCU-6723",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 126667,
-      "totalRentalRevenue": 761657,
-      "totalOperatingCost": 450339,
-      "totalProfit": -74809,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "30萬km"
-    },
-    {
-      "id": "HSR-20010",
-      "plate": "RCU-6730",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 171429,
-      "totalRentalRevenue": 744353,
-      "totalOperatingCost": 351446,
-      "totalProfit": 51542,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "36.5萬km"
-    },
-    {
-      "id": "HSR-20011",
-      "plate": "RCU-6732",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 187619,
-      "totalRentalRevenue": 739048,
-      "totalOperatingCost": 351446,
-      "totalProfit": 62427,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "23.7萬km"
-    },
-    {
-      "id": "HSR-20012",
-      "plate": "RCU-6733",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 191429,
-      "totalRentalRevenue": 754895,
-      "totalOperatingCost": 288537,
-      "totalProfit": 144993,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "24.5萬km"
-    },
-    {
-      "id": "HSR-20013",
-      "plate": "RCU-6735",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 171429,
-      "totalRentalRevenue": 747771,
-      "totalOperatingCost": 346717,
-      "totalProfit": 59689,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "34.2萬km"
-    },
-    {
-      "id": "HSR-20014",
-      "plate": "RCU-6750",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 176190,
-      "totalRentalRevenue": 968096,
-      "totalOperatingCost": 393361,
-      "totalProfit": 238131,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "31.6萬km 有收回復費"
-    },
-    {
-      "id": "HSR-20015",
-      "plate": "RCU-6751",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 118095,
-      "totalRentalRevenue": 735048,
-      "totalOperatingCost": 334736,
-      "totalProfit": 5613,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "28萬km"
-    },
-    {
-      "id": "HSR-20016",
-      "plate": "RCU-6752",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 164762,
-      "totalRentalRevenue": 735048,
-      "totalOperatingCost": 349720,
-      "totalProfit": 5613,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "29.4萬km"
-    },
-    {
-      "id": "HSR-20017",
-      "plate": "RCU-6753",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 141905,
-      "totalRentalRevenue": 746119,
-      "totalOperatingCost": 438791,
-      "totalProfit": 37296,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "40.9萬km"
-    },
-    {
-      "id": "HSR-20018",
-      "plate": "RCU-6760",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 142857,
-      "totalRentalRevenue": 746190,
-      "totalOperatingCost": 445174,
-      "totalProfit": -68921,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "36萬km"
-    },
-    {
-      "id": "HSR-20019",
-      "plate": "RCU-6762",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 143810,
-      "totalRentalRevenue": 735048,
-      "totalOperatingCost": 326343,
-      "totalProfit": 39721,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "32.3萬km"
-    },
-    {
-      "id": "HSR-20020",
-      "plate": "RCU-6763",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 200000,
-      "totalRentalRevenue": 735048,
-      "totalOperatingCost": 245254,
-      "totalProfit": 177000,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "25.1萬km"
-    },
-    {
-      "id": "HSR-20021",
-      "plate": "RCU-6772",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 158095,
-      "totalRentalRevenue": 742095,
-      "totalOperatingCost": 246858,
-      "totalProfit": 140538,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "23,1萬km"
-    },
-    {
-      "id": "HSR-20022",
-      "plate": "RCU-6773",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 164762,
-      "totalRentalRevenue": 735048,
-      "totalOperatingCost": 245254,
-      "totalProfit": 141762,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "24.1萬km"
-    },
-    {
-      "id": "HSR-20023",
-      "plate": "RCU-6773",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-10-02",
-      "purchasePrice": 512794,
-      "salePrice": 164762,
-      "totalRentalRevenue": 735048,
-      "totalOperatingCost": 245254,
-      "totalProfit": 141762,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "24.1萬km"
-    },
-    {
-      "id": "HSR-20024",
-      "plate": "RCU-6775",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2020-04-30",
-      "saleDate": "2023-08-31",
-      "purchasePrice": 338286,
-      "salePrice": 171429,
-      "totalRentalRevenue": 919631,
-      "totalOperatingCost": 298443,
-      "totalProfit": 454331,
-      "holdingPeriod": 3.3,
-      "status": "completed",
-      "notes": "23.7萬km"
-    },
-    {
-      "id": "HSR-20025",
-      "plate": "RDL-6517",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "purchaseDate": "2022-03-11",
-      "saleDate": "2023-08-31",
-      "purchasePrice": 445047,
-      "salePrice": 202857,
-      "totalRentalRevenue": 587424,
-      "totalOperatingCost": 102616,
-      "totalProfit": 242618,
-      "holdingPeriod": 1.46,
-      "status": "completed",
-      "notes": "14.6萬km"
-    }
+    {"id": "GA-19001", "plate": "RDQ-1350", "model": "Toyota Sienta", "type": "MPV", "purchaseDate": "2019-03-31", "saleDate": "2022-03-30", "purchasePrice": 679531, "salePrice": 438095, "totalRentalRevenue": 480000, "totalOperatingCost": 124148, "totalProfit": 114416, "holdingPeriod": 3, "status": "completed", "notes": "5.5萬km"},
+    {"id": "CEO-20001", "plate": "RDB-8065", "model": "M-BENZ GLC coupe", "type": "SUV", "purchaseDate": "2020-12-01", "saleDate": "2023-11-30", "purchasePrice": 2780095, "salePrice": 1790476, "totalRentalRevenue": 1952360, "totalOperatingCost": 306228, "totalProfit": 656513, "holdingPeriod": 3, "status": "completed", "notes": "7.9萬km"},
+    {"id": "HSR-20001", "plate": "RCU-6706", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 147619, "totalRentalRevenue": 743424, "totalOperatingCost": 353683, "totalProfit": 24866, "holdingPeriod": 3.3, "status": "completed", "notes": "33.5萬km"},
+    {"id": "HSR-20002", "plate": "RCU-6710", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 147619, "totalRentalRevenue": 743424, "totalOperatingCost": 353683, "totalProfit": 24866, "holdingPeriod": 3.3, "status": "completed", "notes": "33.5萬km"},
+    {"id": "HSR-20003", "plate": "RCU-6712", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 154286, "totalRentalRevenue": 741484, "totalOperatingCost": 326754, "totalProfit": 56222, "holdingPeriod": 3.3, "status": "completed", "notes": "30.1萬km"},
+    {"id": "HSR-20004", "plate": "RCU-6713", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 171429, "totalRentalRevenue": 746190, "totalOperatingCost": 351446, "totalProfit": 53379, "holdingPeriod": 3.3, "status": "completed", "notes": "36萬km"},
+    {"id": "HSR-20005", "plate": "RCU-6715", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-11-16", "purchasePrice": 512794, "salePrice": 136190, "totalRentalRevenue": 792421, "totalOperatingCost": 397736, "totalProfit": 18081, "holdingPeriod": 3.3, "status": "completed", "notes": "31.3萬km"},
+    {"id": "HSR-20006", "plate": "RCU-6716", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 202857, "totalRentalRevenue": 770322, "totalOperatingCost": 403156, "totalProfit": 57229, "holdingPeriod": 3.3, "status": "completed", "notes": "30.8萬km"},
+    {"id": "HSR-20007", "plate": "RCU-6720", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-26", "purchasePrice": 512794, "salePrice": 170476, "totalRentalRevenue": 768768, "totalOperatingCost": 383830, "totalProfit": 42620, "holdingPeriod": 3.3, "status": "completed", "notes": "30萬km"},
+    {"id": "HSR-20008", "plate": "RCU-6721", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 109524, "totalRentalRevenue": 762533, "totalOperatingCost": 338750, "totalProfit": 20513, "holdingPeriod": 3.3, "status": "completed", "notes": "24.8萬km"},
+    {"id": "HSR-20009", "plate": "RCU-6723", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 126667, "totalRentalRevenue": 761657, "totalOperatingCost": 450339, "totalProfit": -74809, "holdingPeriod": 3.3, "status": "completed", "notes": "30萬km"},
+    {"id": "HSR-20010", "plate": "RCU-6730", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 171429, "totalRentalRevenue": 744353, "totalOperatingCost": 351446, "totalProfit": 51542, "holdingPeriod": 3.3, "status": "completed", "notes": "36.5萬km"},
+    {"id": "HSR-20011", "plate": "RCU-6732", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 187619, "totalRentalRevenue": 739048, "totalOperatingCost": 351446, "totalProfit": 62427, "holdingPeriod": 3.3, "status": "completed", "notes": "23.7萬km"},
+    {"id": "HSR-20012", "plate": "RCU-6733", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 191429, "totalRentalRevenue": 754895, "totalOperatingCost": 288537, "totalProfit": 144993, "holdingPeriod": 3.3, "status": "completed", "notes": "24.5萬km"},
+    {"id": "HSR-20013", "plate": "RCU-6735", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 171429, "totalRentalRevenue": 747771, "totalOperatingCost": 346717, "totalProfit": 59689, "holdingPeriod": 3.3, "status": "completed", "notes": "34.2萬km"},
+    {"id": "HSR-20014", "plate": "RCU-6750", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 176190, "totalRentalRevenue": 968096, "totalOperatingCost": 393361, "totalProfit": 238131, "holdingPeriod": 3.3, "status": "completed", "notes": "31.6萬km 有收回復費"},
+    {"id": "HSR-20015", "plate": "RCU-6751", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 118095, "totalRentalRevenue": 735048, "totalOperatingCost": 334736, "totalProfit": 5613, "holdingPeriod": 3.3, "status": "completed", "notes": "28萬km"},
+    {"id": "HSR-20016", "plate": "RCU-6752", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 164762, "totalRentalRevenue": 735048, "totalOperatingCost": 349720, "totalProfit": 5613, "holdingPeriod": 3.3, "status": "completed", "notes": "29.4萬km"},
+    {"id": "HSR-20017", "plate": "RCU-6753", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 141905, "totalRentalRevenue": 746119, "totalOperatingCost": 438791, "totalProfit": 37296, "holdingPeriod": 3.3, "status": "completed", "notes": "40.9萬km"},
+    {"id": "HSR-20018", "plate": "RCU-6760", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 142857, "totalRentalRevenue": 746190, "totalOperatingCost": 445174, "totalProfit": -68921, "holdingPeriod": 3.3, "status": "completed", "notes": "36萬km"},
+    {"id": "HSR-20019", "plate": "RCU-6762", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 143810, "totalRentalRevenue": 735048, "totalOperatingCost": 326343, "totalProfit": 39721, "holdingPeriod": 3.3, "status": "completed", "notes": "32.3萬km"},
+    {"id": "HSR-20020", "plate": "RCU-6763", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 200000, "totalRentalRevenue": 735048, "totalOperatingCost": 245254, "totalProfit": 177000, "holdingPeriod": 3.3, "status": "completed", "notes": "25.1萬km"},
+    {"id": "HSR-20021", "plate": "RCU-6772", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 158095, "totalRentalRevenue": 742095, "totalOperatingCost": 246858, "totalProfit": 140538, "holdingPeriod": 3.3, "status": "completed", "notes": "23,1萬km"},
+    {"id": "HSR-20022", "plate": "RCU-6773", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 164762, "totalRentalRevenue": 735048, "totalOperatingCost": 245254, "totalProfit": 141762, "holdingPeriod": 3.3, "status": "completed", "notes": "24.1萬km"},
+    {"id": "HSR-20023", "plate": "RCU-6773", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-10-02", "purchasePrice": 512794, "salePrice": 164762, "totalRentalRevenue": 735048, "totalOperatingCost": 245254, "totalProfit": 141762, "holdingPeriod": 3.3, "status": "completed", "notes": "24.1萬km"},
+    {"id": "HSR-20024", "plate": "RCU-6775", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2020-04-30", "saleDate": "2023-08-31", "purchasePrice": 338286, "salePrice": 171429, "totalRentalRevenue": 919631, "totalOperatingCost": 298443, "totalProfit": 454331, "holdingPeriod": 3.3, "status": "completed", "notes": "23.7萬km"},
+    {"id": "HSR-20025", "plate": "RDL-6517", "model": "Toyota Yaris", "type": "Sedan", "purchaseDate": "2022-03-11", "saleDate": "2023-08-31", "purchasePrice": 445047, "salePrice": 202857, "totalRentalRevenue": 587424, "totalOperatingCost": 102616, "totalProfit": 242618, "holdingPeriod": 1.46, "status": "completed", "notes": "14.6萬km"}
   ],
   "terminatedVehicles": [
-    {
-      "id": "HSR-001",
-      "plate": "RCU-6725",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "leaseStartDate": "2020-04-30",
-      "terminationDate": "2020-07-29",
-      "purchasePrice": 512794,
-      "rentalRevenueReceived": 40000,
-      "terminationFeeReceived": 572460,
-      "totalOperatingCost": 533031,
-      "totalProfit": 79429,
-      "holdingPeriod": 0.25,
-      "terminationReason": "苗栗自撞安全島全損",
-      "status": "terminated",
-      "notes": "本金利益26891,RCW-6713接續"
-    },
-    {
-      "id": "HSR-002",
-      "plate": "RCU-6736",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "leaseStartDate": "2020-04-30",
-      "terminationDate": "2021-06-29",
-      "purchasePrice": 512794,
-      "rentalRevenueReceived": 230667,
-      "terminationFeeReceived": 485980,
-      "totalOperatingCost": 645531,
-      "totalProfit": 71116,
-      "holdingPeriod": 1.17,
-      "terminationReason": "彰化自撞電線桿全損",
-      "status": "terminated",
-      "notes": "本金利益38307,RDF-5603接續"
-    },
-    {
-      "id": "HSR-003",
-      "plate": "RDF-5603",
-      "model": "Toyota Yaris",
-      "type": "Sedan",
-      "leaseStartDate": "2021-06-30",
-      "terminationDate": "2022-02-07",
-      "purchasePrice": 520033,
-      "rentalRevenueReceived": 163107,
-      "terminationFeeReceived": 513770,
-      "totalOperatingCost": 592558,
-      "totalProfit": 84319,
-      "holdingPeriod": 0.75,
-      "terminationReason": "彰化自撞全損",
-      "status": "terminated",
-      "notes": "本金利益34051,RDL-6517接續"
-    },
-    {
-      "id": "HSR-004",
-      "plate": "RDA-8226",
-      "model": "Vios",
-      "type": "Sedan",
-      "leaseStartDate": "2023-09-01",
-      "terminationDate": "2025-06-11",
-      "purchasePrice": 528413,
-      "rentalRevenueReceived": 480000,
-      "terminationFeeReceived": 451800,
-      "totalOperatingCost": 682558,
-      "totalProfit": 249242,
-      "holdingPeriod": 1.67,
-      "terminationReason": "雲林自撞路樹全損",
-      "status": "terminated",
-      "notes": "本金利益115949,RDL-6517接續"
-    }
+    {"id": "HSR-001", "plate": "RCU-6725", "model": "Toyota Yaris", "type": "Sedan", "leaseStartDate": "2020-04-30", "terminationDate": "2020-07-29", "purchasePrice": 512794, "rentalRevenueReceived": 40000, "terminationFeeReceived": 572460, "totalOperatingCost": 533031, "totalProfit": 79429, "holdingPeriod": 0.25, "terminationReason": "苗栗自撞安全島全損", "status": "terminated", "notes": "本金利益26891,RCW-6713接續"},
+    {"id": "HSR-002", "plate": "RCU-6736", "model": "Toyota Yaris", "type": "Sedan", "leaseStartDate": "2020-04-30", "terminationDate": "2021-06-29", "purchasePrice": 512794, "rentalRevenueReceived": 230667, "terminationFeeReceived": 485980, "totalOperatingCost": 645531, "totalProfit": 71116, "holdingPeriod": 1.17, "terminationReason": "彰化自撞電線桿全損", "status": "terminated", "notes": "本金利益38307,RDF-5603接續"},
+    {"id": "HSR-003", "plate": "RDF-5603", "model": "Toyota Yaris", "type": "Sedan", "leaseStartDate": "2021-06-30", "terminationDate": "2022-02-07", "purchasePrice": 520033, "rentalRevenueReceived": 163107, "terminationFeeReceived": 513770, "totalOperatingCost": 592558, "totalProfit": 84319, "holdingPeriod": 0.75, "terminationReason": "彰化自撞全損", "status": "terminated", "notes": "本金利益34051,RDL-6517接續"},
+    {"id": "HSR-004", "plate": "RDA-8226", "model": "Vios", "type": "Sedan", "leaseStartDate": "2023-09-01", "terminationDate": "2025-06-11", "purchasePrice": 528413, "rentalRevenueReceived": 480000, "terminationFeeReceived": 451800, "totalOperatingCost": 682558, "totalProfit": 249242, "holdingPeriod": 1.67, "terminationReason": "雲林自撞路樹全損", "status": "terminated", "notes": "本金利益115949,RDL-6517接續"}
   ],
   "costBreakdown": {
     "purchase": 2074034,
@@ -1655,122 +663,131 @@
     "others": 19524
   }
 };
-        
-        // 初始化
-        document.getElementById('reportDate').textContent = fleetData.reportDate;
-        document.getElementById('totalVehicles').textContent = fleetData.summary.totalVehicles;
-        document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
-        document.getElementById('idleVehicles').textContent = fleetData.summary.status.idle;
-        document.getElementById('maintenanceVehicles').textContent = fleetData.summary.status.maintenance;
-        document.getElementById('soldVehicles').textContent = fleetData.summary.status.sold;
-        document.getElementById('terminatedVehicles').textContent = fleetData.summary.status.terminated;
-        
-        // 標籤切換
+
+        // ===== 頁籤切換邏輯 =====
         function switchTab(tabName) {
-            const contents = document.querySelectorAll('.tab-content');
+            const tabs = document.querySelectorAll('.tab-content');
             const buttons = document.querySelectorAll('.tab-btn');
             
-            contents.forEach(c => c.classList.remove('active'));
-            buttons.forEach(b => b.classList.remove('active'));
+            tabs.forEach(tab => tab.classList.remove('active'));
+            buttons.forEach(btn => btn.classList.remove('active'));
             
             document.getElementById(tabName).classList.add('active');
             event.target.classList.add('active');
             
             setTimeout(() => {
-                if (tabName === 'overview') initOverviewCharts();
-                else if (tabName === 'trends') initTrendCharts();
-                else if (tabName === 'vehicles') { initVehicleCharts(); populateVehicleTable(); }
-                else if (tabName === 'sold') populateSoldTable();
-                else if (tabName === 'terminated') populateTerminatedTable();
-                else if (tabName === 'profitability') initProfitabilityCharts();
-                else if (tabName === 'costs') initCostCharts();
+                if (tabName === 'trends') initTrendChart();
+                else if (tabName === 'profitability') {
+                    initProfitChart();
+                    initMarginChart();
+                }
+                else if (tabName === 'costs') initCostChart();
             }, 100);
         }
-        
-        // 圖表配置
-        const chartConfig = {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    labels: {
-                        font: { size: 12 },
-                        padding: 15
+
+        // ===== 初始化頁面 =====
+        function initPage() {
+            updateSummaryCards();
+            initVehicleTypeChart();
+            initStatusChart();
+            populateVehicleTable();
+            populateSoldTable();
+            populateTerminatedTable();
+            updateSoldSummary();
+            updateTerminatedSummary();
+        }
+
+        // ===== 更新摘要卡片 =====
+        function updateSummaryCards() {
+            document.getElementById('totalVehicles').textContent = fleetData.summary.totalVehicles;
+            document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
+            document.getElementById('idleVehicles').textContent = fleetData.summary.status.idle;
+            document.getElementById('avgMonthlyRevenue').textContent = fleetData.summary.avgMonthlyRevenue.toLocaleString();
+            document.getElementById('avgMonthlyExpense').textContent = fleetData.summary.avgMonthlyExpense.toLocaleString();
+            document.getElementById('utilizationRate').textContent = fleetData.summary.utilizationRate;
+        }
+
+        // ===== 車型分佈圖 =====
+        function initVehicleTypeChart() {
+            const ctx = document.getElementById('vehicleTypeChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(fleetData.vehicleTypes),
+                    datasets: [{
+                        data: Object.values(fleetData.vehicleTypes),
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb'],
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        title: {
+                            display: true,
+                            text: '車型分佈'
+                        }
                     }
                 }
-            }
-        };
-        
-        // 初始化車隊總覽圖表
-        function initOverviewCharts() {
-            new Chart(document.getElementById('statusChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['使用中', '自購', '維修中', '中途解約', '已出售'],
-                    datasets: [{
-                        data: [29, 1, 0, 4, 27],
-                        backgroundColor: ['#51cf66', '#ffd93d', '#ff922b', '#ff6b6b', '#868e96']
-                    }]
-                },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('typeChart'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['Sedan', 'SUV', 'MPV'],
-                    datasets: [{
-                        data: [27, 1, 2],
-                        backgroundColor: ['#667eea', '#f093fb', '#00f2fe']
-                    }]
-                },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('ageChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['<1年', '1-3年', '3-5年', '>5年'],
-                    datasets: [{
-                        label: '車輛台數',
-                        data: [0, 28, 2, 0],
-                        backgroundColor: '#667eea'
-                    }]
-                },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('typePerformanceChart'), {
-                type: 'bar',
-                data: {
-                    labels: ['Sedan', 'SUV', 'MPV'],
-                    datasets: [
-                        {
-                            label: '利潤率 (%)',
-                            data: [12.5, 18.2, 10.5],
-                            backgroundColor: '#667eea'
-                        }
-                    ]
-                },
-                options: chartConfig
             });
         }
-        
-        // 初始化年度趨勢圖表
-        function initTrendCharts() {
-            const years = fleetData.yearlyTrend.map(y => y.year);
-            const revenues = fleetData.yearlyTrend.map(y => y.revenue / 1000000);
-            const expenses = fleetData.yearlyTrend.map(y => y.expense / 1000000);
-            const profits = fleetData.yearlyTrend.map(y => y.profit / 1000000);
-            
-            new Chart(document.getElementById('revenueChart'), {
+
+        // ===== 車隊狀態圖 =====
+        function initStatusChart() {
+            const ctx = document.getElementById('statusChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['使用中', '自購', '已出售', '解約'],
+                    datasets: [{
+                        label: '台數',
+                        data: [
+                            fleetData.summary.status.active,
+                            fleetData.summary.status.idle,
+                            fleetData.summary.status.sold,
+                            fleetData.summary.status.terminated
+                        ],
+                        backgroundColor: ['#51cf66', '#4c6ef5', '#868e96', '#ff922b'],
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '車隊狀態分佈'
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // ===== 10年趨勢圖 =====
+        function initTrendChart() {
+            const ctx = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: years,
+                    labels: fleetData.yearlyTrend.map(y => y.year),
                     datasets: [
                         {
                             label: '收益',
-                            data: revenues,
+                            data: fleetData.yearlyTrend.map(y => y.revenue),
                             borderColor: '#51cf66',
                             backgroundColor: 'rgba(81, 207, 102, 0.1)',
                             tension: 0.4,
@@ -1778,7 +795,7 @@
                         },
                         {
                             label: '成本',
-                            data: expenses,
+                            data: fleetData.yearlyTrend.map(y => y.expense),
                             borderColor: '#ff6b6b',
                             backgroundColor: 'rgba(255, 107, 107, 0.1)',
                             tension: 0.4,
@@ -1786,7 +803,7 @@
                         },
                         {
                             label: '淨利',
-                            data: profits,
+                            data: fleetData.yearlyTrend.map(y => y.profit),
                             borderColor: '#667eea',
                             backgroundColor: 'rgba(102, 126, 234, 0.1)',
                             tension: 0.4,
@@ -1794,317 +811,266 @@
                         }
                     ]
                 },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('claimRateChart'), {
-                type: 'line',
-                data: {
-                    labels: years,
-                    datasets: [{
-                        label: '出險率 (%)',
-                        data: fleetData.yearlyTrend.map(y => y.claimRate),
-                        borderColor: '#ff922b',
-                        backgroundColor: 'rgba(255, 146, 43, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('utilizationChart'), {
-                type: 'line',
-                data: {
-                    labels: years,
-                    datasets: [{
-                        label: '使用率 (%)',
-                        data: fleetData.yearlyTrend.map(y => y.utilization),
-                        borderColor: '#4facfe',
-                        backgroundColor: 'rgba(79, 172, 254, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('profitTrendChart'), {
-                type: 'bar',
-                data: {
-                    labels: years,
-                    datasets: [{
-                        label: '年度淨利 (百萬元)',
-                        data: profits,
-                        backgroundColor: years.map((y, i) => fleetData.yearlyTrend[i].forecast ? '#ffd93d' : '#667eea')
-                    }]
-                },
-                options: chartConfig
-            });
-        }
-        
-        // 初始化車輛分析圖表
-        function initVehicleCharts() {
-            const vehicles = fleetData.expiringVehicles;
-            
-            new Chart(document.getElementById('expiryTimelineChart'), {
-                type: 'bar',
-                data: {
-                    labels: vehicles.map(v => v.id),
-                    datasets: [{
-                        label: '距離到期天數',
-                        data: vehicles.map(v => Math.ceil((new Date(v.leaseEnd) - new Date()) / (1000 * 60 * 60 * 24))),
-                        backgroundColor: vehicles.map(v => {
-                            if (v.status === 'critical') return '#ff6b6b';
-                            if (v.status === 'warning') return '#ffd93d';
-                            return '#51cf66';
-                        })
-                    }]
-                },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('expiryProfitChart'), {
-                type: 'bar',
-                data: {
-                    labels: vehicles.map(v => v.id),
-                    datasets: [{
-                        label: '淨利 (萬元)',
-                        data: vehicles.map(v => v.profit / 10000),
-                        backgroundColor: vehicles.map(v => v.profit > 0 ? '#51cf66' : '#ff6b6b')
-                    }]
-                },
-                options: chartConfig
-            });
-        }
-        
-        // 填充車輛表格
-        function populateVehicleTable() {
-            const tbody = document.getElementById('vehicleTableBody');
-            tbody.innerHTML = '';
-            
-            fleetData.expiringVehicles.forEach(v => {
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${v.id}</td>
-                    <td>${v.plate}</td>
-                    <td>${v.type}</td>
-                    <td>${v.leaseEnd}</td>
-                    <td>$${(v.revenue / 1000000).toFixed(2)}M</td>
-                    <td>$${(v.cost / 1000000).toFixed(2)}M</td>
-                    <td>$${(v.profit / 10000).toFixed(0)}萬</td>
-                    <td>${v.margin.toFixed(1)}%</td>
-                    <td>${v.utilization}%</td>
-                    <td><span class="status-badge status-${v.status}">${v.status === 'critical' ? '🔴 緊急' : v.status === 'warning' ? '🟡 警示' : '🟢 一般'}</span></td>
-                    <td>${v.recommendation}</td>
-                `;
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '10年期營運趨勢（過去5年實績 + 未來5年預測）'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
             });
         }
 
-        // 填充已出售車輛表格
-        function populateSoldTable() {
-            const tbody = document.getElementById('soldTableBody');
-            tbody.innerHTML = '';
-            
-            let totalPurchase = 0, totalSale = 0, totalRental = 0, totalCost = 0, totalProfit = 0;
-            
-            fleetData.soldVehicles.forEach(v => {
-                totalPurchase += v.purchasePrice;
-                totalSale += v.salePrice;
-                totalRental += v.totalRentalRevenue;
-                totalCost += v.totalOperatingCost;
-                totalProfit += v.totalProfit;
-                
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${v.id}</td>
-                    <td>${v.plate}</td>
-                    <td>${v.type}</td>
-                    <td>${v.purchaseDate}</td>
-                    <td>${v.saleDate}</td>
-                    <td>$${(v.purchasePrice / 1000000).toFixed(2)}M</td>
-                    <td>$${(v.salePrice / 1000000).toFixed(2)}M</td>
-                    <td>$${(v.totalRentalRevenue / 1000000).toFixed(2)}M</td>
-                    <td>$${(v.totalOperatingCost / 1000000).toFixed(2)}M</td>
-                    <td class="profit-positive">$${(v.totalProfit / 10000).toFixed(0)}萬</td>
-                    <td>${v.holdingPeriod.toFixed(1)}年</td>
-                    <td>${v.notes}</td>
-                `;
-            });
-            
-            document.getElementById('soldCount').textContent = fleetData.soldVehicles.length;
-            document.getElementById('soldTotalPurchase').textContent = '$' + (totalPurchase / 1000000).toFixed(1) + 'M';
-            document.getElementById('soldTotalSale').textContent = '$' + (totalSale / 1000000).toFixed(2) + 'M';
-            document.getElementById('soldTotalRental').textContent = '$' + (totalRental / 1000000).toFixed(1) + 'M';
-            document.getElementById('soldTotalCost').textContent = '$' + (totalCost / 1000000).toFixed(2) + 'M';
-            document.getElementById('soldTotalProfit').textContent = '$' + (totalProfit / 1000000).toFixed(2) + 'M';
-        }
-
-        // 填充解約車輛表格
-        function populateTerminatedTable() {
-            const tbody = document.getElementById('terminatedTableBody');
-            tbody.innerHTML = '';
-            
-            let totalPurchase = 0, totalRental = 0, totalFee = 0, totalCost = 0, totalProfit = 0;
-            
-            fleetData.terminatedVehicles.forEach(v => {
-                totalPurchase += v.purchasePrice;
-                totalRental += v.rentalRevenueReceived;
-                totalFee += v.terminationFeeReceived;
-                totalCost += v.totalOperatingCost;
-                totalProfit += v.totalProfit;
-                
-                const row = tbody.insertRow();
-                row.innerHTML = `
-                    <td>${v.id}</td>
-                    <td>${v.plate}</td>
-                    <td>${v.type}</td>
-                    <td>${v.leaseStartDate}</td>
-                    <td>${v.terminationDate}</td>
-                    <td>$${(v.purchasePrice / 1000000).toFixed(2)}M</td>
-                    <td>$${(v.rentalRevenueReceived / 1000000).toFixed(2)}M</td>
-                    <td>$${(v.terminationFeeReceived / 10000).toFixed(0)}萬</td>
-                    <td>$${(v.totalOperatingCost / 1000000).toFixed(2)}M</td>
-                    <td class="profit-positive">$${(v.totalProfit / 10000).toFixed(0)}萬</td>
-                    <td>${v.holdingPeriod.toFixed(1)}年</td>
-                    <td>${v.terminationReason}</td>
-                    <td>${v.notes}</td>
-                `;
-            });
-            
-            document.getElementById('termCount').textContent = fleetData.terminatedVehicles.length;
-            document.getElementById('termTotalPurchase').textContent = '$' + (totalPurchase / 1000000).toFixed(1) + 'M';
-            document.getElementById('termTotalRental').textContent = '$' + (totalRental / 1000000).toFixed(2) + 'M';
-            document.getElementById('termTotalFee').textContent = '$' + (totalFee / 1000000).toFixed(2) + 'M';
-            document.getElementById('termTotalCost').textContent = '$' + (totalCost / 1000000).toFixed(2) + 'M';
-            document.getElementById('termTotalProfit').textContent = '$' + (totalProfit / 1000000).toFixed(2) + 'M';
-        }
-        
-        // 車輛過濾
-        function filterVehicles() {
-            const searchText = document.getElementById('searchVehicle').value.toLowerCase();
-            const statusFilter = document.getElementById('statusFilter').value;
-            
-            const rows = document.querySelectorAll('#vehicleTableBody tr');
-            rows.forEach(row => {
-                const text = row.textContent.toLowerCase();
-                const status = row.querySelector('.status-badge').className.includes(statusFilter) || statusFilter === '';
-                row.style.display = (text.includes(searchText) && status) ? '' : 'none';
-            });
-        }
-        
-        // 初始化個別損益圖表
-        function initProfitabilityCharts() {
-            const vehicles = fleetData.expiringVehicles;
-            
-            new Chart(document.getElementById('vehicleComparisonChart'), {
+        // ===== 個別損益圖 =====
+        function initProfitChart() {
+            const ctx = document.getElementById('profitChart').getContext('2d');
+            const vehicles = fleetData.expiringVehicles.slice(0, 10);
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: vehicles.map(v => v.id),
                     datasets: [
                         {
                             label: '收益',
-                            data: vehicles.map(v => v.revenue / 1000000),
+                            data: vehicles.map(v => v.revenue),
                             backgroundColor: '#51cf66'
                         },
                         {
                             label: '成本',
-                            data: vehicles.map(v => v.cost / 1000000),
+                            data: vehicles.map(v => v.cost),
                             backgroundColor: '#ff6b6b'
-                        },
-                        {
-                            label: '淨利',
-                            data: vehicles.map(v => v.profit / 1000000),
-                            backgroundColor: '#667eea'
                         }
                     ]
                 },
-                options: chartConfig
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '個別損益對比（前10台）'
+                        }
+                    }
+                }
             });
+        }
+
+        // ===== 利潤率圖 =====
+        function initMarginChart() {
+            const ctx = document.getElementById('marginChart').getContext('2d');
+            const vehicles = fleetData.expiringVehicles.slice(0, 10);
+            const margins = vehicles.map(v => v.margin);
             
-            new Chart(document.getElementById('marginRankChart'), {
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: vehicles.map(v => v.id),
                     datasets: [{
                         label: '利潤率 (%)',
-                        data: vehicles.map(v => v.margin),
-                        backgroundColor: vehicles.map(v => v.margin > 0 ? '#51cf66' : '#ff6b6b')
+                        data: margins,
+                        backgroundColor: margins.map(m => m >= 20 ? '#51cf66' : m >= 10 ? '#ffd93d' : '#ff6b6b')
                     }]
                 },
                 options: {
-                    ...chartConfig,
-                    indexAxis: 'y'
-                }
-            });
-            
-            new Chart(document.getElementById('scatterChart'), {
-                type: 'scatter',
-                data: {
-                    datasets: [{
-                        label: '車輛績效',
-                        data: vehicles.map(v => ({x: v.utilization, y: v.margin})),
-                        backgroundColor: vehicles.map(v => {
-                            if (v.status === 'critical') return '#ff6b6b';
-                            if (v.status === 'warning') return '#ffd93d';
-                            return '#51cf66';
-                        }),
-                        pointRadius: 8
-                    }]
-                },
-                options: {
-                    ...chartConfig,
-                    scales: {
-                        x: { title: { display: true, text: '使用率 (%)' } },
-                        y: { title: { display: true, text: '利潤率 (%)' } }
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '利潤率排行（前10台）'
+                        }
                     }
                 }
             });
         }
-        
-        // 初始化成本結構圖表
-        function initCostCharts() {
-            new Chart(document.getElementById('costStructureChart'), {
+
+        // ===== 成本結構圖 =====
+        function initCostChart() {
+            const ctx = document.getElementById('costChart').getContext('2d');
+            const total = Object.values(fleetData.costBreakdown).reduce((a, b) => a + b, 0);
+            const percentages = Object.values(fleetData.costBreakdown).map(v => (v / total * 100).toFixed(1));
+            
+            new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: ['購車', '稅金', '保修', '保險', '其他'],
+                    labels: ['購車', '稅金', '維修', '保費', '其他'],
                     datasets: [{
-                        data: [45.0, 12.5, 18.5, 15.0, 9.0],
-                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#868e96']
+                        data: percentages,
+                        backgroundColor: ['#667eea', '#764ba2', '#f093fb', '#4c6ef5', '#868e96']
                     }]
                 },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('typeMarginChart'), {
-                type: 'bar',
-                data: {
-                    labels: fleetData.typePerformance.map(t => t.type),
-                    datasets: [{
-                        label: '利潤率 (%)',
-                        data: fleetData.typePerformance.map(t => t.profitMargin),
-                        backgroundColor: '#667eea'
-                    }]
-                },
-                options: chartConfig
-            });
-            
-            new Chart(document.getElementById('costStackChart'), {
-                type: 'bar',
-                data: {
-                    labels: fleetData.expiringVehicles.map(v => v.id),
-                    datasets: [{
-                        label: '成本 (百萬元)',
-                        data: fleetData.expiringVehicles.map(v => v.cost / 1000000),
-                        backgroundColor: '#667eea'
-                    }]
-                },
-                options: chartConfig
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '成本結構佔比 (%)'
+                        }
+                    }
+                }
             });
         }
-        
-        // 初始化首頁圖表
-        initOverviewCharts();
+
+        // ===== 填充使用中車輛表格 =====
+        function populateVehicleTable() {
+            const tbody = document.getElementById('vehicleTableBody');
+            tbody.innerHTML = '';
+            fleetData.expiringVehicles.forEach(v => {
+                const row = `<tr>
+                    <td>${v.id}</td>
+                    <td>${v.plate}</td>
+                    <td>${v.model}</td>
+                    <td>${v.type}</td>
+                    <td>${v.leaseEnd}</td>
+                    <td>${v.revenue.toLocaleString()}</td>
+                    <td>${v.cost.toLocaleString()}</td>
+                    <td class="${v.profit >= 0 ? 'profit-positive' : 'profit-negative'}">${v.profit.toLocaleString()}</td>
+                    <td>${v.margin}%</td>
+                    <td>${v.utilization}%</td>
+                    <td><span class="status-badge status-${v.status}">${v.status === 'critical' ? '緊急' : '正常'}</span></td>
+                    <td>${v.recommendation}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // ===== 填充已出售車輛表格 =====
+        function populateSoldTable() {
+            const tbody = document.getElementById('soldTableBody');
+            tbody.innerHTML = '';
+            fleetData.soldVehicles.forEach(v => {
+                const row = `<tr>
+                    <td>${v.id}</td>
+                    <td>${v.plate}</td>
+                    <td>${v.model}</td>
+                    <td>${v.purchasePrice.toLocaleString()}</td>
+                    <td>${v.salePrice.toLocaleString()}</td>
+                    <td>${v.totalRentalRevenue.toLocaleString()}</td>
+                    <td>${v.totalOperatingCost.toLocaleString()}</td>
+                    <td class="${v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative'}">${v.totalProfit.toLocaleString()}</td>
+                    <td>${v.notes}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // ===== 填充解約車輛表格 =====
+        function populateTerminatedTable() {
+            const tbody = document.getElementById('terminatedTableBody');
+            tbody.innerHTML = '';
+            fleetData.terminatedVehicles.forEach(v => {
+                const row = `<tr>
+                    <td>${v.id}</td>
+                    <td>${v.plate}</td>
+                    <td>${v.model}</td>
+                    <td>${v.rentalRevenueReceived.toLocaleString()}</td>
+                    <td>${v.terminationFeeReceived.toLocaleString()}</td>
+                    <td>${v.totalOperatingCost.toLocaleString()}</td>
+                    <td class="${v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative'}">${v.totalProfit.toLocaleString()}</td>
+                    <td>${v.terminationReason}</td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        // ===== 更新已出售統計 =====
+        function updateSoldSummary() {
+            const sold = fleetData.soldVehicles;
+            const totalPurchase = sold.reduce((sum, v) => sum + v.purchasePrice, 0);
+            const totalSale = sold.reduce((sum, v) => sum + v.salePrice, 0);
+            const totalRental = sold.reduce((sum, v) => sum + v.totalRentalRevenue, 0);
+            const totalCost = sold.reduce((sum, v) => sum + v.totalOperatingCost, 0);
+            const totalProfit = sold.reduce((sum, v) => sum + v.totalProfit, 0);
+            
+            document.getElementById('soldCount').textContent = sold.length;
+            document.getElementById('soldTotalPurchase').textContent = totalPurchase.toLocaleString();
+            document.getElementById('soldTotalSale').textContent = totalSale.toLocaleString();
+            document.getElementById('soldTotalRental').textContent = totalRental.toLocaleString();
+            document.getElementById('soldTotalCost').textContent = totalCost.toLocaleString();
+            document.getElementById('soldTotalProfit').textContent = totalProfit.toLocaleString();
+        }
+
+        // ===== 更新解約統計 =====
+        function updateTerminatedSummary() {
+            const terminated = fleetData.terminatedVehicles;
+            const totalRental = terminated.reduce((sum, v) => sum + v.rentalRevenueReceived, 0);
+            const totalPenalty = terminated.reduce((sum, v) => sum + v.terminationFeeReceived, 0);
+            const totalCost = terminated.reduce((sum, v) => sum + v.totalOperatingCost, 0);
+            const totalProfit = terminated.reduce((sum, v) => sum + v.totalProfit, 0);
+            
+            document.getElementById('terminatedCount').textContent = terminated.length;
+            document.getElementById('terminatedTotalRental').textContent = totalRental.toLocaleString();
+            document.getElementById('terminatedTotalPenalty').textContent = totalPenalty.toLocaleString();
+            document.getElementById('terminatedTotalCost').textContent = totalCost.toLocaleString();
+            document.getElementById('terminatedTotalProfit').textContent = totalProfit.toLocaleString();
+        }
+
+        // ===== 搜尋與篩選 =====
+        function filterVehicleTable() {
+            const input = document.getElementById('vehicleSearch').value.toUpperCase();
+            const table = document.getElementById('vehicleTable');
+            const rows = table.getElementsByTagName('tr');
+            
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toUpperCase().indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        function filterSoldTable() {
+            const input = document.getElementById('soldSearch').value.toUpperCase();
+            const table = document.getElementById('soldTable');
+            const rows = table.getElementsByTagName('tr');
+            
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toUpperCase().indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        function filterTerminatedTable() {
+            const input = document.getElementById('terminatedSearch').value.toUpperCase();
+            const table = document.getElementById('terminatedTable');
+            const rows = table.getElementsByTagName('tr');
+            
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let found = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].textContent.toUpperCase().indexOf(input) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = found ? '' : 'none';
+            }
+        }
+
+        // ===== 頁面載入時初始化 =====
+        window.addEventListener('load', initPage);
     </script>
 </body>
-    </html>
+</html>
