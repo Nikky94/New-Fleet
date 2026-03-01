@@ -318,13 +318,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>👮 車隊績效管理報表</h1>
-            <p>JBD Dept.</p>
+            <h1>👮 天鷹保全</h1>
+            <p>  SEMAIL車隊績效管理報表</p>
         </div>
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
@@ -407,7 +407,7 @@
 
             <!-- 租賃 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">使用中車輛</h2>
+                <h2 style="margin-bottom: 20px;">實行中</h2>
                 <div class="search-filter">
                     <input type="text" id="vehicleSearch" placeholder="搜尋車牌、車型...">
                     <select id="vehicleTypeFilter">
@@ -523,7 +523,7 @@
 
             <!-- 成本結構 -->
             <div id="costs" class="tab-content">
-                <h2 style="margin-bottom: 20px;">成本結構分析</h2>
+                <h2 style="margin-bottom: 20px;">圖表分析</h2>
                 <div class="chart-container" style="height: 500px;">
                     <canvas id="costBreakdownChart"></canvas>
                 </div>
