@@ -319,12 +319,12 @@
     <div class="container">
         <div class="header">
             <h1>👮 天鷹保全</h1>
-            <p> 車隊績效評估報表OALT JBD Dept. 2026.2.28</p>
+            <p>     SEMAIL車隊績效管理報表</p>
         </div>
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 趨勢</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
@@ -380,9 +380,21 @@
                 </div>
             </div>
 
-            <!-- 風險 -->
+            <!-- 趨勢 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">往來案件（過去5年實績 + 未來5年預測）</h2>
+                <h2 style="margin-bottom: 20px;">10年期評估</h2>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #667eea;"></div>
+                        <span>過去5年 (實績)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ffd93d;"></div>
+                        <span>未來5年 (預測)</span>
+                    </div>
+                </div>
+                
                 <div class="chart-container" style="height: 500px;">
                     <canvas id="trendChart"></canvas>
                 </div>
