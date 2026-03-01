@@ -318,33 +318,33 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚗 進階車隊營運績效報表</h1>
-            <p>JBD Dept. Fleet Management - 2026 Performance Dashboard</p>
+            <h1>👮 天鷹保全</h1>
+            <p> 車隊績效評估報表OALT JBD Dept. 2026.2.28</p>
         </div>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('overview')">📊 車隊總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 年度趨勢</button>
-            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 使用中車輛</button>
-            <button class="tab-btn" onclick="switchTab('sold')">✅ 已出售車輛</button>
-            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約車輛</button>
+            <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
+            <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
             <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
             <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
         </div>
         
         <div class="content">
-            <!-- 車隊總覽 -->
+            <!-- 總覽 -->
             <div id="overview" class="tab-content active">
-                <h2 style="margin-bottom: 20px;">現況統計</h2>
+                <h2 style="margin-bottom: 20px;">現況</h2>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>總車輛</h3>
+                        <h3>保有</h3>
                         <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>使用中</h3>
+                        <h3>承租</h3>
                         <div class="value" id="activeVehicles">29</div>
                         <div class="unit">台</div>
                     </div>
@@ -380,9 +380,9 @@
                 </div>
             </div>
 
-            <!-- 年度趨勢 -->
+            <!-- 風險 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">10年期趨勢分析（過去5年實績 + 未來5年預測）</h2>
+                <h2 style="margin-bottom: 20px;">往來案件（過去5年實績 + 未來5年預測）</h2>
                 <div class="chart-container" style="height: 500px;">
                     <canvas id="trendChart"></canvas>
                 </div>
@@ -422,7 +422,7 @@
             <div id="sold" class="tab-content">
                 <h2 style="margin-bottom: 20px;">已出售車輛統計</h2>
                 <div class="summary-box">
-                    <h3>出售統計摘要</h3>
+                    <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">已出售台數</div>
@@ -699,15 +699,13 @@
 
         // ===== 更新摘要卡片 =====
         function updateSummaryCards() {
-            document.getElementById(\'totalVehicles\').textContent = fleetData.summary.totalVehicles            const totalUtilization = fleetData.expiringVehicles.reduce((sum, v) => sum + v.utilization, 0);
-            const averageUtilization = (totalUtilization / fleetData.expiringVehicles.length).toFixed(1);
-            document.getElementById(\'utilizationRate\').textContent = averageUtilization;            document.getElementById(\'idleVehicles\').textContent = fleetData.summary.status.idle;
-            document.getElementById(\'avgMonthlyRevenue\').textContent = fleetData.summary.avgMonthlyRevenue.toLocaleString();
-            document.getElementById(\'avgMonthlyExpense\').textContent = fleetData.summary.avgMonthlyExpense.toLocaleString();
-
-            const totalUtilization = fleetData.expiringVehicles.reduce((sum, v) => sum + v.utilization, 0);
-            const averageUtilization = (totalUtilization / fleetData.expiringVehicles.length).toFixed(1);
-            document.getElementById(\'utilizationRate\').textContent = averageUtilization;
+            document.getElementById('totalVehicles').textContent = fleetData.summary.totalVehicles;
+            document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
+            document.getElementById('idleVehicles').textContent = fleetData.summary.status.idle;
+            document.getElementById('avgMonthlyRevenue').textContent = fleetData.summary.avgMonthlyRevenue.toLocaleString();
+            document.getElementById('avgMonthlyExpense').textContent = fleetData.summary.avgMonthlyExpense.toLocaleString();
+            document.getElementById('utilizationRate').textContent = fleetData.summary.utilizationRate;
+        }
 
         // ===== 車型分佈圖 =====
         function initVehicleTypeChart() {
