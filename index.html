@@ -319,7 +319,7 @@
     <div class="container">
         <div class="header">
             <h1>👮 天鷹保全</h1>
-            <p>  SEMAIL車隊績效管理報表</p>
+            <p>    SEMAIL車隊績效管理報表</p>
         </div>
         
         <div class="tabs">
@@ -399,7 +399,19 @@
 
             <!-- 風險 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">年度趨勢分析</h2>
+                <h2 style="margin-bottom: 20px;">用車習慣</h2>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #667eea;"></div>
+                        <span>過去5年 (實績)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ffd93d;"></div>
+                        <span>未來5年 (預測)</span>
+                    </div>
+                </div>
+                
                 <div class="chart-container" style="height: 500px;">
                     <canvas id="yearlyTrendChart"></canvas>
                 </div>
