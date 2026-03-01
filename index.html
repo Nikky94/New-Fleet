@@ -3,169 +3,554 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>車隊營運報告</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>進階車隊營運績效報表</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
     <style>
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-        .status-critical { color: #ef4444; font-weight: bold; }
-        .status-warning { color: #f59e0b; font-weight: bold; }
-        .status-normal { color: #10b981; font-weight: bold; }
-        .status-completed { color: #6b7280; }
-        .status-terminated { color: #dc2626; }
-        .table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; white-space: nowrap; }
-        th { background-color: #f3f4f6; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: #666;
+            transition: all 0.3s;
+            white-space: nowrap;
+            min-width: 150px;
+        }
+        
+        .tab-btn:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 30px;
+            min-height: 600px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .stat-card .unit {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-critical {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .status-warning {
+            background: #ffd93d;
+            color: #333;
+        }
+        
+        .status-normal {
+            background: #51cf66;
+            color: white;
+        }
+        
+        .status-completed {
+            background: #868e96;
+            color: white;
+        }
+        
+        .status-terminated {
+            background: #ff922b;
+            color: white;
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-filter input,
+        .search-filter select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+        
+        .search-filter input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #ddd;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .profit-positive {
+            color: #51cf66;
+            font-weight: bold;
+        }
+
+        .profit-negative {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .summary-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .summary-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .summary-item .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .summary-item .value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
     </style>
 </head>
-<body class="bg-gray-100 font-sans leading-normal tracking-normal">
-    <div class="container mx-auto p-4">
-        <header class="mb-8">
-            <h1 id="reportTitle" class="text-4xl font-bold text-gray-800 mb-2">👮車隊報表</h1>
-            <p id="companyInfo" class="text-xl text-gray-600"> JBD Dept. </p>
-            <p id="reportDate" class="text-gray-500">報告日期: 2026-03-01</p>
-        </header>
-
-        <nav class="mb-8">
-            <ul class="flex space-x-4">
-                <li><a href="#summary" class="text-blue-600 hover:underline">總覽</a></li>
-                <li><a href="#active-vehicles" class="text-blue-600 hover:underline">使用中車輛</a></li>
-                <li><a href="#sold-vehicles" class="text-blue-600 hover:underline">已出售車輛</a></li>
-                <li><a href="#terminated-vehicles" class="text-blue-600 hover:underline">解約車輛</a></li>
-                <li><a href="#yearly-trend" class="text-blue-600 hover:underline">年度趨勢</a></li>
-                <li><a href="#cost-breakdown" class="text-blue-600 hover:underline">成本結構</a></li>
-            </ul>
-        </nav>
-
-        <section id="summary" class="mb-8 p-6 bg-white rounded-lg shadow-md fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">車隊總覽</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div class="bg-blue-100 p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-blue-800">總車輛數</h3>
-                    <p id="totalVehicles" class="text-3xl font-bold text-blue-900"></p>
-                </div>
-                <div class="bg-green-100 p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-green-800">使用中車輛</h3>
-                    <p id="activeVehicles" class="text-3xl font-bold text-green-900"></p>
-                </div>
-                <div class="bg-yellow-100 p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-yellow-800">已出售車輛</h3>
-                    <p id="soldVehiclesSummary" class="text-3xl font-bold text-yellow-900"></p>
-                </div>
-                <div class="bg-red-100 p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-red-800">解約車輛</h3>
-                    <p id="terminatedVehiclesSummary" class="text-3xl font-bold text-red-900"></p>
-                </div>
-                <div class="bg-purple-100 p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-purple-800">平均月收益</h3>
-                    <p id="avgMonthlyRevenue" class="text-3xl font-bold text-purple-900"></p>
-                </div>
-                <div class="bg-orange-100 p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-orange-800">平均月成本</h3>
-                    <p id="avgMonthlyExpense" class="text-3xl font-bold text-orange-900"></p>
-                </div>
-                <div class="bg-teal-100 p-4 rounded-lg shadow">
-                    <h3 class="text-lg font-medium text-teal-800">整體使用率</h3>
-                    <p id="utilizationRate" class="text-3xl font-bold text-teal-900"></p>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👮 車隊績效管理報表</h1>
+            <p>JBD Dept.</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
+            <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
+            <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+        </div>
+        
+        <div class="content">
+            <!-- 總覽 -->
+            <div id="overview" class="tab-content active">
+                <h2 style="margin-bottom: 20px;">現況</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>保有</h3>
+                        <div class="value" id="totalVehicles"></div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>承租</h3>
+                        <div class="value" id="activeVehicles"></div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>自購</h3>
+                        <div class="value" id="idleVehicles"></div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>維修</h3>
+                        <div class="value" id="maintenanceVehicles">0</div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>出售</h3>
+                        <div class="value" id="soldVehicles"></div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>解約</h3>
+                        <div class="value" id="terminatedVehicles"></div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>平均月收益</h3>
+                        <div class="value" id="avgMonthlyRevenue"></div>
+                        <div class="unit">NTD</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>平均月成本</h3>
+                        <div class="value" id="avgMonthlyExpense"></div>
+                        <div class="unit">NTD</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>整體使用率</h3>
+                        <div class="value" id="utilizationRate"></div>
+                        <div class="unit">%</div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <section id="active-vehicles" class="mb-8 p-6 bg-white rounded-lg shadow-md fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">使用中車輛</h2>
-            <div class="table-container">
-                <table id="activeVehiclesTable" class="min-w-full bg-white">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>車牌</th>
-                            <th>車型</th>
-                            <th>類型</th>
-                            <th>起租日期</th>
-                            <th>持有月數</th>
-                            <th>租約到期日</th>
-                            <th>累計總收益</th>
-                            <th>累計總成本</th>
-                            <th>月均淨利</th>
-                            <th>利潤率 (%)</th>
-                            <th>使用率 (%)</th>
-                            <th>狀態</th>
-                            <th>建議</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <!-- 風險 -->
+            <div id="trends" class="tab-content">
+                <h2 style="margin-bottom: 20px;">年度趨勢與風險評估</h2>
+                <div class="chart-row">
+                    <div class="chart-container">
+                        <canvas id="yearlyTrendChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="claimRateChart"></canvas>
+                    </div>
+                </div>
             </div>
-        </section>
 
-        <section id="sold-vehicles" class="mb-8 p-6 bg-white rounded-lg shadow-md fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">已出售車輛</h2>
-            <div class="table-container">
-                <table id="soldVehiclesTable" class="min-w-full bg-white">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>車牌</th>
-                            <th>車型</th>
-                            <th>類型</th>
-                            <th>購入日期</th>
-                            <th>出售日期</th>
-                            <th>購入價</th>
-                            <th>出售價</th>
-                            <th>總租金收入</th>
-                            <th>總營運成本</th>
-                            <th>總損益</th>
-                            <th>持有期間 (年)</th>
-                            <th>備註</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <!-- 租賃 -->
+            <div id="vehicles" class="tab-content">
+                <h2 style="margin-bottom: 20px;">使用中車輛</h2>
+                <div class="search-filter">
+                    <input type="text" id="vehicleSearch" placeholder="搜尋車牌、車型...">
+                    <select id="statusFilter">
+                        <option value="all">所有狀態</option>
+                        <option value="normal">正常</option>
+                        <option value="warning">警告</option>
+                        <option value="critical">危險</option>
+                    </select>
+                    <select id="typeFilter">
+                        <option value="all">所有類型</option>
+                        <option value="Sedan">轎車</option>
+                        <option value="SUV">休旅車</option>
+                        <option value="MPV">廂型車</option>
+                    </select>
+                </div>
+                <div class="table-container">
+                    <table id="activeVehiclesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>車牌</th>
+                                <th>車型</th>
+                                <th>類型</th>
+                                <th>起租日期</th>
+                                <th>持有月數</th>
+                                <th>租約到期日</th>
+                                <th>累計總收益</th>
+                                <th>累計總成本</th>
+                                <th>月均淨利</th>
+                                <th>利潤率 (%)</th>
+                                <th>使用率 (%)</th>
+                                <th>狀態</th>
+                                <th>建議</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </section>
 
-        <section id="terminated-vehicles" class="mb-8 p-6 bg-white rounded-lg shadow-md fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">解約車輛</h2>
-            <div class="table-container">
-                <table id="terminatedVehiclesTable" class="min-w-full bg-white">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>車牌</th>
-                            <th>車型</th>
-                            <th>類型</th>
-                            <th>起租日期</th>
-                            <th>解約日期</th>
-                            <th>購入價</th>
-                            <th>租金收入</th>
-                            <th>解約金</th>
-                            <th>總營運成本</th>
-                            <th>總損益</th>
-                            <th>持有期間 (年)</th>
-                            <th>解約原因</th>
-                            <th>備註</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <!-- 出售 -->
+            <div id="sold" class="tab-content">
+                <h2 style="margin-bottom: 20px;">已出售車輛</h2>
+                <div class="table-container">
+                    <table id="soldVehiclesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>車牌</th>
+                                <th>車型</th>
+                                <th>類型</th>
+                                <th>購入日期</th>
+                                <th>出售日期</th>
+                                <th>購入價</th>
+                                <th>出售價</th>
+                                <th>總租金收入</th>
+                                <th>總營運成本</th>
+                                <th>總損益</th>
+                                <th>持有期間 (年)</th>
+                                <th>備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </section>
 
-        <section id="yearly-trend" class="mb-8 p-6 bg-white rounded-lg shadow-md fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">年度趨勢</h2>
-            <canvas id="yearlyTrendChart"></canvas>
-        </section>
+            <!-- 異常 -->
+            <div id="terminated" class="tab-content">
+                <h2 style="margin-bottom: 20px;">解約車輛</h2>
+                <div class="table-container">
+                    <table id="terminatedVehiclesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>車牌</th>
+                                <th>車型</th>
+                                <th>類型</th>
+                                <th>起租日期</th>
+                                <th>解約日期</th>
+                                <th>購入價</th>
+                                <th>租金收入</th>
+                                <th>解約金</th>
+                                <th>總營運成本</th>
+                                <th>總損益</th>
+                                <th>持有期間 (年)</th>
+                                <th>解約原因</th>
+                                <th>備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        <section id="cost-breakdown" class="mb-8 p-6 bg-white rounded-lg shadow-md fade-in">
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">成本結構</h2>
-            <canvas id="costBreakdownChart"></canvas>
-        </section>
+            <!-- 個別損益 -->
+            <div id="profitability" class="tab-content">
+                <h2 style="margin-bottom: 20px;">個別車輛損益分析</h2>
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-color status-normal"></span> 利潤率 > 30%</div>
+                    <div class="legend-item"><span class="legend-color status-warning"></span> 利潤率 10% - 30%</div>
+                    <div class="legend-item"><span class="legend-color status-critical"></span> 利潤率 < 10%</div>
+                </div>
+                <div class="table-container">
+                    <table id="profitabilityTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>車牌</th>
+                                <th>車型</th>
+                                <th>類型</th>
+                                <th>累計總收益</th>
+                                <th>累計總成本</th>
+                                <th>月均淨利</th>
+                                <th>利潤率 (%)</th>
+                                <th>使用率 (%)</th>
+                                <th>狀態</th>
+                                <th>建議</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 成本結構 -->
+            <div id="costs" class="tab-content">
+                <h2 style="margin-bottom: 20px;">成本結構分析</h2>
+                <div class="chart-container">
+                    <canvas id="costBreakdownChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2026 JBD Dept. All rights reserved.</p>
+        </div>
     </div>
 
     <script>
-        // Data injected here
+        // Injected fleetData from Python script
         const fleetData = {
     "reportInfo": {
         "reportDate": "2026-03-01",
@@ -179,7 +564,10 @@
             "idle": 0,
             "sold": 27,
             "terminated": 4
-        }
+        },
+        "avgMonthlyRevenue": 0,
+        "avgMonthlyExpense": 0,
+        "utilizationRate": 0
     },
     "yearlyTrend": [
         {
@@ -242,15 +630,26 @@
             "year": 2028,
             "revenue": 9533640,
             "expense": 4000000,
-            "profit": 5533640, "claimRate": 0.6, "utilization": 100},
+            "profit": 5533640,
+            "claimRate": 0.6,
+            "utilization": 100
+        },
         {
             "year": 2029,
             "revenue": 9533640,
-            "expense": 4000000, "profit": 5533600, "claimRate": 0.55, "utilization": 100},
+            "expense": 4000000,
+            "profit": 5533600,
+            "claimRate": 0.55,
+            "utilization": 100
+        },
         {
             "year": 2030,
             "revenue": 9533640,
-            "expense": 4000000, "profit": 5533600, "claimRate": 0.48, "utilization": 100}
+            "expense": 4000000,
+            "profit": 5533600,
+            "claimRate": 0.48,
+            "utilization": 100
+        }
     ],
     "expiringVehicles": [
         {
@@ -1169,8 +1568,8 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             // Update Report Info
-            document.getElementById("reportTitle").innerText = fleetData.reportInfo.reportTitle;
-            document.getElementById("companyInfo").innerText = fleetData.reportInfo.company;
+            document.querySelector(".header h1").innerText = fleetData.reportInfo.reportTitle;
+            document.querySelector(".header p").innerText = fleetData.reportInfo.company;
             document.getElementById("reportDate").innerText = `報告日期: ${fleetData.reportInfo.reportDate}`;
 
             // Update Summary Cards
@@ -1180,17 +1579,46 @@
             populateActiveVehiclesTable();
             populateSoldVehiclesTable();
             populateTerminatedVehiclesTable();
+            populateProfitabilityTable();
 
             // Render Charts
             renderYearlyTrendChart();
+            renderClaimRateChart();
             renderCostBreakdownChart();
+
+            // Set up tab switching
+            const tabButtons = document.querySelectorAll(".tab-btn");
+            tabButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const tabId = button.onclick.toString().match(/switchTab\('([^']+)'\)/)[1];
+                    switchTab(tabId);
+                });
+            });
+            switchTab('overview'); // Default to overview tab
+
+            // Set up search and filter for active vehicles
+            document.getElementById('vehicleSearch').addEventListener('keyup', filterActiveVehicles);
+            document.getElementById('statusFilter').addEventListener('change', filterActiveVehicles);
+            document.getElementById('typeFilter').addEventListener('change', filterActiveVehicles);
         });
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-btn[onclick*='${tabId}']`).classList.add('active');
+        }
 
         function updateSummaryCards() {
             document.getElementById("totalVehicles").innerText = fleetData.summary.totalVehicles;
             document.getElementById("activeVehicles").innerText = fleetData.summary.status.active;
-            document.getElementById("soldVehiclesSummary").innerText = fleetData.summary.status.sold;
-            document.getElementById("terminatedVehiclesSummary").innerText = fleetData.summary.status.terminated;
+            document.getElementById("idleVehicles").innerText = fleetData.summary.status.idle;
+            document.getElementById("soldVehicles").innerText = fleetData.summary.status.sold;
+            document.getElementById("terminatedVehicles").innerText = fleetData.summary.status.terminated;
 
             let totalCumulativeRevenue = 0;
             let totalCumulativeCost = 0;
@@ -1218,11 +1646,33 @@
         function populateActiveVehiclesTable() {
             const tableBody = document.querySelector("#activeVehiclesTable tbody");
             tableBody.innerHTML = ""; // Clear existing rows
-            fleetData.expiringVehicles.forEach(v => {
+            const filteredVehicles = getFilteredActiveVehicles();
+
+            filteredVehicles.forEach(v => {
                 const row = tableBody.insertRow();
                 const margin = ((v.revenue - v.cost) / v.revenue * 100);
-                row.innerHTML = `<td>${v.id}</td><td>${v.plate}</td><td>${v.model}</td><td>${v.type}</td><td>${v.leaseStartDate || "N/A"}</td><td>${v.monthsHeld || 0}</td><td>${v.leaseEnd}</td><td>$${v.revenue.toLocaleString()}</td><td>$${v.cost.toLocaleString()}</td><td>$${(v.avgMonthlyProfit || 0).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td><td class="${margin < 10 ? 'status-critical' : margin < 30 ? 'status-warning' : 'status-normal'}">${margin.toFixed(1)}%</td><td class="${v.utilization < 75 ? 'status-critical' : v.utilization < 90 ? 'status-warning' : 'status-normal'}">${v.utilization.toFixed(1)}%</td><td class="status-${v.status}">${v.status}</td><td>${v.recommendation}</td>`;
+                const statusClass = margin < 10 ? 'status-critical' : (margin < 30 ? 'status-warning' : 'status-normal');
+                const utilizationClass = v.utilization < 75 ? 'status-critical' : (v.utilization < 90 ? 'status-warning' : 'status-normal');
+                
+                row.innerHTML = `<td>${v.id}</td><td>${v.plate}</td><td>${v.model}</td><td>${v.type}</td><td>${v.leaseStartDate || "N/A"}</td><td>${v.monthsHeld || 0}</td><td>${v.leaseEnd}</td><td>$${v.revenue.toLocaleString()}</td><td>$${v.cost.toLocaleString()}</td><td>$${(v.avgMonthlyProfit || 0).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td><td class="${statusClass}">${margin.toFixed(1)}%</td><td class="${utilizationClass}">${v.utilization.toFixed(1)}%</td><td><span class="status-badge ${v.status}">${v.status}</span></td><td>${v.recommendation}</td>`;
             });
+        }
+
+        function getFilteredActiveVehicles() {
+            const searchTerm = document.getElementById('vehicleSearch').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value;
+            const typeFilter = document.getElementById('typeFilter').value;
+
+            return fleetData.expiringVehicles.filter(v => {
+                const matchesSearch = (v.plate.toLowerCase().includes(searchTerm) || v.model.toLowerCase().includes(searchTerm));
+                const matchesStatus = (statusFilter === 'all' || v.status === statusFilter);
+                const matchesType = (typeFilter === 'all' || v.type === typeFilter);
+                return matchesSearch && matchesStatus && matchesType;
+            });
+        }
+
+        function filterActiveVehicles() {
+            populateActiveVehiclesTable();
         }
 
         function populateSoldVehiclesTable() {
@@ -1230,7 +1680,8 @@
             tableBody.innerHTML = ""; // Clear existing rows
             fleetData.soldVehicles.forEach(v => {
                 const row = tableBody.insertRow();
-                row.innerHTML = `<td>${v.id}</td><td>${v.plate}</td><td>${v.model}</td><td>${v.type}</td><td>${v.purchaseDate}</td><td>${v.saleDate}</td><td>$${v.purchasePrice.toLocaleString()}</td><td>$${v.salePrice.toLocaleString()}</td><td>$${v.totalRentalRevenue.toLocaleString()}</td><td>$${v.totalOperatingCost.toLocaleString()}</td><td>$${v.totalProfit.toLocaleString()}</td><td>${v.holdingPeriod}</td><td>${v.notes}</td>`;
+                const profitClass = v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative';
+                row.innerHTML = `<td>${v.id}</td><td>${v.plate}</td><td>${v.model}</td><td>${v.type}</td><td>${v.purchaseDate}</td><td>${v.saleDate}</td><td>$${v.purchasePrice.toLocaleString()}</td><td>$${v.salePrice.toLocaleString()}</td><td>$${v.totalRentalRevenue.toLocaleString()}</td><td>$${v.totalOperatingCost.toLocaleString()}</td><td class="${profitClass}">$${v.totalProfit.toLocaleString()}</td><td>${v.holdingPeriod}</td><td>${v.notes}</td>`;
             });
         }
 
@@ -1239,7 +1690,22 @@
             tableBody.innerHTML = ""; // Clear existing rows
             fleetData.terminatedVehicles.forEach(v => {
                 const row = tableBody.insertRow();
-                row.innerHTML = `<td>${v.id}</td><td>${v.plate}</td><td>${v.model}</td><td>${v.type}</td><td>${v.leaseStartDate || "N/A"}</td><td>${v.terminationDate}</td><td>$${v.purchasePrice.toLocaleString()}</td><td>$${v.rentalRevenueReceived.toLocaleString()}</td><td>$${v.terminationFeeReceived.toLocaleString()}</td><td>$${v.totalOperatingCost.toLocaleString()}</td><td>$${v.totalProfit.toLocaleString()}</td><td>${v.holdingPeriod}</td><td>${v.terminationReason}</td><td>${v.notes}</td>`;
+                const profitClass = v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative';
+                row.innerHTML = `<td>${v.id}</td><td>${v.plate}</td><td>${v.model}</td><td>${v.type}</td><td>${v.leaseStartDate || "N/A"}</td><td>${v.terminationDate}</td><td>$${v.purchasePrice.toLocaleString()}</td><td>$${v.rentalRevenueReceived.toLocaleString()}</td><td>$${v.terminationFeeReceived.toLocaleString()}</td><td>$${v.totalOperatingCost.toLocaleString()}</td><td class="${profitClass}">$${v.totalProfit.toLocaleString()}</td><td>${v.holdingPeriod}</td><td>${v.terminationReason}</td><td>${v.notes}</td>`;
+            });
+        }
+
+        function populateProfitabilityTable() {
+            const tableBody = document.querySelector("#profitabilityTable tbody");
+            tableBody.innerHTML = ""; // Clear existing rows
+            fleetData.expiringVehicles.forEach(v => {
+                const row = tableBody.insertRow();
+                const margin = ((v.revenue - v.cost) / v.revenue * 100);
+                const statusClass = margin < 10 ? 'status-critical' : (margin < 30 ? 'status-warning' : 'status-normal');
+                const utilizationClass = v.utilization < 75 ? 'status-critical' : (v.utilization < 90 ? 'status-warning' : 'status-normal');
+                const profitClass = (v.revenue - v.cost) >= 0 ? 'profit-positive' : 'profit-negative';
+
+                row.innerHTML = `<td>${v.id}</td><td>${v.plate}</td><td>${v.model}</td><td>${v.type}</td><td>$${v.revenue.toLocaleString()}</td><td>$${v.cost.toLocaleString()}</td><td class="${profitClass}">$${(v.avgMonthlyProfit || 0).toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0})}</td><td class="${statusClass}">${margin.toFixed(1)}%</td><td class="${utilizationClass}">${v.utilization.toFixed(1)}%</td><td><span class="status-badge ${v.status}">${v.status}</span></td><td>${v.recommendation}</td>`;
             });
         }
 
@@ -1300,6 +1766,50 @@
             });
         }
 
+        function renderClaimRateChart() {
+            const ctx = document.getElementById("claimRateChart").getContext("2d");
+            new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: fleetData.yearlyTrend.map(item => item.year),
+                    datasets: [
+                        {
+                            label: "理賠率",
+                            data: fleetData.yearlyTrend.map(item => item.claimRate * 100),
+                            backgroundColor: "rgba(255, 159, 64, 0.6)",
+                            borderColor: "rgba(255, 159, 64, 1)",
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "年度理賠率趨勢"
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: "理賠率 (%)"
+                            },
+                            max: 100
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: "年份"
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
         function renderCostBreakdownChart() {
             const ctx = document.getElementById("costBreakdownChart").getContext("2d");
             const costLabels = Object.keys(fleetData.costBreakdown);
@@ -1334,4 +1844,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
