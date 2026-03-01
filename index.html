@@ -441,7 +441,7 @@
                             <div class="value" id="soldCount">27</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">購入成本</div>
+                            <div class="label">購車成本</div>
                             <div class="value" id="soldTotalPurchase">0</div>
                         </div>
                         <div class="summary-item">
@@ -501,7 +501,7 @@
                             <div class="value" id="terminatedTotalRental">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">結案收入</div>
+                            <div class="label">理賠款收入</div>
                             <div class="value" id="terminatedTotalPenalty">0</div>
                         </div>
                         <div class="summary-item">
@@ -552,7 +552,7 @@
 
             <!-- 成本結構 -->
             <div id="costs" class="tab-content">
-                <h2 style="margin-bottom: 20px;">圓餅圖表</h2>
+                <h2 style="margin-bottom: 20px;">圖表</h2>
                 <div class="chart-container">
                     <canvas id="costChart"></canvas>
                 </div>
@@ -595,14 +595,14 @@
     {"year": 2023, "revenue": 8744272, "expense": 3694609, "profit": 5049663, "claimRate": 1.44, "utilization": 95.8},
     {"year": 2024, "revenue": 9306029, "expense": 3202077, "profit": 6103952, "claimRate": 0.74, "utilization": 96.2},
     {"year": 2025, "revenue": 8595524, "expense": 3158363, "profit": 5437161, "claimRate": 0.67, "utilization": 96.7},
-    {"year": 2026, "revenue": 8854422, "expense": 2858841, "profit": 5234191, "claimRate": 0.69, "utilization": 96.7},
-    {"year": 2027, "revenue": 8499354, "expense": 3026021, "profit": 5473333, "claimRate": 0.64, "utilization": 100},
-    {"year": 2028, "revenue": 9533640, "expense": 4000000, "profit": 5533640, "claimRate": 0.6, "utilization": 100},
-    {"year": 2029, "revenue": 9533640, "expense": 4000000, "profit": 5533600, "claimRate": 0.55, "utilization": 100},
-    {"year": 2030, "revenue": 9533640, "expense": 4000000, "profit": 5533600, "claimRate": 0.48, "utilization": 100}
+    {"year": 2026, "revenue": 8854422, "expense": 2858841, "profit": 5234191, "claimRate": 0.61, "utilization": 96.7},
+    {"year": 2027, "revenue": 8499354, "expense": 3026021, "profit": 5473333, "claimRate": 0.54, "utilization": 100},
+    {"year": 2028, "revenue": 9533640, "expense": 4000000, "profit": 5533640, "claimRate": 0.46, "utilization": 100},
+    {"year": 2029, "revenue": 9533640, "expense": 4000000, "profit": 5533600, "claimRate": 0.39, "utilization": 100},
+    {"year": 2030, "revenue": 9533640, "expense": 4000000, "profit": 5533600, "claimRate": 0.31, "utilization": 100}
   ],
   "expiringVehicles": [
-    {"id": "GA-21001", "plate": "RDH-8065", "model": "Luxgen M7", "type": "MPV", "leaseEnd": "2026-09-18", "revenue": 1033000, "cost": 796000, "profit": 285000, "margin": 7.8, "utilization": 78.5, "status": "critical", "recommendation": "已使用五年，建議汰新"},
+    {"id": "GA-21001", "plate": "RDH-8065", "model": "Luxgen M7", "type": "MPV", "leaseEnd": "2026-09-18", "revenue": 1033143, "cost": 787030, "profit": 246113, "margin": 7.8, "utilization": 78.5, "status": "critical", "recommendation": "已使用五年，建議汰新"},
     {"id": "GA-21002", "plate": "RDQ-0865", "model": "Honda CR-V", "type": "SUV", "leaseEnd": "2027-03-30", "revenue": 1001000, "cost": 1254000, "profit": 373000, "margin": 20.8, "utilization": 82.1, "status": "critical", "recommendation": "已使用六年，建議汰新"},
     {"id": "CEO-22001", "plate": "RFD-9786", "model": "Toyota Sienna", "type": "MPV", "leaseEnd": "2026-11-30", "revenue": 2100000, "cost": 3089000, "profit": 373000, "margin": 20.8, "utilization": 88.3, "status": "critical", "recommendation": "8.6萬,高收益車輛"},
     {"id": "HSR-23001", "plate": "RFA-8173", "model": "Toyota Vios", "type": "Sedan", "leaseEnd": "2026-04-30", "revenue": 768000, "cost": 919000, "profit": 38000, "margin": 20.8, "utilization": 55.3, "status": "critical", "recommendation": "巡邏車高稼動,如期更新"},
