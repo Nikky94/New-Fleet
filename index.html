@@ -1532,7 +1532,7 @@
       "holdingPeriod": 0.25,
       "terminationReason": "苗栗自撞安全島全損",
       "status": "terminated",
-      "notes": "本金利益26891,RCW-6713接續"
+      "notes": "本金利益26,891 接續RCW-6713"
     },
     {
       "id": "HSR-002",
@@ -1548,7 +1548,7 @@
       "holdingPeriod": 1.17,
       "terminationReason": "彰化自撞電線桿全損",
       "status": "terminated",
-      "notes": "本金利益38307,RDF-5603接續"
+      "notes": "本金利益38,307 接續RDF-5603"
     },
     {
       "id": "HSR-003",
@@ -1564,7 +1564,7 @@
       "holdingPeriod": 0.75,
       "terminationReason": "彰化自撞全損",
       "status": "terminated",
-      "notes": "本金利益34051,RDL-6517接續"
+      "notes": "本金利益34,051 接續RDL-6517"
     },
     {
       "id": "HSR-004",
@@ -1580,15 +1580,15 @@
       "holdingPeriod": 1.67,
       "terminationReason": "雲林自撞路樹全損",
       "status": "terminated",
-      "notes": "本金利益115949,RDL-6517接續"
+      "notes": "本金利益115,949 接續RDL-6517"
     }
   ],
   "costBreakdown": {
-    "purchase": 2074034,
-    "tax": 41331,
-    "maintenance": 229508,
-    "insurance": 92390,
-    "others": 19524
+    "車輛購置": 2074034,
+    "牌燃稅規費": 41331,
+    "保養維修": 229508,
+    "保險費": 92390,
+    "其他": 19524
   }
 };
 
@@ -1948,7 +1948,7 @@
                 window.statusChartInstance.destroy();
             }
 
-            const labels = ['承租', '自購', '出售', '異常'];
+            const labels = ['承租', '自購', '出售', '解約'];
             const data = [
                 fleetData.summary.status.active,
                 fleetData.summary.status.idle || 0, // Assuming 'idle' is for '自購'
