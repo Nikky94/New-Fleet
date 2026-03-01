@@ -327,7 +327,7 @@
             <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
-            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
             <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
             <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
         </div>
@@ -340,27 +340,27 @@
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h3>保有</h3>
-                        <div class="value" id="totalVehicles"></div>
+                        <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>承租</h3>
-                        <div class="value" id="activeVehicles"></div>
+                        <div class="value" id="activeVehicles">29</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>自購</h3>
-                        <div class="value" id="idleVehicles"></div>
+                        <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
                         <h3>出售</h3>
-                        <div class="value" id="soldVehicles"></div>
+                        <div class="value" id="soldVehicles">27</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>異常</h3>
-                        <div class="value" id="terminatedVehicles"></div>
+                        <h3>解約</h3>
+                        <div class="value" id="terminatedVehicles">4</div>
                         <div class="unit">台</div>
                     </div>
                 </div>
@@ -397,9 +397,9 @@
                 </div>
             </div>
 
-            <!-- 風險 -->
+            <!-- 長期評估 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">用車習慣</h2>
+                <h2 style="margin-bottom: 20px;">10年期趨勢</h2>
                 
                 <div class="legend">
                     <div class="legend-item">
@@ -458,7 +458,7 @@
 
             <!-- 出售 -->
             <div id="sold" class="tab-content">
-                <h2 style="margin-bottom: 20px;">已出售車輛</h2>
+                <h2 style="margin-bottom: 20px;">結案明細</h2>
                 <div class="table-container">
                     <table id="soldVehiclesTable">
                         <thead>
@@ -481,9 +481,9 @@
                 </div>
             </div>
 
-            <!-- 異常 -->
+            <!-- 解約 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">異常車輛</h2>
+                <h2 style="margin-bottom: 20px;">事故全損</h2>
                 <div class="table-container">
                     <table id="terminatedVehiclesTable">
                         <thead>
@@ -510,7 +510,7 @@
 
             <!-- 個別損益 -->
             <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">個別車輛損益分析</h2>
+                <h2 style="margin-bottom: 20px;">實行中</h2>
                 <div class="table-container">
                     <table id="profitabilityTable">
                         <thead>
@@ -557,7 +557,7 @@
         </div>
 
         <div class="footer">
-            <p>&copy; 2026 JBD Dept. All rights reserved.</p>
+            <p>OALT JBD Dept. Nikky Wu 2026-02-28</p>
         </div>
     </div>
 
