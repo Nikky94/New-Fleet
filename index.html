@@ -324,7 +324,7 @@
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 趨勢</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 長期趨勢</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
@@ -380,9 +380,9 @@
                 </div>
             </div>
 
-            <!-- 趨勢 -->
+            <!-- 長期趨勢 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">10年期評估</h2>
+                <h2 style="margin-bottom: 20px;">10年期案件</h2>
                 
                 <div class="legend">
                     <div class="legend-item">
@@ -400,9 +400,9 @@
                 </div>
             </div>
 
-            <!-- 使用中車輛 -->
+            <!-- 租賃 -->
             <div id="vehicles" class="tab-content">
-                <h2 style="margin-bottom: 20px;">使用中車輛明細</h2>
+                <h2 style="margin-bottom: 20px;">實行中</h2>
                 <div class="search-filter">
                     <input type="text" id="vehicleSearch" placeholder="搜尋車牌或編號..." onkeyup="filterVehicleTable()">
                 </div>
@@ -410,7 +410,7 @@
                     <table id="vehicleTable">
                         <thead>
                             <tr>
-                                <th>車輛編號</th>
+                                <th>序號</th>
                                 <th>車牌</th>
                                 <th>車型</th>
                                 <th>類型</th>
@@ -432,28 +432,28 @@
 
             <!-- 已出售車輛 -->
             <div id="sold" class="tab-content">
-                <h2 style="margin-bottom: 20px;">已出售車輛統計</h2>
+                <h2 style="margin-bottom: 20px;">結案明細</h2>
                 <div class="summary-box">
                     <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
-                            <div class="label">已出售台數</div>
+                            <div class="label">台數</div>
                             <div class="value" id="soldCount">27</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總購入成本</div>
+                            <div class="label">購入成本</div>
                             <div class="value" id="soldTotalPurchase">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總出售收入</div>
+                            <div class="label">出售收入</div>
                             <div class="value" id="soldTotalSale">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總租金收入</div>
+                            <div class="label">租金收入</div>
                             <div class="value" id="soldTotalRental">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">總營運成本</div>
+                            <div class="label">營運成本</div>
                             <div class="value" id="soldTotalCost">0</div>
                         </div>
                         <div class="summary-item">
@@ -469,7 +469,7 @@
                     <table id="soldTable">
                         <thead>
                             <tr>
-                                <th>車輛編號</th>
+                                <th>序號</th>
                                 <th>車牌</th>
                                 <th>車型</th>
                                 <th>購入價</th>
@@ -486,14 +486,14 @@
                 </div>
             </div>
 
-            <!-- 解約車輛 -->
+            <!-- 異常 -->
             <div id="terminated" class="tab-content">
-                <h2 style="margin-bottom: 20px;">解約車輛統計</h2>
+                <h2 style="margin-bottom: 20px;">中途解約</h2>
                 <div class="summary-box">
-                    <h3>解約統計摘要</h3>
+                    <h3>摘要</h3>
                     <div class="summary-content">
                         <div class="summary-item">
-                            <div class="label">解約台數</div>
+                            <div class="label">台數</div>
                             <div class="value" id="terminatedCount">4</div>
                         </div>
                         <div class="summary-item">
@@ -501,7 +501,7 @@
                             <div class="value" id="terminatedTotalRental">0</div>
                         </div>
                         <div class="summary-item">
-                            <div class="label">違約金收入</div>
+                            <div class="label">結案收入</div>
                             <div class="value" id="terminatedTotalPenalty">0</div>
                         </div>
                         <div class="summary-item">
@@ -521,7 +521,7 @@
                     <table id="terminatedTable">
                         <thead>
                             <tr>
-                                <th>車輛編號</th>
+                                <th>序號</th>
                                 <th>車牌</th>
                                 <th>車型</th>
                                 <th>租金收入</th>
@@ -539,7 +539,7 @@
 
             <!-- 個別損益 -->
             <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">個別損益分析</h2>
+                <h2 style="margin-bottom: 20px;">實行中</h2>
                 <div class="chart-row">
                     <div class="chart-container">
                         <canvas id="profitChart"></canvas>
@@ -552,7 +552,7 @@
 
             <!-- 成本結構 -->
             <div id="costs" class="tab-content">
-                <h2 style="margin-bottom: 20px;">成本結構分析</h2>
+                <h2 style="margin-bottom: 20px;">圓餅圖表</h2>
                 <div class="chart-container">
                     <canvas id="costChart"></canvas>
                 </div>
@@ -560,7 +560,7 @@
         </div>
         
         <div class="footer">
-            <p>進階車隊營運績效報表 | 最後更新：2026-02-28 | JBD Dept. Fleet Management Division</p>
+            <p>日期：2026-02-28 | OALT JBD Dept. Nikky Wu</p>
         </div>
     </div>
 
