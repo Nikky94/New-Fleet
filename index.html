@@ -323,13 +323,13 @@
         </div>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab(\'overview\')">📊 總覽</button>
-            <button class="tab-btn" onclick="switchTab(\'trends\')">📈 風險</button>
-            <button class="tab-btn" onclick="switchTab(\'vehicles\')">🚙 租賃</button>
-            <button class="tab-btn" onclick="switchTab(\'sold\')">✅ 出售</button>
-            <button class="tab-btn" onclick="switchTab(\'terminated\')">⛔ 異常</button>
-            <button class="tab-btn" onclick="switchTab(\'profitability\')">💰 個別損益</button>
-            <button class="tab-btn" onclick="switchTab(\'costs\')">🔧 成本結構</button>
+            <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 風險</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
+            <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 異常</button>
+            <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
         </div>
         
         <div class="content">
@@ -1986,7 +1986,11 @@
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            document.querySelector(`.tab-btn[onclick="switchTab(\'${tabId}\')"]`).classList.add('active');
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                if (b.getAttribute('onclick') === "switchTab('" + tabId + "')") {
+                    b.classList.add('active');
+                }
+            });
 
             // Re-render charts when their tab is activated to ensure proper rendering
             if (tabId === 'trends') {
