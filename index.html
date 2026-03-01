@@ -328,7 +328,6 @@
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
-            <button class="tab-btn" onclick="switchTab('profitability')">💰 個別損益</button>
             <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
         </div>
         
@@ -506,32 +505,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <!-- 個別損益 -->
-            <div id="profitability" class="tab-content">
-                <h2 style="margin-bottom: 20px;">實行中</h2>
-                <div class="table-container">
-                    <table id="profitabilityTable">
-                        <thead>
-                            <tr>
-                                <th>車牌</th>
-                                <th>車型</th>
-                                <th>累計總收益</th>
-                                <th>累計總成本</th>
-                                <th>月均淨利</th>
-                                <th>利潤率</th>
-                                <th>使用率</th>
-                                <th>狀態</th>
-                                <th>建議</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Profitability data will be inserted here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            </div>                            
 
             <!-- 成本結構 -->
             <div id="costs" class="tab-content">
@@ -1732,26 +1706,6 @@
             });
         }
 
-        function renderProfitabilityTable() {
-            const tableBody = document.querySelector('#profitabilityTable tbody');
-            tableBody.innerHTML = '';
-            fleetData.expiringVehicles.forEach(v => {
-                const row = tableBody.insertRow();
-                row.insertCell().textContent = v.plate;
-                row.insertCell().textContent = v.model;
-                row.insertCell().textContent = formatCurrency(v.revenue);
-                row.insertCell().textContent = formatCurrency(v.cost);
-                row.insertCell().textContent = formatCurrency(v.monthlyProfit);
-                const marginCell = row.insertCell();
-                marginCell.textContent = formatPercentage(v.margin);
-                marginCell.classList.add(v.margin > 30 ? 'profit-positive' : (v.margin > 10 ? 'profit-warning' : 'profit-negative'));
-                row.insertCell().textContent = formatPercentage(v.utilization);
-                const statusCell = row.insertCell();
-                statusCell.innerHTML = `<span class="status-badge ${getStatusBadge(v.status)}">${v.status === 'critical' ? '建議汰新' : (v.status === 'warning' ? '獲利偏低' : '正常')}</span>`;
-                row.insertCell().textContent = v.recommendation;
-            });
-        }
-
         function renderYearlyTrendChart() {
             const ctx = document.getElementById('yearlyTrendChart').getContext('2d');
             if (window.yearlyTrendChartInstance) {
@@ -2014,7 +1968,6 @@
                 return matchesSearch && matchesType && matchesStatus;
             });
             renderVehiclesTable(filteredVehicles);
-            renderProfitabilityTable(filteredVehicles);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -2067,8 +2020,7 @@
             populateVehicleTypeFilter();
             renderVehiclesTable(fleetData.expiringVehicles);
             renderSoldVehiclesTable();
-            renderTerminatedVehiclesTable();
-            renderProfitabilityTable(fleetData.expiringVehicles);
+            renderTerminatedVehiclesTable();            
             renderVehicleTypeChart();
             renderStatusChart();
             // Initial render of charts for active tabs
