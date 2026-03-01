@@ -2038,7 +2038,7 @@
                     v.monthlyProfit = v.revenue - v.cost;
                 }
                 // Recalculate margin based on cumulative revenue and cost
-                v.margin = v.revenue > 0 ? parseFloat(((v.revenue - v.cost) / v.revenue * 100).toFixed(1)) : 0;
+                v.margin = v.revenue > 0 ? parseFloat(((v.revenue - v.cost) / v.cost * 100).toFixed(1)) : 0;
             });
 
             // Calculate overall summary metrics
