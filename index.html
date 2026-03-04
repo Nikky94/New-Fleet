@@ -534,6 +534,9 @@
 
                 <!-- 使用中車輛彙總 -->
                 <h3 style="margin-bottom: 10px; color: #667eea;">🚙 使用中車輛（29台）</h3>
+                <div class="chart-container" style="height: 350px; margin-bottom: 20px;">
+                    <canvas id="plActiveChart"></canvas>
+                </div>
                 <div class="table-container" style="margin-bottom: 30px;">
                     <table id="plActiveTable">
                         <thead>
@@ -551,6 +554,9 @@
 
                 <!-- 已出售車輛彙總 -->
                 <h3 style="margin-bottom: 10px; color: #51cf66;">✅ 已出售車輛（28台）</h3>
+                <div class="chart-container" style="height: 350px; margin-bottom: 20px;">
+                    <canvas id="plSoldChart"></canvas>
+                </div>
                 <div class="table-container" style="margin-bottom: 20px;">
                     <table id="plSoldTable">
                         <thead>
@@ -2602,6 +2608,140 @@
                 });
             }
             renderPLSummaryTables();
+
+            // === 損益分析長條圖 ===
+            function renderPLCharts() {
+                // 使用中車輛長條圖
+                let activePurchase = 0, activeEstSale = 0;
+                let activeEstInsurance = 0, activeInsurance = 0;
+                let activeEstMaintenance = 0, activeMaintenance = 0;
+                fleetData.expiringVehicles.forEach(v => {
+                    activePurchase += (v.purchaseCost || 0);
+                    activeEstSale += (v.estimatedSaleValue || 0);
+                    activeEstInsurance += (v.estimatedInsuranceCost || 0);
+                    activeInsurance += (v.insuranceCost || 0);
+                    activeEstMaintenance += (v.estimatedMaintenanceCost || 0);
+                    activeMaintenance += (v.maintenanceCost || 0);
+                });
+
+                const activeCtx = document.getElementById('plActiveChart').getContext('2d');
+                new Chart(activeCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['車輛\n(購置價/出售價)', '保險費\n(預估/實支)', '保養維修\n(預估/實支)'],
+                        datasets: [
+                            {
+                                label: '預估',
+                                data: [activePurchase, activeEstInsurance, activeEstMaintenance],
+                                backgroundColor: 'rgba(102, 126, 234, 0.7)',
+                                borderColor: 'rgba(102, 126, 234, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '實支/實收',
+                                data: [activeEstSale, activeInsurance, activeMaintenance],
+                                backgroundColor: 'rgba(255, 107, 107, 0.7)',
+                                borderColor: 'rgba(255, 107, 107, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '使用中車輛 — 預估 vs 實支/實收',
+                                font: { size: 16 }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' + formatCurrency(context.raw);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // 已出售車輛長條圖
+                let soldPurchase = 0, soldSale = 0;
+                let soldEstInsurance = 0, soldInsurance = 0;
+                let soldEstMaintenance = 0, soldMaintenance = 0;
+                fleetData.soldVehicles.forEach(v => {
+                    soldPurchase += (v.purchasePrice || 0);
+                    soldSale += (v.salePrice || 0);
+                    soldEstInsurance += (v.estimatedInsuranceCost || 0);
+                    soldInsurance += (v.insuranceCost || 0);
+                    soldEstMaintenance += (v.estimatedMaintenanceCost || 0);
+                    soldMaintenance += (v.maintenanceCost || 0);
+                });
+
+                const soldCtx = document.getElementById('plSoldChart').getContext('2d');
+                new Chart(soldCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['車輛\n(購置價/出售價)', '保險費\n(預估/實支)', '保養維修\n(預估/實支)'],
+                        datasets: [
+                            {
+                                label: '預估',
+                                data: [soldPurchase, soldEstInsurance, soldEstMaintenance],
+                                backgroundColor: 'rgba(81, 207, 102, 0.7)',
+                                borderColor: 'rgba(81, 207, 102, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: '實支/實收',
+                                data: [soldSale, soldInsurance, soldMaintenance],
+                                backgroundColor: 'rgba(255, 107, 107, 0.7)',
+                                borderColor: 'rgba(255, 107, 107, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '已出售車輛 — 預估 vs 實支/實收',
+                                font: { size: 16 }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.dataset.label + ': ' + formatCurrency(context.raw);
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            renderPLCharts();
 
             // Initial render of charts for active tabs
             switchTab('overview');
