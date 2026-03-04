@@ -328,7 +328,7 @@
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 整體損益</button>
         </div>
         
         <div class="content">
@@ -511,7 +511,7 @@
 
             <!-- 成本結構 -->
             <div id="costs" class="tab-content">
-                <h2 style="margin-bottom: 20px;">圖表分析</h2>
+                <h2 style="margin-bottom: 20px;">圖表</h2>
                 <div class="chart-container" style="height: 500px;">
                     <canvas id="costBreakdownChart"></canvas>
                 </div>
@@ -532,8 +532,8 @@
 
                 <h2 style="margin-top: 40px; margin-bottom: 20px;">損益分析彙總</h2>
 
-                <!-- 使用中車輛彙總 -->
-                <h3 style="margin-bottom: 10px; color: #667eea;">🚙 使用中車輛（29台）</h3>
+                <!-- 使用中彙總 -->
+                <h3 style="margin-bottom: 10px; color: #667eea;">🚙 使用中（29台）</h3>
                 <div class="chart-container" style="height: 350px; margin-bottom: 20px;">
                     <canvas id="plActiveChart"></canvas>
                 </div>
@@ -552,8 +552,8 @@
                     </table>
                 </div>
 
-                <!-- 已出售車輛彙總 -->
-                <h3 style="margin-bottom: 10px; color: #51cf66;">✅ 已出售車輛（28台）</h3>
+                <!-- 已出售彙總 -->
+                <h3 style="margin-bottom: 10px; color: #51cf66;">✅ 已出售（28台）</h3>
                 <div class="chart-container" style="height: 350px; margin-bottom: 20px;">
                     <canvas id="plSoldChart"></canvas>
                 </div>
@@ -2155,8 +2155,8 @@
     }
   ],
   "costBreakdown": {
-    "車輛購置": 2074034,
-    "牌燃稅規費": 41331,
+    "購車": 2074034,
+    "稅金規費": 41331,
     "保養維修": 229508,
     "保險費": 92390,
     "其他": 19524
@@ -2639,10 +2639,10 @@
                 totalOthersCost += (v.othersCost || 0);
             });
 
-            // Update costBreakdown with calculated totals (順序：車輛購置→牌燃稅規費→保險費→保養維修→其他)
+            // Update costBreakdown with calculated totals (順序：購車→稅金規費→保險費→保養維修→其他)
             fleetData.costBreakdown = {
-                '車輛購置': totalPurchaseCost,
-                '牌燃稅規費': totalTaxCost,
+                '購車': totalPurchaseCost,
+                '稅金規費': totalTaxCost,
                 '保險費': totalInsuranceCost,
                 '保養維修': totalMaintenanceCost,
                 '其他': totalOthersCost
@@ -2655,9 +2655,9 @@
             renderTerminatedVehiclesTable();            
             renderVehicleTypeChart();
             renderStatusChart();
-            // === 損益分析彙總表 ===
+            // === 損益彙總表 ===
             function renderPLSummaryTables() {
-                // 使用中車輛彙總
+                // 使用中彙總
                 let activePurchase = 0, activeEstSale = 0;
                 let activeEstTax = 0, activeTax = 0;
                 let activeEstInsurance = 0, activeInsurance = 0;
@@ -2677,11 +2677,11 @@
                 });
 
                 const activeData = [
-                    { item: '車輛（購置價/出售價）', estimated: activePurchase, actual: activeEstSale },
-                    { item: '牌燃稅規費（預估/實付）', estimated: activeEstTax, actual: activeTax },
+                    { item: '車輛（購買/出售）', estimated: activePurchase, actual: activeEstSale },
+                    { item: '稅金規費（預估/實支）', estimated: activeEstTax, actual: activeTax },
                     { item: '保險費（預估/實支）', estimated: activeEstInsurance, actual: activeInsurance },
                     { item: '保養維修（預估/實支）', estimated: activeEstMaintenance, actual: activeMaintenance },
-                    { item: '其他（預估/實付）', estimated: activeEstOthers, actual: activeOthers }
+                    { item: '其他（預估/實支）', estimated: activeEstOthers, actual: activeOthers }
                 ];
 
                 const activeBody = document.querySelector('#plActiveTable tbody');
@@ -2697,7 +2697,7 @@
                     diffCell.classList.add(diff >= 0 ? 'profit-positive' : 'profit-negative');
                 });
 
-                // 已出售車輛彙總
+                // 已出售彙總
                 let soldPurchase = 0, soldSale = 0;
                 let soldEstTax = 0, soldTax = 0;
                 let soldEstInsurance = 0, soldInsurance = 0;
@@ -2717,11 +2717,11 @@
                 });
 
                 const soldData = [
-                    { item: '車輛（購置價/出售價）', estimated: soldPurchase, actual: soldSale },
-                    { item: '牌燃稅規費（預估/實付）', estimated: soldEstTax, actual: soldTax },
+                    { item: '車輛（購買/出售）', estimated: soldPurchase, actual: soldSale },
+                    { item: '稅金規費（預估/實支）', estimated: soldEstTax, actual: soldTax },
                     { item: '保險費（預估/實支）', estimated: soldEstInsurance, actual: soldInsurance },
                     { item: '保養維修（預估/實支）', estimated: soldEstMaintenance, actual: soldMaintenance },
-                    { item: '其他（預估/實付）', estimated: soldEstOthers, actual: soldOthers }
+                    { item: '其他（預估/實支）', estimated: soldEstOthers, actual: soldOthers }
                 ];
 
                 const soldBody = document.querySelector('#plSoldTable tbody');
@@ -2741,7 +2741,7 @@
 
             // === 損益分析長條圖 ===
             function renderPLCharts() {
-                // 使用中車輛長條圖
+                // 使用中長條圖
                 let activePurchase = 0, activeEstSale = 0;
                 let activeEstTax = 0, activeTax = 0;
                 let activeEstInsurance = 0, activeInsurance = 0;
@@ -2764,7 +2764,7 @@
                 new Chart(activeCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['車輛\n(購置價/出售價)', '牌燃稅規費\n(預估/實付)', '保險費\n(預估/實支)', '保養維修\n(預估/實支)', '其他\n(預估/實付)'],
+                        labels: ['車輛\n(購買/出售)', '稅金規費\n(預估/實支)', '保險費\n(預估/實支)', '保養維修\n(預估/實支)', '其他\n(預估/實支)'],
                         datasets: [
                             {
                                 label: '預估',
@@ -2788,7 +2788,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: '使用中車輛 — 預估 vs 實支/實收',
+                                text: '使用中 — 預估 vs 實支/實收',
                                 font: { size: 16 }
                             },
                             tooltip: {
@@ -2812,7 +2812,7 @@
                     }
                 });
 
-                // 已出售車輛長條圖
+                // 已出售長條圖
                 let soldPurchase = 0, soldSale = 0;
                 let soldEstTax = 0, soldTax = 0;
                 let soldEstInsurance = 0, soldInsurance = 0;
@@ -2835,7 +2835,7 @@
                 new Chart(soldCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['車輛\n(購置價/出售價)', '牌燃稅規費\n(預估/實付)', '保險費\n(預估/實支)', '保養維修\n(預估/實支)', '其他\n(預估/實付)'],
+                        labels: ['車輛\n(購買/出售)', '稅金規費\n(預估/實支)', '保險費\n(預估/實支)', '保養維修\n(預估/實支)', '其他\n(預估/實支)'],
                         datasets: [
                             {
                                 label: '預估',
@@ -2859,7 +2859,7 @@
                         plugins: {
                             title: {
                                 display: true,
-                                text: '已出售車輛 — 預估 vs 實支/實收',
+                                text: '已出售 — 預估 vs 實支/實收',
                                 font: { size: 16 }
                             },
                             tooltip: {
