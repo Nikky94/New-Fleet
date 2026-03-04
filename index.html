@@ -2361,6 +2361,2519 @@
 
             // Sum from sold vehicles
             fleetData.soldVehicles.forEach(v => {
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>進階車隊營運績效報表</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            background: #f5f5f5;
+            border-bottom: 2px solid #ddd;
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 1em;
+            color: #666;
+            transition: all 0.3s;
+            white-space: nowrap;
+            min-width: 150px;
+        }
+        
+        .tab-btn:hover {
+            background: #e0e0e0;
+            color: #333;
+        }
+        
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            border-bottom: 3px solid #667eea;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 30px;
+            min-height: 600px;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .stat-card .unit {
+            font-size: 0.8em;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .chart-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .chart-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95em;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:hover {
+            background: #f9f9f9;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-critical {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .status-warning {
+            background: #ffd93d;
+            color: #333;
+        }
+        
+        .status-normal {
+            background: #51cf66;
+            color: white;
+        }
+        
+        .status-completed {
+            background: #868e96;
+            color: white;
+        }
+        
+        .status-terminated {
+            background: #ff922b;
+            color: white;
+        }
+        
+        .search-filter {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .search-filter input,
+        .search-filter select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+        
+        .search-filter input {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #ddd;
+        }
+        
+        .legend {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+        }
+
+        .profit-positive {
+            color: #51cf66;
+            font-weight: bold;
+        }
+
+        .profit-negative {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .summary-box h3 {
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .summary-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-item {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .summary-item .label {
+            font-size: 0.9em;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .summary-item .value {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>👮 天鷹保全</h1>
+            <p>    SEMAIL車隊績效管理報表</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
+            <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
+            <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
+            <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+        </div>
+        
+        <div class="content">
+            <!-- 總覽 -->
+            <div id="overview" class="tab-content active">
+                <h2 style="margin-bottom: 20px;">現況</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>保有</h3>
+                        <div class="value" id="totalVehicles">30</div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>承租</h3>
+                        <div class="value" id="activeVehicles">29</div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>自購</h3>
+                        <div class="value" id="idleVehicles">1</div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>出售</h3>
+                        <div class="value" id="soldVehicles">28</div>
+                        <div class="unit">台</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>解約</h3>
+                        <div class="value" id="terminatedVehicles">4</div>
+                        <div class="unit">台</div>
+                    </div>
+                </div>
+
+                <div class="summary-box">
+                    <h3>車隊總覽</h3>
+                    <div class="summary-content">
+                        <div class="summary-item">
+                            <div class="label">總車輛數</div>
+                            <div class="value" id="summaryTotalVehicles"></div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="label">平均月收益</div>
+                            <div class="value" id="summaryAvgMonthlyRevenue"></div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="label">平均月成本</div>
+                            <div class="value" id="summaryAvgMonthlyExpense"></div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="label">整體使用率</div>
+                            <div class="value" id="summaryUtilizationRate"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-row">
+                    <div class="chart-container">
+                        <canvas id="vehicleTypeChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 長期評估 -->
+            <div id="trends" class="tab-content">
+                <h2 style="margin-bottom: 20px;">10年期趨勢</h2>
+                
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #667eea;"></div>
+                        <span>過去5年 (實績)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ffd93d;"></div>
+                        <span>未來5年 (預測)</span>
+                    </div>
+                </div>
+                
+                <div class="chart-container" style="height: 500px;">
+                    <canvas id="yearlyTrendChart"></canvas>
+                </div>
+
+                <h2 style="margin-top: 40px; margin-bottom: 20px;">損益分析彙總</h2>
+
+                <!-- 使用中車輛彙總 -->
+                <h3 style="margin-bottom: 10px; color: #667eea;">🚙 使用中車輛（29台）</h3>
+                <div class="table-container" style="margin-bottom: 30px;">
+                    <table id="plActiveTable">
+                        <thead>
+                            <tr>
+                                <th>項目</th>
+                                <th>預估</th>
+                                <th>實支/實收</th>
+                                <th>差異</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 已出售車輛彙總 -->
+                <h3 style="margin-bottom: 10px; color: #51cf66;">✅ 已出售車輛（28台）</h3>
+                <div class="table-container" style="margin-bottom: 20px;">
+                    <table id="plSoldTable">
+                        <thead>
+                            <tr>
+                                <th>項目</th>
+                                <th>預估</th>
+                                <th>實支/實收</th>
+                                <th>差異</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 租賃 -->
+            <div id="vehicles" class="tab-content">
+                <h2 style="margin-bottom: 20px;">實行中</h2>
+                <div class="search-filter">
+                    <input type="text" id="vehicleSearch" placeholder="搜尋車牌、車型...">
+                    <select id="vehicleTypeFilter">
+                        <option value="all">所有車型</option>
+                    </select>
+                    <select id="vehicleStatusFilter">
+                        <option value="all">所有狀態</option>
+                        <option value="critical">建議汰新</option>
+                        <option value="warning">獲利偏低</option>
+                        <option value="normal">正常</option>
+                    </select>
+                </div>
+                <div class="table-container">
+                    <table id="vehiclesTable">
+                        <thead>
+                            <tr>
+                                <th>車牌</th>
+                                <th>車型</th>
+                                <th>車型類別</th>
+                                <th>租約到期日</th>
+                                <th>累計總收益</th>
+                                <th>累計總成本</th>
+                                <th>預估出售值</th>
+                                <th>月均淨利</th>
+                                <th>利潤率</th>
+                                <th>使用率</th>
+                                <th>狀態</th>
+                                <th>建議</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Vehicle data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 出售 -->
+            <div id="sold" class="tab-content">
+                <h2 style="margin-bottom: 20px;">結案明細</h2>
+                <div class="table-container">
+                    <table id="soldVehiclesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>車牌</th>
+                                <th>車型</th>
+                                <th>購入價</th>
+                                <th>出售價</th>
+                                <th>租金收入</th>
+                                <th>營運成本</th>
+                                <th>總損益</th>
+                                <th>持有期間 (年)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Sold vehicle data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 解約 -->
+            <div id="terminated" class="tab-content">
+                <h2 style="margin-bottom: 20px;">事故全損</h2>
+                <div class="table-container">
+                    <table id="terminatedVehiclesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>車牌</th>
+                                <th>車型</th>
+                                <th>購入價</th>
+                                <th>租金收入</th>
+                                <th>解約金</th>
+                                <th>營運成本</th>
+                                <th>總損益</th>
+                                <th>持有期間 (年)</th>
+                                <th>解約原因</th>
+                                <th>備註</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Terminated vehicle data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>                            
+
+            <!-- 成本結構 -->
+            <div id="costs" class="tab-content">
+                <h2 style="margin-bottom: 20px;">圖表分析</h2>
+                <div class="chart-container" style="height: 500px;">
+                    <canvas id="costBreakdownChart"></canvas>
+                </div>
+                <div class="table-container" style="margin-top: 20px;">
+                    <table id="costBreakdownTable">
+                        <thead>
+                            <tr>
+                                <th>成本項目</th>
+                                <th>金額</th>
+                                <th>佔比</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Cost breakdown data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>OALT JBD Dept. Nikky Wu 2026-02-28</p>
+        </div>
+    </div>
+
+    <script>
+        const fleetData = {
+  "summary": {
+    "totalVehicles": 30,
+    "status": {
+      "active": 29,
+      "idle": 1,
+      "sold": 28,
+      "terminated": 4
+    },
+    "avgMonthlyRevenue": 24695,
+    "avgMonthlyExpense": 7722,
+    "utilizationRate": 58.2,
+    "active": 29,
+    "sold": 87,
+    "terminated": 4
+  },
+  "vehicleTypes": {
+    "Sedan": 26,
+    "SUV": 2,
+    "MPV": 2
+  },
+  "yearlyTrend": [
+    {
+      "year": 2021,
+      "revenue": 5774563,
+      "expense": 3934790,
+      "profit": 1839773,
+      "claimRate": 0.42,
+      "utilization": 92.5
+    },
+    {
+      "year": 2022,
+      "revenue": 7085577,
+      "expense": 4077142,
+      "profit": 3008435,
+      "claimRate": 0.44,
+      "utilization": 94.1
+    },
+    {
+      "year": 2023,
+      "revenue": 8744272,
+      "expense": 3694609,
+      "profit": 5049663,
+      "claimRate": 1.44,
+      "utilization": 95.8
+    },
+    {
+      "year": 2024,
+      "revenue": 9306029,
+      "expense": 3202077,
+      "profit": 6103952,
+      "claimRate": 0.74,
+      "utilization": 96.2
+    },
+    {
+      "year": 2025,
+      "revenue": 8595524,
+      "expense": 3158363,
+      "profit": 5437161,
+      "claimRate": 0.67,
+      "utilization": 96.7
+    },
+    {
+      "year": 2026,
+      "revenue": 8854422,
+      "expense": 2858841,
+      "profit": 5234191,
+      "claimRate": 0.62,
+      "utilization": 96.7
+    },
+    {
+      "year": 2027,
+      "revenue": 8499354,
+      "expense": 3026021,
+      "profit": 5473333,
+      "claimRate": 0.56,
+      "utilization": 100
+    },
+    {
+      "year": 2028,
+      "revenue": 9533640,
+      "expense": 4000000,
+      "profit": 5533640,
+      "claimRate": 0.51,
+      "utilization": 100
+    },
+    {
+      "year": 2029,
+      "revenue": 9533640,
+      "expense": 4000000,
+      "profit": 5533600,
+      "claimRate": 0.45,
+      "utilization": 100
+    },
+    {
+      "year": 2030,
+      "revenue": 9533640,
+      "expense": 4000000,
+      "profit": 5533600,
+      "claimRate": 0.40,
+      "utilization": 100
+    }
+  ],
+  "expiringVehicles": [
+    {
+      "id": "GA-21001",
+      "plate": "RDH-8065",
+      "model": "Luxgen M7",
+      "type": "MPV",
+      "leaseEnd": "2026-09-18",
+      "revenue": 952190,
+      "cost": 787030,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 165160,
+      "margin": 7.8,
+      "utilization": 73,
+      "status": "normal",
+      "recommendation": "2026提案汰新",
+      "leaseStartDate": "2021-09-19",
+      "holdingMonths": 54,
+      "monthlyRevenue": 19129.63,
+      "monthlyCost": 14740.74,
+      "monthlyProfit": 5277.78
+    },
+    {
+      "id": "GA-21002",
+      "plate": "RDQ-0865",
+      "model": "Honda CR-V",
+      "type": "SUV",
+      "leaseEnd": "2027-03-30",
+      "revenue": 809143,
+      "cost": 679016,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 130127,
+      "margin": 20.8,
+      "utilization": 70,
+      "status": "warning",
+      "recommendation": "2027提案汰新",
+      "leaseStartDate": "2022-03-31",
+      "holdingMonths": 48,
+      "monthlyRevenue": 20854.17,
+      "monthlyCost": 26125.0,
+      "monthlyProfit": 7770.83
+    },
+    {
+      "id": "CEO-22001",
+      "plate": "RFD-9786",
+      "model": "Toyota Sienna",
+      "type": "MPV",
+      "leaseEnd": "2026-11-30",
+      "revenue": 1575619,
+      "cost": 1420725,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 154894,
+      "margin": 20.8,
+      "utilization": 54,
+      "status": "warning",
+      "recommendation": "董事長車會汰新",
+      "leaseStartDate": "2023-12-01",
+      "holdingMonths": 27,
+      "monthlyRevenue": 77777.78,
+      "monthlyCost": 114407.41,
+      "monthlyProfit": 13814.81
+    },
+    {
+      "id": "HSR-23001",
+      "plate": "RFA-8173",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 727272,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 16728,
+      "margin": 20.8,
+      "utilization": 95,
+      "status":"critical",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23002",
+      "plate": "RFA-8175",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 753238,
+      "cost": 576037,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 177021,
+      "margin": 20.8,
+      "utilization": 65,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23003",
+      "plate": "RFA-8187",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 541154,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 202846,
+      "margin": 20.8,
+      "utilization": 64,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23004",
+      "plate": "RFA-8190",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 543944,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 200056,
+      "margin": 20.8,
+      "utilization": 64,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23005",
+      "plate": "RFA-8192",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 595685,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 148315,
+      "margin": 20.8,
+      "utilization": 73,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23006",
+      "plate": "RFA-8193",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 582646,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 161354,
+      "margin": 20.8,
+      "utilization": 72,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23007",
+      "plate": "RFA-8197",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 582366,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 161634,
+      "margin": 20.8,
+      "utilization": 73,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23008",
+      "plate": "RFA-8201",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 561803,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 182197,
+      "margin": 20.8,
+      "utilization": 64,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23009",
+      "plate": "RFA-8202",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 584023,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 159977,
+      "margin": 20.8,
+      "utilization": 63,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23010",
+      "plate": "RFA-8203",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 569808,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 174192,
+      "margin": 20.8,
+      "utilization": 64,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23011",
+      "plate": "RFA-8205",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 560514,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 183486,
+      "margin": 20.8,
+      "utilization": 66,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23012",
+      "plate": "RFA-8210",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 573916,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 170084,
+      "margin": 20.8,
+      "utilization": 70,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23013",
+      "plate": "RFA-8211",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 590748,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 153252,
+      "margin": 20.8,
+      "utilization": 74,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23014",
+      "plate": "RFA-8215",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 587263,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 156737,
+      "margin": 20.8,
+      "utilization": 69,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23015",
+      "plate": "RFA-8219",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 600834,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 143166,
+      "margin": 20.8,
+      "utilization": 71,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23016",
+      "plate": "RFA-8223",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 617164,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 126836,
+      "margin": 20.8,
+      "utilization": 78,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23017",
+      "plate": "RFA-8225",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 590133,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 153867,
+      "margin": 20.8,
+      "utilization": 68,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23018",
+      "plate": "RFA-8230",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 615471,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 128529,
+      "margin": 20.8,
+      "utilization": 79,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23019",
+      "plate": "RFA-8232",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 691005,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 52995,
+      "margin": 20.8,
+      "utilization": 88,
+      "status": "critical",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23020",
+      "plate": "RFA-8235",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 563052,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 180948,
+      "margin": 20.8,
+      "utilization": 67,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23021",
+      "plate": "RFA-8237",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 581131,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 162869,
+      "margin": 20.8,
+      "utilization": 70,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23022",
+      "plate": "RFA-8239",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 673710,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 70290,
+      "margin": 20.8,
+      "utilization": 83,
+      "status": "warning",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23023",
+      "plate": "RFA-8250",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 578811,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 165189,
+      "margin": 20.8,
+      "utilization": 69,
+      "status": "normal",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23024",
+      "plate": "RFA-8251",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 697082,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 46918,
+      "margin": 20.8,
+      "utilization": 63,
+      "status": "critical",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-23025",
+      "plate": "RFA-8252",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 744000,
+      "cost": 629890,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 114110,
+      "margin": 20.8,
+      "utilization": 82,
+      "status": "warning",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2023-09-01",
+      "holdingMonths": 30,
+      "monthlyRevenue": 25600.0,
+      "monthlyCost": 30633.33,
+      "monthlyProfit": 1266.67
+    },
+    {
+      "id": "HSR-25026",
+      "plate": "RFQ-9715",
+      "model": "Toyota Vios",
+      "type": "Sedan",
+      "leaseEnd": "2026-04-30",
+      "revenue": 314286,
+      "cost": 293221,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedSaleValue": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "profit": 21065,
+      "margin": 20.8,
+      "utilization": 72,
+      "status": "critical",
+      "recommendation": "高稼動,如期更新",
+      "leaseStartDate": "2025-05-01",
+      "holdingMonths": 10,
+      "monthlyRevenue": 76800.0,
+      "monthlyCost": 91900.0,
+      "monthlyProfit": 3800.0
+    }
+  ],
+  "soldVehicles": [
+    {
+      "id": "GA-19001",
+      "plate": "RDQ-1350",
+      "model": "Toyota Sienta",
+      "purchasePrice": 679531,
+      "salePrice": 438095,
+      "rentalRevenue": 480000,
+      "operatingCost": 124148,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 114466,
+      "holdingPeriod": 3.5
+    },
+    {
+      "id": "CEO-20001",
+      "plate": "RDB-8065",
+      "model": "M-BENZ GLC coupe",
+      "purchasePrice": 2780095,
+      "salePrice": 1790476,
+      "rentalRevenue": 1952360,
+      "operatingCost": 306628,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 656513,
+      "holdingPeriod": 3
+    },
+    {
+      "id": "HSR-20001",
+      "plate": "RCU-6706",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 147619,
+      "rentalRevenue": 743424,
+      "operatingCost": 353683,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 24866,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20002",
+      "plate": "RCU-6710",
+      "model": "Toyota Yaris",      
+      "purchasePrice": 512794,
+      "salePrice": 147619,
+      "rentalRevenue": 743424,
+      "operatingCost": 353683,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 24866,
+      "holdingPeriod": 3.3      
+    },
+    {
+      "id": "HSR-20003",
+      "plate": "RCU-6712",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 154286,
+      "rentalRevenue": 741484,
+      "operatingCost": 326754,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 56222,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20004",
+      "plate": "RCU-6713",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 171429,
+      "rentalRevenue": 746190,
+      "operatingCost": 351446,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 53379,
+      "holdingPeriod": 3.3
+    },
+    {     
+      "id": "HSR-20005",
+      "plate": "RCU-6715",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 136190,
+      "rentalRevenue": 792421,
+      "operatingCost": 397736,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 18081,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20006",
+      "plate": "RCU-6716",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 202857,
+      "rentalRevenue": 770322,
+      "operatingCost": 403156,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 57229,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20007",
+      "plate": "RCU-6720",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 170476,
+      "rentalRevenue": 768768,
+      "operatingCost": 383830,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 42620,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20008",
+      "plate": "RCU-6721",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 109524,
+      "rentalRevenue": 762533,
+      "operatingCost": 338750,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 20513,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20009",
+      "plate": "RCU-6723",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 126667,
+      "rentalRevenue": 761657,
+      "operatingCost": 450339,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": -74809,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20010",
+      "plate": "RCU-6730",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 171429,
+      "rentalRevenue": 744353,
+      "operatingCost": 351446,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 51542,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20011",
+      "plate": "RCU-6732",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 187619,
+      "rentalRevenue": 739048,
+      "operatingCost": 351446,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 62427,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20012",
+      "plate": "RCU-6733",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 191429,
+      "rentalRevenue": 754895,
+      "operatingCost": 288537,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 144993,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20013",
+      "plate": "RCU-6735",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 171429,
+      "rentalRevenue": 747771,
+      "operatingCost": 346717,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 59689,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20014",
+      "plate": "RCU-6750",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 176190,
+      "rentalRevenue": 968096,
+      "operatingCost": 393361,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 238131,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20015",
+      "plate": "RCU-6751",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 118095,
+      "rentalRevenue": 735048,
+      "operatingCost": 334736,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 5613,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20016",
+      "plate": "RCU-6752",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 164762,
+      "rentalRevenue": 735048,
+      "operatingCost": 349720,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 5613,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20017",
+      "plate": "RCU-6753",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 141905,
+      "rentalRevenue": 746119,
+      "operatingCost": 438791,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 37296,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20018",
+      "plate": "RCU-6760",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 142857,
+      "rentalRevenue": 746190,
+      "operatingCost": 445174,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": -68921,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20019",
+      "plate": "RCU-6762",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 143810,
+      "rentalRevenue": 735048,
+      "operatingCost": 326343,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 39721,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20020",
+      "plate": "RCU-6763",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 200000,
+      "rentalRevenue": 735048,
+      "operatingCost": 245254,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 177000,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20021",
+      "plate": "RCU-6772",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 158095,
+      "rentalRevenue": 742095,
+      "operatingCost": 246858,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 140538,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20022",
+      "plate": "RCU-6773",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 164762,
+      "rentalRevenue": 735048,
+      "operatingCost": 245254,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 141762,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20023",
+      "plate": "RCU-6775",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 164762,
+      "rentalRevenue": 735048,
+      "operatingCost": 245254,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 141762,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20024",
+      "plate": "RCU-6781",
+      "model": "Toyota Yaris",
+      "purchasePrice": 512794,
+      "salePrice": 190476,
+      "rentalRevenue": 735048,
+      "operatingCost": 249316,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 163414,
+      "holdingPeriod": 3.3
+    },
+    {
+      "id": "HSR-20025",
+      "plate": "RDL-6517",
+      "model": "Toyota Yaris",
+      "purchasePrice": 445047,
+      "salePrice": 202857,
+      "rentalRevenue": 587424,
+      "operatingCost": 102616,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": 242618,
+      "holdingPeriod": 1.46
+    },
+    {
+      "id": "HSR-20026",
+      "plate": "RCW-6713",
+      "model": "Toyota Yaris",
+      "purchasePrice": 514219,
+      "salePrice": 142857,
+      "rentalRevenue": 727333,
+      "operatingCost": 417061,
+      "purchaseCost": 0,
+      "taxCost": 0,
+      "insuranceCost": 0,
+      "maintenanceCost": 0,
+      "othersCost": 0,
+      "estimatedInsuranceCost": 0,
+      "estimatedMaintenanceCost": 0,
+      "totalProfit": -61090,
+      "holdingPeriod": 3.3
+      }
+  ],
+  "terminatedVehicles": [
+    {
+      "id": "HSR-001",
+      "plate": "RCU-6725",
+      "model": "Toyota Yaris",      
+      "leaseStartDate": "2020-04-30",
+      "terminationDate": "2020-07-29",
+      "purchasePrice": 512794,
+      "rentalRevenueReceived": 40000,
+      "terminationFeeReceived": 572460,
+      "totalOperatingCost": 533031,
+      "totalProfit": 79429,
+      "holdingPeriod": 0.25,
+      "terminationReason": "苗栗自撞安全島全損",
+      "status": "terminated",
+      "notes": "本金利益26,891 接續RCW-6713"
+    },
+    {
+      "id": "HSR-002",
+      "plate": "RCU-6736",
+      "model": "Toyota Yaris",
+      "leaseStartDate": "2020-04-30",
+      "terminationDate": "2021-06-29",
+      "purchasePrice": 512794,
+      "rentalRevenueReceived": 230667,
+      "terminationFeeReceived": 485980,
+      "totalOperatingCost": 645531,
+      "totalProfit": 71116,
+      "holdingPeriod": 1.17,
+      "terminationReason": "彰化自撞電線桿全損",
+      "status": "terminated",
+      "notes": "本金利益38,307 接續RDF-5603"
+    },
+    {
+      "id": "HSR-003",
+      "plate": "RDF-5603",
+      "model": "Toyota Yaris",
+      "leaseStartDate": "2021-06-30",
+      "terminationDate": "2022-02-07",
+      "purchasePrice": 520033,
+      "rentalRevenueReceived": 163107,
+      "terminationFeeReceived": 513770,
+      "totalOperatingCost": 592558,
+      "totalProfit": 84319,
+      "holdingPeriod": 0.75,
+      "terminationReason": "彰化自撞全損",
+      "status": "terminated",
+      "notes": "本金利益34,051 接續RDL-6517"
+    },
+    {
+      "id": "HSR-004",
+      "plate": "RFA-8226",
+      "model": "Toyota Vios",
+      "leaseStartDate": "2023-09-01",
+      "terminationDate": "2025-06-11",
+      "purchasePrice": 528413,
+      "rentalRevenueReceived": 480000,
+      "terminationFeeReceived": 451800,
+      "totalOperatingCost": 682558,
+      "totalProfit": 249242,
+      "holdingPeriod": 1.67,
+      "terminationReason": "雲林自撞路樹全損",
+      "status": "terminated",
+      "notes": "本金利益115,949 接續RFQ-9715"
+    }
+  ],
+  "costBreakdown": {
+    "車輛購置": 2074034,
+    "牌燃稅規費": 41331,
+    "保養維修": 229508,
+    "保險費": 92390,
+    "其他": 19524
+  }
+};
+
+        const CURRENT_DATE = new Date('2026-03-01');
+
+        function calculateHoldingMonths(startDateStr) {
+            if (!startDateStr) return 0;
+            const startDate = new Date(startDateStr);
+            let months = (CURRENT_DATE.getFullYear() - startDate.getFullYear()) * 12;
+            months -= startDate.getMonth();
+            months += CURRENT_DATE.getMonth();
+            return months <= 0 ? 0 : months;
+        }
+
+        function formatCurrency(value) {
+            return new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(value);
+        }
+
+        function formatPercentage(value) {
+            return `${value.toFixed(1)}%`;
+        }
+
+        function getStatusBadge(status) {
+            switch (status) {
+                case 'critical': return 'status-critical';
+                case 'warning': return 'status-warning';
+                case 'normal': return 'status-normal';
+                case 'completed': return 'status-completed';
+                case 'terminated': return 'status-terminated';
+                default: return '';
+            }
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                if (b.getAttribute('onclick') === "switchTab('" + tabId + "')") {
+                    b.classList.add('active');
+                }
+            });
+
+            // Re-render charts when their tab is activated to ensure proper rendering
+            if (tabId === 'trends') {
+                renderYearlyTrendChart();
+            } else if (tabId === 'costs') {
+                renderCostBreakdownChart();
+            }
+        }
+
+        function updateSummaryCards() {
+            document.getElementById('totalVehicles').textContent = fleetData.summary.totalVehicles;
+            document.getElementById('activeVehicles').textContent = fleetData.summary.status.active;
+            document.getElementById('idleVehicles').textContent = fleetData.summary.status.idle || 0; // Assuming 'idle' is for '自購'
+            document.getElementById('soldVehicles').textContent = fleetData.summary.status.sold;
+            document.getElementById('terminatedVehicles').textContent = fleetData.summary.status.terminated;
+
+            document.getElementById('summaryTotalVehicles').textContent = fleetData.summary.totalVehicles;
+            document.getElementById('summaryAvgMonthlyRevenue').textContent = formatCurrency(fleetData.summary.avgMonthlyRevenue);
+            document.getElementById('summaryAvgMonthlyExpense').textContent = formatCurrency(fleetData.summary.avgMonthlyExpense);
+            document.getElementById('summaryUtilizationRate').textContent = formatPercentage(fleetData.summary.utilizationRate);
+        }
+
+        function populateVehicleTypeFilter() {
+            const filter = document.getElementById('vehicleTypeFilter');
+            const types = new Set();
+            fleetData.expiringVehicles.forEach(v => types.add(v.type));
+            types.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                filter.appendChild(option);
+            });
+        }
+
+        function renderVehiclesTable(vehicles) {
+            const tableBody = document.querySelector('#vehiclesTable tbody');
+            tableBody.innerHTML = '';
+            vehicles.forEach(v => {
+                const row = tableBody.insertRow();
+                row.insertCell().textContent = v.plate;
+                row.insertCell().textContent = v.model;
+                row.insertCell().textContent = v.type;
+                row.insertCell().textContent = v.leaseEnd;
+                row.insertCell().textContent = formatCurrency(v.revenue);
+                row.insertCell().textContent = formatCurrency(v.cost);
+                row.insertCell().textContent = formatCurrency(v.estimatedSaleValue || 0);
+                row.insertCell().textContent = formatCurrency(v.monthlyProfit);
+                const marginCell = row.insertCell();
+                marginCell.textContent = formatPercentage(v.margin);
+                marginCell.classList.add(v.margin > 30 ? 'profit-positive' : (v.margin > 10 ? 'profit-warning' : 'profit-negative'));
+                row.insertCell().textContent = formatPercentage(v.utilization);
+                const statusCell = row.insertCell();
+                statusCell.innerHTML = `<span class="status-badge ${getStatusBadge(v.status)}">${v.status === 'critical' ? '建議汰新' : (v.status === 'warning' ? '獲利偏低' : '正常')}</span>`;
+                row.insertCell().textContent = v.recommendation;
+            });
+        }
+
+        function renderSoldVehiclesTable() {
+            const tableBody = document.querySelector('#soldVehiclesTable tbody');
+            tableBody.innerHTML = '';
+            fleetData.soldVehicles.forEach(v => {
+                const row = tableBody.insertRow();
+                row.insertCell().textContent = v.id;
+                row.insertCell().textContent = v.plate;
+                row.insertCell().textContent = v.model;
+                row.insertCell().textContent = formatCurrency(v.purchasePrice);
+                row.insertCell().textContent = formatCurrency(v.salePrice);
+                row.insertCell().textContent = formatCurrency(v.rentalRevenue);
+                row.insertCell().textContent = formatCurrency(v.operatingCost);
+                const profitCell = row.insertCell();
+                profitCell.textContent = formatCurrency(v.totalProfit);
+                profitCell.classList.add(v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative');
+                row.insertCell().textContent = `${v.holdingPeriod} 年`;
+            });
+        }
+
+        function renderTerminatedVehiclesTable() {
+            const tableBody = document.querySelector('#terminatedVehiclesTable tbody');
+            tableBody.innerHTML = '';
+            fleetData.terminatedVehicles.forEach(v => {
+                const row = tableBody.insertRow();
+                row.insertCell().textContent = v.id;
+                row.insertCell().textContent = v.plate;
+                row.insertCell().textContent = v.model;
+                row.insertCell().textContent = formatCurrency(v.purchasePrice);
+                row.insertCell().textContent = formatCurrency(v.rentalRevenueReceived);
+                row.insertCell().textContent = formatCurrency(v.terminationFeeReceived);
+                row.insertCell().textContent = formatCurrency(v.totalOperatingCost);
+                const profitCell = row.insertCell();
+                profitCell.textContent = formatCurrency(v.totalProfit);
+                profitCell.classList.add(v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative');
+                row.insertCell().textContent = `${v.holdingPeriod} 年`;
+                row.insertCell().textContent = v.terminationReason;
+                row.insertCell().textContent = v.notes;
+            });
+        }
+
+        function renderYearlyTrendChart() {
+            const ctx = document.getElementById('yearlyTrendChart').getContext('2d');
+            if (window.yearlyTrendChartInstance) {
+                window.yearlyTrendChartInstance.destroy();
+            }
+            window.yearlyTrendChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: fleetData.yearlyTrend.map(d => d.year),
+                    datasets: [
+                        {
+                            label: '收益 (TWD)',
+                            data: fleetData.yearlyTrend.map(d => d.revenue),
+                            borderColor: '#4CAF50',
+                            backgroundColor: 'rgba(76, 175, 80, 0.2)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: '成本 (TWD)',
+                            data: fleetData.yearlyTrend.map(d => d.expense),
+                            borderColor: '#F44336',
+                            backgroundColor: 'rgba(244, 67, 54, 0.2)',
+                            fill: true,
+                            tension: 0.3
+                        },
+                        {
+                            label: '淨利 (TWD)',
+                            data: fleetData.yearlyTrend.map(d => d.profit),
+                            borderColor: '#2196F3',
+                            backgroundColor: 'rgba(33, 150, 243, 0.2)',
+                            fill: true,
+                            tension: 0.3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '年度收益、成本與淨利趨勢',
+                            font: { size: 18 }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '金額 (TWD)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: '年份'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderCostBreakdownChart() {
+            const ctx = document.getElementById('costBreakdownChart').getContext('2d');
+            if (window.costBreakdownChartInstance) {
+                window.costBreakdownChartInstance.destroy();
+            }
+
+            const costLabels = Object.keys(fleetData.costBreakdown);
+            const costValues = Object.values(fleetData.costBreakdown);
+            const totalCost = costValues.reduce((sum, val) => sum + val, 0);
+
+            const tableBody = document.querySelector('#costBreakdownTable tbody');
+            tableBody.innerHTML = '';
+            costLabels.forEach((label, index) => {
+                const row = tableBody.insertRow();
+                row.insertCell().textContent = label;
+                row.insertCell().textContent = formatCurrency(costValues[index]);
+                row.insertCell().textContent = totalCost > 0 ? formatPercentage((costValues[index] / totalCost) * 100) : '0.0%';
+            });
+
+            window.costBreakdownChartInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: costLabels,
+                    datasets: [{
+                        data: costValues,
+                        backgroundColor: [
+                            '#FF6384',
+                            '#36A2EB',
+                            '#FFCE56',
+                            '#4BC0C0',
+                            '#9966FF',
+                            '#FF9F40'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '成本結構分佈',
+                            font: { size: 18 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += formatCurrency(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderVehicleTypeChart() {
+            const ctx = document.getElementById('vehicleTypeChart').getContext('2d');
+            if (window.vehicleTypeChartInstance) {
+                window.vehicleTypeChartInstance.destroy();
+            }
+
+            const labels = Object.keys(fleetData.vehicleTypes);
+            const data = Object.values(fleetData.vehicleTypes);
+
+            window.vehicleTypeChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '車輛數量',
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '車型分佈',
+                            font: { size: 18 }
+                        },
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: '數量 (台)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderStatusChart() {
+            const ctx = document.getElementById('statusChart').getContext('2d');
+            if (window.statusChartInstance) {
+                window.statusChartInstance.destroy();
+            }
+
+            const labels = ['承租', '自購', '出售', '解約'];
+            const data = [
+                fleetData.summary.status.active,
+                fleetData.summary.status.idle || 0, // Assuming 'idle' is for '自購'
+                fleetData.summary.status.sold,
+                fleetData.summary.status.terminated
+            ];
+
+            window.statusChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#667eea',
+                            '#FFCE56',
+                            '#868e96',
+                            '#ff922b'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '車輛狀態分佈',
+                            font: { size: 18 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + ' 台';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('vehicleSearch').value.toLowerCase();
+            const typeFilter = document.getElementById('vehicleTypeFilter').value;
+            const statusFilter = document.getElementById('vehicleStatusFilter').value;
+
+            const filteredVehicles = fleetData.expiringVehicles.filter(v => {
+                const matchesSearch = v.plate.toLowerCase().includes(searchTerm) || v.model.toLowerCase().includes(searchTerm);
+                const matchesType = typeFilter === 'all' || v.type === typeFilter;
+                let matchesStatus = true;
+                if (statusFilter !== 'all') {
+                    matchesStatus = v.status === statusFilter;
+                }
+                return matchesSearch && matchesType && matchesStatus;
+            });
+            renderVehiclesTable(filteredVehicles);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Calculate holdingMonths, monthlyRevenue, monthlyCost, monthlyProfit for expiringVehicles
+            fleetData.expiringVehicles.forEach(v => {
+                if (v.leaseStartDate) {
+                    const holdingMonths = calculateHoldingMonths(v.leaseStartDate);
+                    v.holdingMonths = holdingMonths;
+                    if (holdingMonths > 0) {
+                        v.monthlyRevenue = parseFloat((v.revenue / holdingMonths).toFixed(2));
+                        v.monthlyCost = parseFloat((v.cost / holdingMonths).toFixed(2));
+                        v.monthlyProfit = parseFloat(((v.revenue - v.cost) / holdingMonths).toFixed(2));
+                    } else {
+                        v.monthlyRevenue = v.revenue;
+                        v.monthlyCost = v.cost;
+                        v.monthlyProfit = v.revenue - v.cost;
+                    }
+                } else {
+                    v.holdingMonths = 0;
+                    v.monthlyRevenue = v.revenue;
+                    v.monthlyCost = v.cost;
+                    v.monthlyProfit = v.revenue - v.cost;
+                }
+                // Recalculate margin based on cumulative revenue and cost
+                v.margin = v.revenue > 0 ? parseFloat(((v.revenue - v.cost) / v.cost * 100).toFixed(1)) : 0;
+            });
+
+            // Calculate overall summary metrics
+            let totalActiveRevenue = 0;
+            let totalActiveCost = 0;
+            let totalActiveHoldingMonths = 0;
+            fleetData.expiringVehicles.forEach(v => {
+                totalActiveRevenue += v.revenue;
+                totalActiveCost += v.cost;
+                totalActiveHoldingMonths += v.holdingMonths;
+            });
+
+            fleetData.summary.avgMonthlyRevenue = totalActiveHoldingMonths > 0 ? parseFloat((totalActiveRevenue / totalActiveHoldingMonths).toFixed(2)) : 0;
+            fleetData.summary.avgMonthlyExpense = totalActiveHoldingMonths > 0 ? parseFloat((totalActiveCost / totalActiveHoldingMonths).toFixed(2)) : 0;
+
+            // Calculate overall utilization rate (Logic A: average of active vehicles)
+            if (fleetData.expiringVehicles.length > 0) {
+                const totalUtilization = fleetData.expiringVehicles.reduce((sum, v) => sum + (v.utilization || 0), 0);
+                fleetData.summary.utilizationRate = parseFloat((totalUtilization / fleetData.expiringVehicles.length).toFixed(1));
+            } else {
+                fleetData.summary.utilizationRate = 0;
+            }
+
+            // Auto-calculate costBreakdown from active + sold vehicles
+            let totalPurchaseCost = 0;
+            let totalTaxCost = 0;
+            let totalInsuranceCost = 0;
+            let totalMaintenanceCost = 0;
+            let totalOthersCost = 0;
+
+            // Sum from active vehicles (expiringVehicles)
+            fleetData.expiringVehicles.forEach(v => {
+                totalPurchaseCost += (v.purchaseCost || 0);
+                totalTaxCost += (v.taxCost || 0);
+                totalInsuranceCost += (v.insuranceCost || 0);
+                totalMaintenanceCost += (v.maintenanceCost || 0);
+                totalOthersCost += (v.othersCost || 0);
+            });
+
+            // Sum from sold vehicles
+            fleetData.soldVehicles.forEach(v => {
                 totalPurchaseCost += (v.purchaseCost || 0);
                 totalTaxCost += (v.taxCost || 0);
                 totalInsuranceCost += (v.insuranceCost || 0);
@@ -2384,6 +4897,74 @@
             renderTerminatedVehiclesTable();            
             renderVehicleTypeChart();
             renderStatusChart();
+            // === 損益分析彙總表 ===
+            function renderPLSummaryTables() {
+                // 使用中車輛彙總
+                let activePurchase = 0, activeEstSale = 0;
+                let activeEstInsurance = 0, activeInsurance = 0;
+                let activeEstMaintenance = 0, activeMaintenance = 0;
+                fleetData.expiringVehicles.forEach(v => {
+                    activePurchase += (v.purchaseCost || 0);
+                    activeEstSale += (v.estimatedSaleValue || 0);
+                    activeEstInsurance += (v.estimatedInsuranceCost || 0);
+                    activeInsurance += (v.insuranceCost || 0);
+                    activeEstMaintenance += (v.estimatedMaintenanceCost || 0);
+                    activeMaintenance += (v.maintenanceCost || 0);
+                });
+
+                const activeData = [
+                    { item: '車輛（購置價/出售價）', estimated: activePurchase, actual: activeEstSale },
+                    { item: '保險費（預估/實支）', estimated: activeEstInsurance, actual: activeInsurance },
+                    { item: '保養維修（預估/實支）', estimated: activeEstMaintenance, actual: activeMaintenance }
+                ];
+
+                const activeBody = document.querySelector('#plActiveTable tbody');
+                activeBody.innerHTML = '';
+                activeData.forEach(d => {
+                    const row = activeBody.insertRow();
+                    row.insertCell().textContent = d.item;
+                    row.insertCell().textContent = formatCurrency(d.estimated);
+                    row.insertCell().textContent = formatCurrency(d.actual);
+                    const diffCell = row.insertCell();
+                    const diff = d.actual - d.estimated;
+                    diffCell.textContent = formatCurrency(diff);
+                    diffCell.classList.add(diff >= 0 ? 'profit-positive' : 'profit-negative');
+                });
+
+                // 已出售車輛彙總
+                let soldPurchase = 0, soldSale = 0;
+                let soldEstInsurance = 0, soldInsurance = 0;
+                let soldEstMaintenance = 0, soldMaintenance = 0;
+                fleetData.soldVehicles.forEach(v => {
+                    soldPurchase += (v.purchasePrice || 0);
+                    soldSale += (v.salePrice || 0);
+                    soldEstInsurance += (v.estimatedInsuranceCost || 0);
+                    soldInsurance += (v.insuranceCost || 0);
+                    soldEstMaintenance += (v.estimatedMaintenanceCost || 0);
+                    soldMaintenance += (v.maintenanceCost || 0);
+                });
+
+                const soldData = [
+                    { item: '車輛（購置價/出售價）', estimated: soldPurchase, actual: soldSale },
+                    { item: '保險費（預估/實支）', estimated: soldEstInsurance, actual: soldInsurance },
+                    { item: '保養維修（預估/實支）', estimated: soldEstMaintenance, actual: soldMaintenance }
+                ];
+
+                const soldBody = document.querySelector('#plSoldTable tbody');
+                soldBody.innerHTML = '';
+                soldData.forEach(d => {
+                    const row = soldBody.insertRow();
+                    row.insertCell().textContent = d.item;
+                    row.insertCell().textContent = formatCurrency(d.estimated);
+                    row.insertCell().textContent = formatCurrency(d.actual);
+                    const diffCell = row.insertCell();
+                    const diff = d.actual - d.estimated;
+                    diffCell.textContent = formatCurrency(diff);
+                    diffCell.classList.add(diff >= 0 ? 'profit-positive' : 'profit-negative');
+                });
+            }
+            renderPLSummaryTables();
+
             // Initial render of charts for active tabs
             switchTab('overview');
 
