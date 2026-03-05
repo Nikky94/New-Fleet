@@ -324,7 +324,7 @@
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 預估vs.實際收支</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 預估vs.實費</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
@@ -338,27 +338,27 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>保有</h3>
+                        <h3>保有車</h3>
                         <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>承租</h3>
+                        <h3>租賃車</h3>
                         <div class="value" id="activeVehicles">29</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>自購</h3>
+                        <h3>自購車</h3>
                         <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>出售</h3>
+                        <h3>結案出售</h3>
                         <div class="value" id="soldVehicles">28</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>解約</h3>
+                        <h3>解約異常</h3>
                         <div class="value" id="terminatedVehicles">4</div>
                         <div class="unit">台</div>
                     </div>
@@ -388,7 +388,7 @@
 
                 <div style="display: flex; gap: 20px; margin-top: 20px;">
                     <div class="summary-box" style="flex: 1; background: linear-gradient(135deg, #1a5c2e 0%, #2d8a4e 100%); margin: 0;">
-                        <h3 style="color: #fff;">✅ 結案車輛累計損益（28台）</h3>
+                        <h3 style="color: #fff;">💸 結案累計損益（28台）</h3>
                         <div class="summary-content">
                             <div class="summary-item">
                                 <div class="label" style="color: rgba(255,255,255,0.8);">總收入</div>
@@ -409,7 +409,7 @@
                         </div>
                     </div>
                     <div class="summary-box" style="flex: 1; background: linear-gradient(135deg, #1a3a6e 0%, #2d5aa0 100%); margin: 0;">
-                        <h3 style="color: #fff;">🚙 實行中車輛累計損益（29台）</h3>
+                        <h3 style="color: #fff;">🚙 實行中累計損益（29台）</h3>
                         <div class="summary-content">
                             <div class="summary-item">
                                 <div class="label" style="color: rgba(255,255,255,0.8);">總收入</div>
