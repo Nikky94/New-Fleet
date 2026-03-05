@@ -324,7 +324,7 @@
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 預估vs.實際收支</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
@@ -365,7 +365,7 @@
                 </div>
 
                 <div class="summary-box">
-                    <h3>車隊總覽</h3>
+                    <h3>月成本收益</h3>
                     <div class="summary-content">
                         <div class="summary-item">
                             <div class="label">總車輛數</div>
@@ -398,7 +398,7 @@
 
             <!-- 長期評估 -->
             <div id="trends" class="tab-content">
-                <h2 style="margin-bottom: 20px;">10年期趨勢</h2>
+                <h2 style="margin-bottom: 20px;">10年期</h2>
                 
                 <div class="legend">
                     <div class="legend-item">
@@ -2858,7 +2858,7 @@
 
             // Update costBreakdown with calculated totals (順序：車輛購置→稅金規費→保險費→保養維修→其他)
             fleetData.costBreakdown = {
-                '車輛購置': totalPurchaseCost,
+                '購車款': totalPurchaseCost,
                 '稅金規費': totalTaxCost,
                 '保險費': totalInsuranceCost,
                 '保養維修': totalMaintenanceCost,
@@ -2910,12 +2910,12 @@
 
                 const activeData = [
                     { item: '租金總收入', estimated: activeEstRevenue, actual: activeRevenue, type: 'revenue' },
-                    { item: '車輛（購置價/出售價）', estimated: activePurchase, actual: activeEstSale, type: 'vehicle' },
-                    { item: '稅金規費（預估/實費）', estimated: activeEstTax, actual: activeTax, type: 'cost' },
-                    { item: '保險費（預估/實費）', estimated: activeEstInsurance, actual: activeInsurance, type: 'cost' },
-                    { item: '保養維修（預估/實費）', estimated: activeEstMaintenance, actual: activeMaintenance, type: 'cost' },
-                    { item: '其他（預估/實費）', estimated: activeEstOthers, actual: activeOthers, type: 'cost' },
-                    { item: '五項合計', estimated: activeEstTotal, actual: activeActTotal, type: 'total' }
+                    { item: '車輛（購入/出售）', estimated: activePurchase, actual: activeEstSale, type: 'vehicle' },
+                    { item: '稅金規費', estimated: activeEstTax, actual: activeTax, type: 'cost' },
+                    { item: '保險費', estimated: activeEstInsurance, actual: activeInsurance, type: 'cost' },
+                    { item: '保養維修', estimated: activeEstMaintenance, actual: activeMaintenance, type: 'cost' },
+                    { item: '其他', estimated: activeEstOthers, actual: activeOthers, type: 'cost' },
+                    { item: '合計', estimated: activeEstTotal, actual: activeActTotal, type: 'total' }
                 ];
 
                 const activeBody = document.querySelector('#plActiveTable tbody');
@@ -2994,12 +2994,12 @@
 
                 const soldData = [
                     { item: '租金總收入', estimated: soldEstRevenue, actual: soldRevenue, type: 'revenue' },
-                    { item: '車輛（購置價/出售價）', estimated: soldPurchase, actual: soldSale, type: 'vehicle' },
-                    { item: '稅金規費（預估/實費）', estimated: soldEstTax, actual: soldTax, type: 'cost' },
-                    { item: '保險費（預估/實費）', estimated: soldEstInsurance, actual: soldInsurance, type: 'cost' },
-                    { item: '保養維修（預估/實費）', estimated: soldEstMaintenance, actual: soldMaintenance, type: 'cost' },
-                    { item: '其他（預估/實費）', estimated: soldEstOthers, actual: soldOthers, type: 'cost' },
-                    { item: '五項合計', estimated: soldEstTotal, actual: soldActTotal, type: 'total' }
+                    { item: '車輛（購入/出售）', estimated: soldPurchase, actual: soldSale, type: 'vehicle' },
+                    { item: '稅金規費', estimated: soldEstTax, actual: soldTax, type: 'cost' },
+                    { item: '保險費', estimated: soldEstInsurance, actual: soldInsurance, type: 'cost' },
+                    { item: '保養維修', estimated: soldEstMaintenance, actual: soldMaintenance, type: 'cost' },
+                    { item: '其他', estimated: soldEstOthers, actual: soldOthers, type: 'cost' },
+                    { item: '合計', estimated: soldEstTotal, actual: soldActTotal, type: 'total' }
                 ];
 
                 const soldBody = document.querySelector('#plSoldTable tbody');
@@ -3081,7 +3081,7 @@
                 new Chart(activeCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['租金\n總收入', '車輛\n(購置價/出售價)', '稅金規費\n(預估/實費)', '保險費\n(預估/實費)', '保養維修\n(預估/實費)', '其他\n(預估/實費)', '五項\n合計'],
+                        labels: ['租金\n總收入', '車輛\n(購入/出售)', '稅金規費\n', '保險費\n', '保養維修\n', '其他\n', '五項\n'],
                         datasets: [
                             {
                                 label: '預估',
@@ -3164,7 +3164,7 @@
                 new Chart(soldCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['租金\n總收入', '車輛\n(購置價/出售價)', '稅金規費\n(預估/實費)', '保險費\n(預估/實費)', '保養維修\n(預估/實費)', '其他\n(預估/實費)', '五項\n合計'],
+                        labels: ['租金\n總收入', '車輛\n(購入/出售)', '稅金規費\n', '保險費\n', '保養維修\n', '其他\n', '五項\n'],
                         datasets: [
                             {
                                 label: '預估',
