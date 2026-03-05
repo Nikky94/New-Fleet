@@ -324,11 +324,11 @@
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
-            <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
+            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
             <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
-            <button class="tab-btn" onclick="switchTab('costs')">🔧 成本結構</button>
+            <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
         </div>
         
         <div class="content">
@@ -440,14 +440,12 @@
                                 <th>車型</th>
                                 <th>車型類別</th>
                                 <th>租約到期日</th>
-                                <th>累計總收益</th>
-                                <th>累計總成本</th>
-                                <th>預估出售值</th>
-                                <th>月均淨利</th>
-                                <th>利潤率</th>
-                                <th>使用率</th>
+                                <th>租期（設定/實現）</th>
+                                <th>出險次數</th>
+                                <th>保費使用率</th>
+                                <th>最近進廠里程</th>
+                                <th>保修使用率</th>
                                 <th>狀態</th>
-                                <th>建議</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -464,15 +462,12 @@
                     <table id="soldVehiclesTable">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>車牌</th>
                                 <th>車型</th>
-                                <th>購入價</th>
                                 <th>出售價</th>
-                                <th>租金收入</th>
-                                <th>營運成本</th>
-                                <th>總損益</th>
-                                <th>持有期間 (年)</th>
+                                <th>出售里程</th>
+                                <th>出售殘值</th>
+                                <th>持有期間</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -489,17 +484,14 @@
                     <table id="terminatedVehiclesTable">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>車牌</th>
                                 <th>車型</th>
-                                <th>購入價</th>
                                 <th>租金收入</th>
-                                <th>解約金</th>
-                                <th>營運成本</th>
+                                <th>理賠款</th>
                                 <th>總損益</th>
-                                <th>持有期間 (年)</th>
+                                <th>本金損益</th>
+                                <th>持有期間</th>
                                 <th>解約原因</th>
-                                <th>備註</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -690,6 +682,9 @@
       "model": "Luxgen M7",
       "type": "MPV",
       "leaseEnd": "2026-09-18",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 952190,
       "cost": 787030,
       "purchaseCost": 796116,
@@ -719,6 +714,9 @@
       "model": "Honda CR-V",
       "type": "SUV",
       "leaseEnd": "2027-03-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 809143,
       "cost": 679016,
       "purchaseCost": 1007571,
@@ -748,13 +746,16 @@
       "model": "Toyota Sienna",
       "type": "MPV",
       "leaseEnd": "2026-11-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 1575619,
       "cost": 1420725,
       "purchaseCost": 2857143,
       "taxCost": 78725,
       "actualTaxCost": 53389,
       "insuranceCost": 148197,
-      "maintenanceCost": 21761,
+      "maintenanceCost": 14142,
       "othersCost": 3015,
       "estimatedSaleValue": 1600000,
       "estimatedInsuranceCost": 184891,
@@ -777,6 +778,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 727272,
       "purchaseCost": 528413,
@@ -806,13 +810,16 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 753238,
       "cost": 576037,
       "purchaseCost": 528413,
       "taxCost": 38465,
       "actualTaxCost": 29941,
       "insuranceCost": 60022,
-      "maintenanceCost": 134525,
+      "maintenanceCost": 125287,
       "othersCost": 14536,
       "estimatedSaleValue": 191400,
       "estimatedInsuranceCost": 72049,
@@ -835,6 +842,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 541154,
       "purchaseCost": 528413,
@@ -864,6 +874,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 543944,
       "purchaseCost": 528413,
@@ -893,6 +906,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 595685,
       "purchaseCost": 528413,
@@ -922,6 +938,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 582646,
       "purchaseCost": 528413,
@@ -951,6 +970,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 582366,
       "purchaseCost": 528413,
@@ -980,6 +1002,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 561803,
       "purchaseCost": 528413,
@@ -1009,6 +1034,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 584023,
       "purchaseCost": 528413,
@@ -1038,6 +1066,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 569808,
       "purchaseCost": 528413,
@@ -1067,6 +1098,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 560514,
       "purchaseCost": 528413,
@@ -1096,6 +1130,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 573916,
       "purchaseCost": 528413,
@@ -1125,6 +1162,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 590748,
       "purchaseCost": 528413,
@@ -1154,6 +1194,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 587263,
       "purchaseCost": 528413,
@@ -1183,6 +1226,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 600834,
       "purchaseCost": 528413,
@@ -1212,6 +1258,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 617164,
       "purchaseCost": 528413,
@@ -1241,6 +1290,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 590133,
       "purchaseCost": 528413,
@@ -1270,6 +1322,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 615471,
       "purchaseCost": 528413,
@@ -1299,6 +1354,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 691005,
       "purchaseCost": 528413,
@@ -1328,6 +1386,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 563052,
       "purchaseCost": 528413,
@@ -1357,6 +1418,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 581131,
       "purchaseCost": 528413,
@@ -1386,6 +1450,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 673710,
       "purchaseCost": 528413,
@@ -1415,6 +1482,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 578811,
       "purchaseCost": 528413,
@@ -1444,13 +1514,16 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
-      "revenue": 867810,
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
+      "revenue": 744000,
       "cost": 697082,
       "purchaseCost": 528413,
       "taxCost": 38465,
       "actualTaxCost": 29941,
       "insuranceCost": 60022,
-      "maintenanceCost": 267068,
+      "maintenanceCost": 143258,
       "othersCost": 3038,
       "estimatedSaleValue": 191400,
       "estimatedInsuranceCost": 72049,
@@ -1473,6 +1546,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 744000,
       "cost": 629890,
       "purchaseCost": 528413,
@@ -1502,6 +1578,9 @@
       "model": "Toyota Vios",
       "type": "Sedan",
       "leaseEnd": "2026-04-30",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0,
       "revenue": 314286,
       "cost": 293221,
       "purchaseCost": 422095,
@@ -1545,7 +1624,11 @@
       "estimatedMaintenanceCost": 48528,
       "estimatedOthersCost": 14400,
       "totalProfit": 114466,
-      "holdingPeriod": 3.5
+      "holdingPeriod": 3.5,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "CEO-20001",
@@ -1559,13 +1642,17 @@
       "taxCost": 61739,
       "actualTaxCost": 55708,
       "insuranceCost": 137692,
-      "maintenanceCost": 104944,
+      "maintenanceCost": 21155,
       "othersCost": 7884,
       "estimatedInsuranceCost": 139681,
       "estimatedMaintenanceCost": 185472,
       "estimatedOthersCost": 21499,
       "totalProfit": 656513,
-      "holdingPeriod": 3
+      "holdingPeriod": 3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20001",
@@ -1573,19 +1660,23 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 188571,
-      "rentalRevenue": 744252,
+      "rentalRevenue": 743424,
       "operatingCost": 353683,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39056,
       "insuranceCost": 69625,
-      "maintenanceCost": 159006,
+      "maintenanceCost": 149801,
       "othersCost": 20235,
       "estimatedInsuranceCost": 94550,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 24866,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20002",
@@ -1593,19 +1684,23 @@
       "model": "Toyota Yaris",      
       "purchasePrice": 512794,
       "salePrice": 189524,
-      "rentalRevenue": 748495,
+      "rentalRevenue": 743424,
       "operatingCost": 353683,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39056,
       "insuranceCost": 68521,
-      "maintenanceCost": 167204,
+      "maintenanceCost": 153756,
       "othersCost": 14139,
       "estimatedInsuranceCost": 97604,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 24866,
-      "holdingPeriod": 3.3      
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20003",
@@ -1613,19 +1708,23 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 136190,
-      "rentalRevenue": 757257,
+      "rentalRevenue": 741484,
       "operatingCost": 326754,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 38606,
-      "insuranceCost": 69589,
+      "insuranceCost": 64589,
       "maintenanceCost": 186075,
       "othersCost": 18373,
       "estimatedInsuranceCost": 109813,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 56222,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20004",
@@ -1633,19 +1732,23 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 153333,
-      "rentalRevenue": 745190,
+      "rentalRevenue": 746190,
       "operatingCost": 351446,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 70024,
-      "maintenanceCost": 142663,
+      "maintenanceCost": 132301,
       "othersCost": 14316,
       "estimatedInsuranceCost": 94551,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 53379,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {     
       "id": "HSR-20005",
@@ -1659,13 +1762,17 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 70374,
-      "maintenanceCost": 265604,
+      "maintenanceCost": 208231,
       "othersCost": 22602,
       "estimatedInsuranceCost": 103709,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 18081,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20006",
@@ -1679,13 +1786,17 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 68250,
-      "maintenanceCost": 278182,
+      "maintenanceCost": 242906,
       "othersCost": 17568,
       "estimatedInsuranceCost": 94551,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 57229,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20007",
@@ -1693,19 +1804,23 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 170476,
-      "rentalRevenue": 768834,
+      "rentalRevenue": 768768,
       "operatingCost": 383830,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 38956,
-      "insuranceCost": 69201,
-      "maintenanceCost": 273673,
+      "insuranceCost": 66235,
+      "maintenanceCost": 242778,
       "othersCost": 17137,
       "estimatedInsuranceCost": 113646,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 42620,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20008",
@@ -1718,14 +1833,18 @@
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
-      "insuranceCost": 71781,
-      "maintenanceCost": 213430,
+      "insuranceCost": 66781,
+      "maintenanceCost": 190706,
       "othersCost": 17383,
       "estimatedInsuranceCost": 97604,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 20513,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20009",
@@ -1739,13 +1858,17 @@
       "taxCost": 58296,
       "actualTaxCost": 38956,
       "insuranceCost": 70828,
-      "maintenanceCost": 322345,
+      "maintenanceCost": 295735,
       "othersCost": 18210,
       "estimatedInsuranceCost": 101435,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": -74809,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20010",
@@ -1758,14 +1881,18 @@
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
-      "insuranceCost": 69088,
-      "maintenanceCost": 210693,
+      "insuranceCost": 66426,
+      "maintenanceCost": 203923,
       "othersCost": 32509,
       "estimatedInsuranceCost": 118971,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 51542,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20011",
@@ -1785,7 +1912,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 62427,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20012",
@@ -1798,14 +1929,18 @@
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
-      "insuranceCost": 68641,
-      "maintenanceCost": 155683,
+      "insuranceCost": 63641,
+      "maintenanceCost": 140597,
       "othersCost": 20094,
       "estimatedInsuranceCost": 103709,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 144993,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20013",
@@ -1819,13 +1954,17 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 69201,
-      "maintenanceCost": 224079,
+      "maintenanceCost": 211355,
       "othersCost": 14281,
       "estimatedInsuranceCost": 103709,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 59689,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20014",
@@ -1833,7 +1972,7 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 420891,
-      "rentalRevenue": 1201145,
+      "rentalRevenue": 968096,
       "operatingCost": 393361,
       "purchaseCost": 512794,
       "taxCost": 58296,
@@ -1845,7 +1984,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 238131,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20015",
@@ -1865,7 +2008,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 5613,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20016",
@@ -1885,7 +2032,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 5613,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20017",
@@ -1905,7 +2056,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 37296,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20018",
@@ -1918,14 +2073,18 @@
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 37956,
-      "insuranceCost": 70374,
-      "maintenanceCost": 301961,
+      "insuranceCost": 67712,
+      "maintenanceCost": 293353,
       "othersCost": 34883,
       "estimatedInsuranceCost": 97604,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": -68921,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20019",
@@ -1945,7 +2104,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 39721,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20020",
@@ -1965,7 +2128,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 177000,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20021",
@@ -1978,14 +2145,18 @@
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 38506,
-      "insuranceCost": 70374,
+      "insuranceCost": 62974,
       "maintenanceCost": 122995,
       "othersCost": 14983,
       "estimatedInsuranceCost": 97604,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 140538,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20022",
@@ -2005,7 +2176,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 141762,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20023",
@@ -2013,19 +2188,23 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 171429,
-      "rentalRevenue": 919535,
+      "rentalRevenue": 735048,
       "operatingCost": 245254,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
-      "insuranceCost": 71310,
-      "maintenanceCost": 167838,
+      "insuranceCost": 63648,
+      "maintenanceCost": -9352,
       "othersCost": 20139,
       "estimatedInsuranceCost": 115983,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 141762,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20024",
@@ -2045,7 +2224,11 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "totalProfit": 163414,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20025",
@@ -2065,7 +2248,11 @@
       "estimatedMaintenanceCost": 142208,
       "estimatedOthersCost": 52767,
       "totalProfit": 242618,
-      "holdingPeriod": 1.46
+      "holdingPeriod": 1.46,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
     },
     {
       "id": "HSR-20026",
@@ -2079,13 +2266,17 @@
       "taxCost": 55131,
       "actualTaxCost": 37068,
       "insuranceCost": 52093,
-      "maintenanceCost": 228328,
+      "maintenanceCost": 196042,
       "othersCost": 11475,
       "estimatedInsuranceCost": 88328,
       "estimatedMaintenanceCost": 210975,
       "estimatedOthersCost": 65770,
       "totalProfit": -61090,
-      "holdingPeriod": 3.3
+      "holdingPeriod": 3.3,
+      "leaseEnd": "",
+      "leaseRent": 0,
+      "renewalTerm": 0,
+      "renewalRent": 0
       }
   ],
   "terminatedVehicles": [
@@ -2098,8 +2289,10 @@
       "purchasePrice": 512794,
       "rentalRevenueReceived": 40000,
       "terminationFeeReceived": 572460,
+      "claimAmount": 572460,
       "totalOperatingCost": 533031,
       "totalProfit": 79429,
+      "principalPL": 26891,
       "holdingPeriod": 0.25,
       "terminationReason": "苗栗自撞安全島全損",
       "status": "terminated",
@@ -2114,8 +2307,10 @@
       "purchasePrice": 512794,
       "rentalRevenueReceived": 230667,
       "terminationFeeReceived": 485980,
+      "claimAmount": 485980,
       "totalOperatingCost": 645531,
       "totalProfit": 71116,
+      "principalPL": 38307,
       "holdingPeriod": 1.17,
       "terminationReason": "彰化自撞電線桿全損",
       "status": "terminated",
@@ -2130,8 +2325,10 @@
       "purchasePrice": 520033,
       "rentalRevenueReceived": 163107,
       "terminationFeeReceived": 513770,
+      "claimAmount": 513770,
       "totalOperatingCost": 592558,
       "totalProfit": 84319,
+      "principalPL": 34051,
       "holdingPeriod": 0.75,
       "terminationReason": "彰化自撞全損",
       "status": "terminated",
@@ -2146,8 +2343,10 @@
       "purchasePrice": 528413,
       "rentalRevenueReceived": 480000,
       "terminationFeeReceived": 451800,
+      "claimAmount": 451800,
       "totalOperatingCost": 682558,
       "totalProfit": 249242,
+      "principalPL": 115949,
       "holdingPeriod": 1.67,
       "terminationReason": "雲林自撞路樹全損",
       "status": "terminated",
@@ -2250,17 +2449,31 @@
                 row.insertCell().textContent = v.model;
                 row.insertCell().textContent = v.type;
                 row.insertCell().textContent = v.leaseEnd;
-                row.insertCell().textContent = formatCurrency(v.revenue);
-                row.insertCell().textContent = formatCurrency(v.cost);
-                row.insertCell().textContent = formatCurrency(v.estimatedSaleValue || 0);
-                row.insertCell().textContent = formatCurrency(v.monthlyProfit);
-                const marginCell = row.insertCell();
-                marginCell.textContent = formatPercentage(v.margin);
-                marginCell.classList.add(v.margin > 30 ? 'profit-positive' : (v.margin > 10 ? 'profit-warning' : 'profit-negative'));
-                row.insertCell().textContent = formatPercentage(v.utilization);
+                // 租期（設定/實現）: 設定=手動輸入 leaseTermSet, 實現=leaseEnd-leaseStartDate 月數
+                let actualTerm = 0;
+                if (v.leaseStartDate && v.leaseEnd) {
+                    const start = new Date(v.leaseStartDate);
+                    const end = new Date(v.leaseEnd);
+                    actualTerm = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+                }
+                row.insertCell().textContent = (v.leaseTermSet || 0) + ' / ' + actualTerm;
+                // 出險次數
+                row.insertCell().textContent = v.accidentCount || 0;
+                // 保費使用率 = insuranceCost / estimatedInsuranceCost * 100
+                const insuranceUtil = v.estimatedInsuranceCost > 0 ? (v.insuranceCost / v.estimatedInsuranceCost * 100) : 0;
+                const insCell = row.insertCell();
+                insCell.textContent = insuranceUtil.toFixed(1) + '%';
+                insCell.classList.add(insuranceUtil > 100 ? 'profit-negative' : 'profit-positive');
+                // 最近進廠里程
+                row.insertCell().textContent = v.lastServiceMileage ? v.lastServiceMileage.toLocaleString() + ' km' : '0 km';
+                // 保修使用率 = maintenanceCost / estimatedMaintenanceCost * 100
+                const maintenanceUtil = v.estimatedMaintenanceCost > 0 ? (v.maintenanceCost / v.estimatedMaintenanceCost * 100) : 0;
+                const maintCell = row.insertCell();
+                maintCell.textContent = maintenanceUtil.toFixed(1) + '%';
+                maintCell.classList.add(maintenanceUtil > 100 ? 'profit-negative' : 'profit-positive');
+                // 狀態
                 const statusCell = row.insertCell();
                 statusCell.innerHTML = `<span class="status-badge ${getStatusBadge(v.status)}">${v.status === 'critical' ? '建議汰新' : (v.status === 'warning' ? '獲利偏低' : '正常')}</span>`;
-                row.insertCell().textContent = v.recommendation;
             });
         }
 
@@ -2269,16 +2482,15 @@
             tableBody.innerHTML = '';
             fleetData.soldVehicles.forEach(v => {
                 const row = tableBody.insertRow();
-                row.insertCell().textContent = v.id;
                 row.insertCell().textContent = v.plate;
                 row.insertCell().textContent = v.model;
-                row.insertCell().textContent = formatCurrency(v.purchasePrice);
                 row.insertCell().textContent = formatCurrency(v.salePrice);
-                row.insertCell().textContent = formatCurrency(v.rentalRevenue);
-                row.insertCell().textContent = formatCurrency(v.operatingCost);
-                const profitCell = row.insertCell();
-                profitCell.textContent = formatCurrency(v.totalProfit);
-                profitCell.classList.add(v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative');
+                row.insertCell().textContent = v.saleMileage ? v.saleMileage.toLocaleString() + ' km' : '0 km';
+                // 出售殘值 = salePrice - purchasePrice (負數表示折舊)
+                const residual = v.residualValue || (v.salePrice - v.purchasePrice);
+                const resCell = row.insertCell();
+                resCell.textContent = formatCurrency(residual);
+                resCell.classList.add(residual >= 0 ? 'profit-positive' : 'profit-negative');
                 row.insertCell().textContent = `${v.holdingPeriod} 年`;
             });
         }
@@ -2288,19 +2500,24 @@
             tableBody.innerHTML = '';
             fleetData.terminatedVehicles.forEach(v => {
                 const row = tableBody.insertRow();
-                row.insertCell().textContent = v.id;
                 row.insertCell().textContent = v.plate;
                 row.insertCell().textContent = v.model;
-                row.insertCell().textContent = formatCurrency(v.purchasePrice);
                 row.insertCell().textContent = formatCurrency(v.rentalRevenueReceived);
-                row.insertCell().textContent = formatCurrency(v.terminationFeeReceived);
-                row.insertCell().textContent = formatCurrency(v.totalOperatingCost);
+                // 理賠款
+                row.insertCell().textContent = formatCurrency(v.claimAmount || v.terminationFeeReceived || 0);
+                // 總損益
                 const profitCell = row.insertCell();
                 profitCell.textContent = formatCurrency(v.totalProfit);
                 profitCell.classList.add(v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative');
+                // 本金損益
+                const principalPL = v.principalPL || 0;
+                const ppCell = row.insertCell();
+                ppCell.textContent = formatCurrency(principalPL);
+                ppCell.classList.add(principalPL >= 0 ? 'profit-positive' : 'profit-negative');
+                // 持有期間
                 row.insertCell().textContent = `${v.holdingPeriod} 年`;
+                // 解約原因
                 row.insertCell().textContent = v.terminationReason;
-                row.insertCell().textContent = v.notes;
             });
         }
 
@@ -2664,6 +2881,7 @@
                 let activeEstMaintenance = 0, activeMaintenance = 0;
                 let activeEstOthers = 0, activeOthers = 0;
                 let activeRevenue = 0;
+                let activeEstRevenue = 0;
                 fleetData.expiringVehicles.forEach(v => {
                     activePurchase += (v.purchaseCost || 0);
                     activeEstSale += (v.estimatedSaleValue || 0);
@@ -2676,6 +2894,14 @@
                     activeEstOthers += (v.estimatedOthersCost || 0);
                     activeOthers += (v.othersCost || 0);
                     activeRevenue += (v.revenue || 0);
+                    // 租金收入預估 = 租期月數 × 每期租金 + 續租期 × 續租租金
+                    let leaseTerm = 0;
+                    if (v.leaseStartDate && v.leaseEnd) {
+                        const start = new Date(v.leaseStartDate);
+                        const end = new Date(v.leaseEnd);
+                        leaseTerm = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+                    }
+                    activeEstRevenue += (leaseTerm * (v.leaseRent || 0)) + ((v.renewalTerm || 0) * (v.renewalRent || 0));
                 });
 
                 // 五項合計
@@ -2683,7 +2909,7 @@
                 const activeActTotal = activeEstSale + activeTax + activeInsurance + activeMaintenance + activeOthers;
 
                 const activeData = [
-                    { item: '租金總收入', estimated: activeRevenue, actual: activeRevenue, type: 'revenue' },
+                    { item: '租金總收入', estimated: activeEstRevenue, actual: activeRevenue, type: 'revenue' },
                     { item: '車輛（購置價/出售價）', estimated: activePurchase, actual: activeEstSale, type: 'vehicle' },
                     { item: '稅金規費（預估/實費）', estimated: activeEstTax, actual: activeTax, type: 'cost' },
                     { item: '保險費（預估/實費）', estimated: activeEstInsurance, actual: activeInsurance, type: 'cost' },
@@ -2703,8 +2929,12 @@
                     }
                     if (d.type === 'revenue') {
                         row.insertCell().textContent = formatCurrency(d.estimated);
-                        row.insertCell().textContent = '';
-                        row.insertCell().textContent = '';
+                        row.insertCell().textContent = formatCurrency(d.actual);
+                        const diffCell = row.insertCell();
+                        const diff = d.actual - d.estimated;
+                        diffCell.textContent = formatCurrency(diff);
+                        diffCell.style.fontWeight = 'bold';
+                        diffCell.classList.add(diff >= 0 ? 'profit-positive' : 'profit-negative');
                     } else if (d.type === 'total') {
                         row.style.borderTop = '2px solid #667eea';
                         row.insertCell().textContent = formatCurrency(d.estimated);
@@ -2735,6 +2965,7 @@
                 let soldEstMaintenance = 0, soldMaintenance = 0;
                 let soldEstOthers = 0, soldOthers = 0;
                 let soldRevenue = 0;
+                let soldEstRevenue = 0;
                 fleetData.soldVehicles.forEach(v => {
                     soldPurchase += (v.purchasePrice || 0);
                     soldSale += (v.salePrice || 0);
@@ -2747,6 +2978,14 @@
                     soldEstOthers += (v.estimatedOthersCost || 0);
                     soldOthers += (v.othersCost || 0);
                     soldRevenue += (v.rentalRevenue || 0);
+                    // 租金收入預估 = 租期月數 × 每期租金 + 續租期 × 續租租金
+                    let leaseTerm = 0;
+                    if (v.leaseStartDate && v.leaseEnd) {
+                        const start = new Date(v.leaseStartDate);
+                        const end = new Date(v.leaseEnd);
+                        leaseTerm = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+                    }
+                    soldEstRevenue += (leaseTerm * (v.leaseRent || 0)) + ((v.renewalTerm || 0) * (v.renewalRent || 0));
                 });
 
                 // 五項合計
@@ -2754,7 +2993,7 @@
                 const soldActTotal = soldSale + soldTax + soldInsurance + soldMaintenance + soldOthers;
 
                 const soldData = [
-                    { item: '租金總收入', estimated: soldRevenue, actual: soldRevenue, type: 'revenue' },
+                    { item: '租金總收入', estimated: soldEstRevenue, actual: soldRevenue, type: 'revenue' },
                     { item: '車輛（購置價/出售價）', estimated: soldPurchase, actual: soldSale, type: 'vehicle' },
                     { item: '稅金規費（預估/實費）', estimated: soldEstTax, actual: soldTax, type: 'cost' },
                     { item: '保險費（預估/實費）', estimated: soldEstInsurance, actual: soldInsurance, type: 'cost' },
@@ -2774,8 +3013,12 @@
                     }
                     if (d.type === 'revenue') {
                         row.insertCell().textContent = formatCurrency(d.estimated);
-                        row.insertCell().textContent = '';
-                        row.insertCell().textContent = '';
+                        row.insertCell().textContent = formatCurrency(d.actual);
+                        const diffCell = row.insertCell();
+                        const diff = d.actual - d.estimated;
+                        diffCell.textContent = formatCurrency(diff);
+                        diffCell.style.fontWeight = 'bold';
+                        diffCell.classList.add(diff >= 0 ? 'profit-positive' : 'profit-negative');
                     } else if (d.type === 'total') {
                         row.style.borderTop = '2px solid #667eea';
                         row.insertCell().textContent = formatCurrency(d.estimated);
@@ -2810,6 +3053,7 @@
                 let activeEstMaintenance = 0, activeMaintenance = 0;
                 let activeEstOthers = 0, activeOthers = 0;
                 let activeRevenue = 0;
+                let activeEstRevenue = 0;
                 fleetData.expiringVehicles.forEach(v => {
                     activePurchase += (v.purchaseCost || 0);
                     activeEstSale += (v.estimatedSaleValue || 0);
@@ -2822,6 +3066,13 @@
                     activeEstOthers += (v.estimatedOthersCost || 0);
                     activeOthers += (v.othersCost || 0);
                     activeRevenue += (v.revenue || 0);
+                    let leaseTerm = 0;
+                    if (v.leaseStartDate && v.leaseEnd) {
+                        const start = new Date(v.leaseStartDate);
+                        const end = new Date(v.leaseEnd);
+                        leaseTerm = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+                    }
+                    activeEstRevenue += (leaseTerm * (v.leaseRent || 0)) + ((v.renewalTerm || 0) * (v.renewalRent || 0));
                 });
                 const activeEstTotal = activePurchase + activeEstTax + activeEstInsurance + activeEstMaintenance + activeEstOthers;
                 const activeActTotal = activeEstSale + activeTax + activeInsurance + activeMaintenance + activeOthers;
@@ -2834,14 +3085,14 @@
                         datasets: [
                             {
                                 label: '預估',
-                                data: [activeRevenue, activePurchase, activeEstTax, activeEstInsurance, activeEstMaintenance, activeEstOthers, activeEstTotal],
+                                data: [activeEstRevenue, activePurchase, activeEstTax, activeEstInsurance, activeEstMaintenance, activeEstOthers, activeEstTotal],
                                 backgroundColor: 'rgba(102, 126, 234, 0.7)',
                                 borderColor: 'rgba(102, 126, 234, 1)',
                                 borderWidth: 1
                             },
                             {
                                 label: '實費',
-                                data: [0, activeEstSale, activeTax, activeInsurance, activeMaintenance, activeOthers, activeActTotal],
+                                data: [activeRevenue, activeEstSale, activeTax, activeInsurance, activeMaintenance, activeOthers, activeActTotal],
                                 backgroundColor: 'rgba(255, 165, 0, 0.7)',
                                 borderColor: 'rgba(255, 165, 0, 1)',
                                 borderWidth: 1
@@ -2885,6 +3136,7 @@
                 let soldEstMaintenance = 0, soldMaintenance = 0;
                 let soldEstOthers = 0, soldOthers = 0;
                 let soldRevenue = 0;
+                let soldEstRevenue = 0;
                 fleetData.soldVehicles.forEach(v => {
                     soldPurchase += (v.purchasePrice || 0);
                     soldSale += (v.salePrice || 0);
@@ -2897,6 +3149,13 @@
                     soldEstOthers += (v.estimatedOthersCost || 0);
                     soldOthers += (v.othersCost || 0);
                     soldRevenue += (v.rentalRevenue || 0);
+                    let leaseTerm = 0;
+                    if (v.leaseStartDate && v.leaseEnd) {
+                        const start = new Date(v.leaseStartDate);
+                        const end = new Date(v.leaseEnd);
+                        leaseTerm = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+                    }
+                    soldEstRevenue += (leaseTerm * (v.leaseRent || 0)) + ((v.renewalTerm || 0) * (v.renewalRent || 0));
                 });
                 const soldEstTotal = soldPurchase + soldEstTax + soldEstInsurance + soldEstMaintenance + soldEstOthers;
                 const soldActTotal = soldSale + soldTax + soldInsurance + soldMaintenance + soldOthers;
@@ -2909,14 +3168,14 @@
                         datasets: [
                             {
                                 label: '預估',
-                                data: [soldRevenue, soldPurchase, soldEstTax, soldEstInsurance, soldEstMaintenance, soldEstOthers, soldEstTotal],
+                                data: [soldEstRevenue, soldPurchase, soldEstTax, soldEstInsurance, soldEstMaintenance, soldEstOthers, soldEstTotal],
                                 backgroundColor: 'rgba(139, 90, 43, 0.7)',
                                 borderColor: 'rgba(139, 90, 43, 1)',
                                 borderWidth: 1
                             },
                             {
                                 label: '實費',
-                                data: [0, soldSale, soldTax, soldInsurance, soldMaintenance, soldOthers, soldActTotal],
+                                data: [soldRevenue, soldSale, soldTax, soldInsurance, soldMaintenance, soldOthers, soldActTotal],
                                 backgroundColor: 'rgba(255, 165, 0, 0.7)',
                                 borderColor: 'rgba(255, 165, 0, 1)',
                                 borderWidth: 1
