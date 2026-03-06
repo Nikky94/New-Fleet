@@ -319,14 +319,14 @@
     <div class="container">
         <div class="header">
             <h1>👮 天鷹保全</h1>
-            <p>    SEMAIL車隊績效管理報表</p>
+                  <p>SEMAIL 車隊績效管理報表</p>
         </div>
         
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('overview')">📊 總覽</button>
             <button class="tab-btn" onclick="switchTab('costs')">🔧 預估vs.實費</button>
             <button class="tab-btn" onclick="switchTab('vehicles')">🚙 租賃</button>
-            <button class="tab-btn" onclick="switchTab('sold')">✅ 出售</button>
+            <button class="tab-btn" onclick="switchTab('sold')">💰 出售</button>
             <button class="tab-btn" onclick="switchTab('terminated')">⛔ 解約</button>
             <button class="tab-btn" onclick="switchTab('trends')">📈 長期評估</button>
         </div>
@@ -338,27 +338,27 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3>保有車</h3>
+                        <h3>保有</h3>
                         <div class="value" id="totalVehicles">30</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>租賃車</h3>
+                        <h3>承租</h3>
                         <div class="value" id="activeVehicles">29</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>自購車</h3>
+                        <h3>自購</h3>
                         <div class="value" id="idleVehicles">1</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>結案出售</h3>
+                        <h3>出售</h3>
                         <div class="value" id="soldVehicles">28</div>
                         <div class="unit">台</div>
                     </div>
                     <div class="stat-card">
-                        <h3>解約異常</h3>
+                        <h3>解約</h3>
                         <div class="value" id="terminatedVehicles">4</div>
                         <div class="unit">台</div>
                     </div>
@@ -388,7 +388,7 @@
 
                 <div style="display: flex; gap: 20px; margin-top: 20px;">
                     <div class="summary-box" style="flex: 1; background: linear-gradient(135deg, #1a5c2e 0%, #2d8a4e 100%); margin: 0;">
-                        <h3 style="color: #fff;">💸 結案累計損益（28台）</h3>
+                        <h3 style="color: #fff;"> 💰 結案累計損益（28台）</h3>
                         <div class="summary-content">
                             <div class="summary-item">
                                 <div class="label" style="color: rgba(255,255,255,0.8);">總收入</div>
@@ -409,7 +409,7 @@
                         </div>
                     </div>
                     <div class="summary-box" style="flex: 1; background: linear-gradient(135deg, #1a3a6e 0%, #2d5aa0 100%); margin: 0;">
-                        <h3 style="color: #fff;">🚙 實行中累計損益（29台）</h3>
+                        <h3 style="color: #fff;">🚙 實行中車輛累計損益（29台）</h3>
                         <div class="summary-content">
                             <div class="summary-item">
                                 <div class="label" style="color: rgba(255,255,255,0.8);">總收入</div>
@@ -616,7 +616,7 @@
                 </div>
 
                 <!-- 已出售 -->
-                <h3 style="margin-bottom: 10px; color: #51cf66;">✅ 已出售（28台）</h3>
+                <h3 style="margin-bottom: 10px; color: #51cf66;">💰 已出售（28台）</h3>
                 <div class="chart-container" style="height: 350px; margin-bottom: 20px;">
                     <canvas id="plSoldChart"></canvas>
                 </div>
@@ -755,7 +755,7 @@
       "leaseEnd": "2026-09-18",
       "leaseTerm": 36,
       "leaseRent": 17905,
-      "renewalTerm": 18,
+      "renewalTerm": 24,
       "renewalRent": 16190,
       "revenue": 952190,
       "purchaseCost": 796116,
@@ -780,7 +780,7 @@
       "leaseEnd": "2027-03-30",
       "leaseTerm": 36,
       "leaseRent": 17143,
-      "renewalTerm": 10,
+      "renewalTerm": 24,
       "renewalRent": 16000,
       "revenue": 809143,
       "purchaseCost": 1007571,
@@ -819,7 +819,7 @@
       "estimatedMaintenanceCost": 159012,
       "estimatedOthersCost": 26533,
       "utilization": 54,
-      "status": "warning",
+      "status": "normal",
       "leaseStartDate": "2023-12-01",
     },
     {
@@ -1011,7 +1011,7 @@
       "purchaseCost": 528413,
       "taxCost": 38465,
       "actualTaxCost": 29941,
-      "insuranceCost": 63468,
+      "insuranceCost": 60022,
       "maintenanceCost": 127543,
       "othersCost": 10458,
       "estimatedSaleValue": 185600,
@@ -1257,7 +1257,7 @@
       "leaseRent": 24000,
       "renewalTerm": 0,
       "renewalRent": 0,
-      "revenue": 744000,
+      "revenue": 744952,
       "purchaseCost": 528413,
       "taxCost": 38465,
       "actualTaxCost": 29941,
@@ -1412,7 +1412,7 @@
       "taxCost": 38465,
       "actualTaxCost": 29941,
       "insuranceCost": 60022,
-      "maintenanceCost": 267048,
+      "maintenanceCost": 267068,
       "othersCost": 3038,
       "estimatedSaleValue": 191400,
       "estimatedInsuranceCost": 72049,
@@ -1508,7 +1508,7 @@
       "taxCost": 61739,
       "actualTaxCost": 55708,
       "insuranceCost": 137692,
-      "maintenanceCost": 21155,
+      "maintenanceCost": 104944,
       "othersCost": 7884,
       "estimatedInsuranceCost": 139681,
       "estimatedMaintenanceCost": 185472,
@@ -1526,18 +1526,18 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 188571,
-      "rentalRevenue": 743424,
+      "rentalRevenue": 744252,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39056,
       "insuranceCost": 69625,
-      "maintenanceCost": 149801,
+      "maintenanceCost": 159006,
       "othersCost": 20235,
       "estimatedInsuranceCost": 94550,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1549,18 +1549,18 @@
       "model": "Toyota Yaris",      
       "purchasePrice": 512794,
       "salePrice": 189524,
-      "rentalRevenue": 743424,
+      "rentalRevenue": 748495,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39056,
       "insuranceCost": 68521,
-      "maintenanceCost": 153756,
+      "maintenanceCost": 167204,
       "othersCost": 14139,
       "estimatedInsuranceCost": 97604,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1572,7 +1572,7 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 136190,
-      "rentalRevenue": 741484,
+      "rentalRevenue": 757257,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 38606,
@@ -1583,7 +1583,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1595,18 +1595,18 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 153333,
-      "rentalRevenue": 746190,
+      "rentalRevenue": 745190,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 70024,
-      "maintenanceCost": 132301,
+      "maintenanceCost": 142663,
       "othersCost": 14316,
       "estimatedInsuranceCost": 94551,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1623,13 +1623,13 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 70374,
-      "maintenanceCost": 208231,
+      "maintenanceCost": 265604,
       "othersCost": 22602,
       "estimatedInsuranceCost": 103709,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": 2024-04-29"",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1646,13 +1646,13 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 68250,
-      "maintenanceCost": 242906,
+      "maintenanceCost": 278182,
       "othersCost": 17568,
       "estimatedInsuranceCost": 94551,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1669,13 +1669,13 @@
       "taxCost": 58296,
       "actualTaxCost": 38956,
       "insuranceCost": 66235,
-      "maintenanceCost": 242778,
+      "maintenanceCost": 273673,
       "othersCost": 17137,
       "estimatedInsuranceCost": 113646,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1692,13 +1692,13 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 66781,
-      "maintenanceCost": 190706,
+      "maintenanceCost": 213430,
       "othersCost": 17383,
       "estimatedInsuranceCost": 97604,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1715,13 +1715,13 @@
       "taxCost": 58296,
       "actualTaxCost": 38956,
       "insuranceCost": 70828,
-      "maintenanceCost": 295735,
+      "maintenanceCost": 322345,
       "othersCost": 18210,
       "estimatedInsuranceCost": 101435,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1738,13 +1738,13 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 66426,
-      "maintenanceCost": 203923,
+      "maintenanceCost": 210693,
       "othersCost": 32509,
       "estimatedInsuranceCost": 118971,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1767,7 +1767,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1784,13 +1784,13 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 63641,
-      "maintenanceCost": 140597,
+      "maintenanceCost": 155683,
       "othersCost": 20094,
       "estimatedInsuranceCost": 103709,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1807,13 +1807,13 @@
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 69201,
-      "maintenanceCost": 211355,
+      "maintenanceCost": 224079,
       "othersCost": 14281,
       "estimatedInsuranceCost": 103709,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1825,7 +1825,7 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 420891,
-      "rentalRevenue": 968096,
+      "rentalRevenue": 1201145,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
@@ -1836,7 +1836,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1859,7 +1859,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1882,7 +1882,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1899,13 +1899,13 @@
       "taxCost": 58296,
       "actualTaxCost": 37956,
       "insuranceCost": 70828,
-      "maintenanceCost": 302574,
+      "maintenanceCost": 313645,
       "othersCost": 16362,
       "estimatedInsuranceCost": 94551,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1922,13 +1922,13 @@
       "taxCost": 58296,
       "actualTaxCost": 37956,
       "insuranceCost": 67712,
-      "maintenanceCost": 293353,
+      "maintenanceCost": 301961,
       "othersCost": 34883,
       "estimatedInsuranceCost": 97604,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1951,7 +1951,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1974,7 +1974,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -1997,7 +1997,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -2020,7 +2020,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -2032,18 +2032,18 @@
       "model": "Toyota Yaris",
       "purchasePrice": 512794,
       "salePrice": 171429,
-      "rentalRevenue": 735048,
+      "rentalRevenue": 919535,
       "purchaseCost": 512794,
       "taxCost": 58296,
       "actualTaxCost": 39156,
       "insuranceCost": 63648,
-      "maintenanceCost": -9352,
+      "maintenanceCost": 167838,
       "othersCost": 20139,
       "estimatedInsuranceCost": 115983,
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -2066,7 +2066,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -2089,7 +2089,7 @@
       "estimatedMaintenanceCost": 142208,
       "estimatedOthersCost": 52767,
       "holdingPeriod": 1.46,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 14,
       "leaseRent": 20952,
       "renewalTerm": 3,
@@ -2106,13 +2106,13 @@
       "taxCost": 55131,
       "actualTaxCost": 37068,
       "insuranceCost": 52093,
-      "maintenanceCost": 196042,
+      "maintenanceCost": 193731,
       "othersCost": 11475,
       "estimatedInsuranceCost": 88328,
       "estimatedMaintenanceCost": 210975,
       "estimatedOthersCost": 65770,
       "holdingPeriod": 3.3,
-      "leaseEnd": "",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -3011,7 +3011,7 @@
                 new Chart(activeCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['租金\n總收入', '車輛\n(購入/出售)', '稅金規費\n', '保險費\n', '保養維修\n', '其他\n', '五項\n'],
+                        labels: ['租金\n總收入', '車輛\n(購入/出售)', '稅金規費\n', '保險費\n', '保養維修\n', '其他\n', '計\n'],
                         datasets: [
                             {
                                 label: '預估',
@@ -3088,7 +3088,7 @@
                 new Chart(soldCtx, {
                     type: 'bar',
                     data: {
-                        labels: ['租金\n總收入', '車輛\n(購入/出售)', '稅金規費\n', '保險費\n', '保養維修\n', '其他\n', '五項\n'],
+                        labels: ['租金\n總收入', '車輛\n(購入/出售)', '稅金規費\n', '保險費\n', '保養維修\n', '其他\n', '計\n'],
                         datasets: [
                             {
                                 label: '預估',
