@@ -559,7 +559,6 @@
                                 <th>車型</th>
                                 <th>租金收入</th>
                                 <th>理賠款</th>
-                                <th>總損益</th>
                                 <th>本金損益</th>
                                 <th>持有期間</th>
                                 <th>解約原因</th>
@@ -1629,7 +1628,7 @@
       "estimatedMaintenanceCost": 223800,
       "estimatedOthersCost": 72033,
       "holdingPeriod": 3.3,
-      "leaseEnd": 2024-04-29"",
+      "leaseEnd": "2024-04-29",
       "leaseTerm": 36,
       "leaseRent": 17000,
       "renewalTerm": 4,
@@ -2379,10 +2378,6 @@
                 row.insertCell().textContent = formatCurrency(v.rentalRevenueReceived);
                 // 理賠款
                 row.insertCell().textContent = formatCurrency(v.claimAmount || v.terminationFeeReceived || 0);
-                // 總損益
-                const profitCell = row.insertCell();
-                profitCell.textContent = formatCurrency(v.totalProfit);
-                profitCell.classList.add(v.totalProfit >= 0 ? 'profit-positive' : 'profit-negative');
                 // 本金損益
                 const principalPL = v.principalPL || 0;
                 const ppCell = row.insertCell();
